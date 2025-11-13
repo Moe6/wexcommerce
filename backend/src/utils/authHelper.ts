@@ -2,7 +2,7 @@ import { Request } from 'express'
 import { jwtVerify, SignJWT } from 'jose'
 import bcrypt from 'bcrypt'
 import axios from 'axios'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as helper from './helper'
 import * as env from '../config/env.config'
 
@@ -91,8 +91,8 @@ export const parseJwt = (token: string) => JSON.parse(Buffer.from(token.split('.
  * @param {string} token
  * @returns {boolean}
  */
-export const validateAccessToken = async (socialSignInType: wexcommerceTypes.SocialSignInType, token: string, email: string) => {
-  if (socialSignInType === wexcommerceTypes.SocialSignInType.Facebook) {
+export const validateAccessToken = async (socialSignInType: lebobeautycoTypes.SocialSignInType, token: string, email: string) => {
+  if (socialSignInType === lebobeautycoTypes.SocialSignInType.Facebook) {
     try {
       parseJwt(token)
       return true
@@ -101,7 +101,7 @@ export const validateAccessToken = async (socialSignInType: wexcommerceTypes.Soc
     }
   }
 
-  if (socialSignInType === wexcommerceTypes.SocialSignInType.Apple) {
+  if (socialSignInType === lebobeautycoTypes.SocialSignInType.Apple) {
     try {
       const res = parseJwt(token)
       return res.email === email
@@ -110,7 +110,7 @@ export const validateAccessToken = async (socialSignInType: wexcommerceTypes.Soc
     }
   }
 
-  if (socialSignInType === wexcommerceTypes.SocialSignInType.Google) {
+  if (socialSignInType === lebobeautycoTypes.SocialSignInType.Google) {
     try {
       const res = await axios.get(
         'https://www.googleapis.com/oauth2/v3/tokeninfo',

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import mongoose from 'mongoose'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as env from '../config/env.config'
 import * as helper from '../utils/helper'
 import * as authHelper from '../utils/authHelper'
@@ -23,7 +23,7 @@ const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
     // Check token
     try {
       const sessionData = await authHelper.decryptJWT(token)
-      const $match: mongoose.FilterQuery<wexcommerceTypes.User> = {
+      const $match: mongoose.FilterQuery<lebobeautycoTypes.User> = {
         $and: [
           { _id: sessionData?.id },
           { blacklisted: { $in: [null, false] } },
@@ -31,9 +31,9 @@ const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
       }
 
       if (isAdmin) {
-        $match.$and?.push({ type: wexcommerceTypes.UserType.Admin })
+        $match.$and?.push({ type: lebobeautycoTypes.UserType.Admin })
       } else if (isFrontend) {
-        $match.$and?.push({ type: wexcommerceTypes.UserType.User })
+        $match.$and?.push({ type: lebobeautycoTypes.UserType.User })
       }
 
       if (

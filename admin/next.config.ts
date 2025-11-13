@@ -21,7 +21,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'wexcommerce.dynv6.net',
+        hostname: 'lebobeautyco.dynv6.net',
         pathname: '**',
       },
     ],
@@ -30,8 +30,8 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(__dirname, '..'), // makes it absolute
     resolveAlias: {
-      ':wexcommerce-types': '../packages/wexcommerce-types',
-      ':wexcommerce-helper': '../packages/wexcommerce-helper',
+      ':lebobeautyco-types': '../packages/lebobeautyco-types',
+      ':lebobeautyco-helper': '../packages/lebobeautyco-helper',
     },
   },
   //
@@ -45,7 +45,7 @@ const nextConfig: NextConfig = {
   //
   experimental: {
     serverActions: {
-      allowedOrigins: ['localhost:8001', 'wexcommerce.dynv6.net:8001'],
+      allowedOrigins: ['localhost:8001', 'lebobeautyco.dynv6.net:8001'],
     },
     // workerThreads: false,
   },

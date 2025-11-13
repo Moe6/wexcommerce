@@ -1,3 +1,3 @@
 #!/bin/bash
 
-tail -f /opt/wexcommerce/backend/logs/all.log
+tail -f /opt/lebobeautyco/backend/logs/all.log

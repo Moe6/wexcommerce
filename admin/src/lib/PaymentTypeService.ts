@@ -1,6 +1,6 @@
 'use server'
 
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as fetchInstance from './fetchInstance'
 import * as UserService from './UserService'
 
@@ -9,7 +9,7 @@ import * as UserService from './UserService'
  *
  * @returns {*}
  */
-export const getPaymentTypes = async (): Promise<wexcommerceTypes.PaymentTypeInfo[]> =>
+export const getPaymentTypes = async (): Promise<lebobeautycoTypes.PaymentTypeInfo[]> =>
   fetchInstance
     .GET(
       '/api/payment-types',
@@ -23,7 +23,7 @@ export const getPaymentTypes = async (): Promise<wexcommerceTypes.PaymentTypeInf
  * @param {*} data
  * @returns {*}
  */
-export const updatePaymentTypes = async (data: wexcommerceTypes.UpdatePaymentTypesPayload): Promise<number> =>
+export const updatePaymentTypes = async (data: lebobeautycoTypes.UpdatePaymentTypesPayload): Promise<number> =>
   fetchInstance
     .PUT(
       '/api/update-payment-types',

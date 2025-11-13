@@ -1,6 +1,6 @@
 'use server'
 
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as fetchInstance from './fetchInstance'
 import * as UserService from './UserService'
 
@@ -10,10 +10,10 @@ import * as UserService from './UserService'
  * @param {string} wishlistId
  * @param {string} userId
  * @param {string} productId
- * @returns {Promise<wexcommerceTypes.Response<string>>}
+ * @returns {Promise<lebobeautycoTypes.Response<string>>}
  */
-export const addItem = async (userId: string, productId: string): Promise<wexcommerceTypes.Response<string>> => {
-  const data: wexcommerceTypes.AddWishlistItemPayload = { userId, productId }
+export const addItem = async (userId: string, productId: string): Promise<lebobeautycoTypes.Response<string>> => {
+  const data: lebobeautycoTypes.AddWishlistItemPayload = { userId, productId }
 
   return fetchInstance
     .POST(
@@ -29,7 +29,7 @@ export const addItem = async (userId: string, productId: string): Promise<wexcom
  *
  * @param {string} wishlistId
  * @param {string} productId
- * @returns {Promise<wexcommerceTypes.Response<{ wishlistDeleted: boolean }>>}
+ * @returns {Promise<lebobeautycoTypes.Response<{ wishlistDeleted: boolean }>>}
  */
 export const deleteItem = async (wishlistId: string, productId: string): Promise<number> => (
   fetchInstance
@@ -61,9 +61,9 @@ export const clearWishlist = async (wishlistId: string): Promise<number> => (
  * Get wishlist.
  *
  * @param {string} wishlistId
- * @returns {Promise<wexcommerceTypes.Wishlist>}
+ * @returns {Promise<lebobeautycoTypes.Wishlist>}
  */
-export const getWishlist = async (wishlistId: string): Promise<wexcommerceTypes.Wishlist> => (
+export const getWishlist = async (wishlistId: string): Promise<lebobeautycoTypes.Wishlist> => (
   fetchInstance
     .GET(
       `/api/wishlist/${wishlistId}`,

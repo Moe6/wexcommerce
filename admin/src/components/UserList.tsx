@@ -1,5 +1,5 @@
 import React from 'react'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import env from '@/config/env.config'
 import * as UserService from '@/lib/UserService'
 import { Address, Email, EmptyList, FullName, Actions, Pager, Phone, SubscribedAt } from './UserList.client'
@@ -12,7 +12,7 @@ interface UserListProps {
 }
 
 const UserList = async ({ keyword, page }: UserListProps) => {
-  let users: wexcommerceTypes.User[] = []
+  let users: lebobeautycoTypes.User[] = []
   let rowCount = 0
   let totalRecords = 0
   let noMatch = false

@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as env from '../src/config/env.config'
 import * as logger from '../src/utils/logger'
 import * as databaseHelper from '../src/utils/databaseHelper'
@@ -21,7 +21,7 @@ export default async function globalSetup() {
           email: env.ADMIN_EMAIL,
           language: 'en',
           password: passwordHash,
-          type: wexcommerceTypes.UserType.Admin,
+          type: lebobeautycoTypes.UserType.Admin,
         })
         await admin.save()
         logger.info('globalSetup: Admin user created:', admin.id)

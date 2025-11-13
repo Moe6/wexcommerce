@@ -1,7 +1,7 @@
 FROM node:lts-alpine AS packages
-WORKDIR /wexcommerce/packages
+WORKDIR /lebobeautyco/packages
 
-COPY ./packages /wexcommerce/packages
+COPY ./packages /lebobeautyco/packages
 
 # Install dependencies for all internal packages
 RUN set -e && \
@@ -14,7 +14,7 @@ RUN set -e && \
   done' _ {} +
 
 FROM node:lts-alpine AS admin
-WORKDIR /wexcommerce/admin
+WORKDIR /lebobeautyco/admin
 
 COPY ./admin/package*.json ./
 RUN npm install --force && npm cache clean --force
@@ -23,7 +23,7 @@ COPY ./admin ./
 COPY ./admin/.env.docker.development .env
 
 # Copy preinstalled internal packages
-COPY --from=packages /wexcommerce/packages /wexcommerce/packages
+COPY --from=packages /lebobeautyco/packages /lebobeautyco/packages
 
 EXPOSE 8005
 CMD ["npm", "run", "dev:docker"]

@@ -1,14 +1,14 @@
 'use client'
 
 import React from 'react'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import { LanguageContextType, useLanguageContext } from '@/context/LanguageContext'
 import * as helper from '@/utils/helper'
 
 import styles from '@/styles/order-status.module.css'
 
 interface OrderStatusProps {
-  value: wexcommerceTypes.OrderStatus
+  value: lebobeautycoTypes.OrderStatus
   className?: string
   // eslint-disable-next-line no-unused-vars
   onClick?: (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void
@@ -26,12 +26,12 @@ const OrderStatus: React.FC<OrderStatusProps> = (
   return language && (
     <span
       className={(className ? className + ' ' : '') +
-        (value === wexcommerceTypes.OrderStatus.Pending ? styles.pending
-          : value === wexcommerceTypes.OrderStatus.Paid ? styles.paid
-            : value === wexcommerceTypes.OrderStatus.Confirmed ? styles.confirmed
-              : value === wexcommerceTypes.OrderStatus.InProgress ? styles.inProgress
-                : value === wexcommerceTypes.OrderStatus.Shipped ? styles.shipped
-                  : value === wexcommerceTypes.OrderStatus.Cancelled ? styles.cancelled
+        (value === lebobeautycoTypes.OrderStatus.Pending ? styles.pending
+          : value === lebobeautycoTypes.OrderStatus.Paid ? styles.paid
+            : value === lebobeautycoTypes.OrderStatus.Confirmed ? styles.confirmed
+              : value === lebobeautycoTypes.OrderStatus.InProgress ? styles.inProgress
+                : value === lebobeautycoTypes.OrderStatus.Shipped ? styles.shipped
+                  : value === lebobeautycoTypes.OrderStatus.Cancelled ? styles.cancelled
                     : '')}
       onClick={(e) => {
         if (onClick) {

@@ -1,12 +1,12 @@
 import { Request, Response } from 'express'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as logger from '../utils/logger'
 import i18n from '../lang/i18n'
 import PaymentType from '../models/PaymentType'
 
 export const init = async () => {
   try {
-    const _init = async (paymentType: wexcommerceTypes.PaymentType, enabled: boolean) => {
+    const _init = async (paymentType: lebobeautycoTypes.PaymentType, enabled: boolean) => {
       const pt = await PaymentType.findOne({ name: paymentType })
 
       if (!pt) {
@@ -15,9 +15,9 @@ export const init = async () => {
       }
     }
 
-    await _init(wexcommerceTypes.PaymentType.CreditCard, true)
-    await _init(wexcommerceTypes.PaymentType.Cod, true)
-    await _init(wexcommerceTypes.PaymentType.WireTransfer, false)
+    await _init(lebobeautycoTypes.PaymentType.CreditCard, true)
+    await _init(lebobeautycoTypes.PaymentType.Cod, true)
+    await _init(lebobeautycoTypes.PaymentType.WireTransfer, false)
 
     return true
   } catch (err) {
@@ -50,7 +50,7 @@ export const getEnabledPaymentTypes = async (req: Request, res: Response) => {
 
 export const updatePaymentTypes = async (req: Request, res: Response) => {
   try {
-    const paymentTypes: wexcommerceTypes.UpdatePaymentTypesPayload = req.body
+    const paymentTypes: lebobeautycoTypes.UpdatePaymentTypesPayload = req.body
 
     for (const paymentType of paymentTypes) {
       const pt = await PaymentType.findOne({ name: paymentType.name })

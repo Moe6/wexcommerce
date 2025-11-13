@@ -4,7 +4,7 @@ import asyncFs from 'node:fs/promises'
 import { nanoid } from 'nanoid'
 import escapeStringRegexp from 'escape-string-regexp'
 import { Request, Response } from 'express'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as logger from '../utils/logger'
 import * as helper from '../utils/helper'
 import i18n from '../lang/i18n'
@@ -25,7 +25,7 @@ import Wishlist from '../models/Wishlist'
  */
 export const validate = async (req: Request, res: Response) => {
   try {
-    const { language, value }: wexcommerceTypes.ValidateCategoryPayload = req.body
+    const { language, value }: lebobeautycoTypes.ValidateCategoryPayload = req.body
 
     if (!language || !value) {
       throw new Error('Missing language or value from payload')
@@ -105,7 +105,7 @@ export const checkCategory = async (req: Request, res: Response) => {
  * @returns {unknown}
  */
 export const create = async (req: Request, res: Response) => {
-  const { body }: { body: wexcommerceTypes.UpsertCategoryPayload } = req
+  const { body }: { body: lebobeautycoTypes.UpsertCategoryPayload } = req
   const { values, image, featured } = body
 
   try {
@@ -168,7 +168,7 @@ export const update = async (req: Request, res: Response) => {
       return
     }
 
-    const { body }: { body: wexcommerceTypes.UpsertCategoryPayload } = req
+    const { body }: { body: lebobeautycoTypes.UpsertCategoryPayload } = req
     const { values, featured } = body
     category.featured = featured
 

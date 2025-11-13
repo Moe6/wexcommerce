@@ -1,12 +1,12 @@
 import { Request, Response } from 'express'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as logger from '../utils/logger'
 import i18n from '../lang/i18n'
 import DeliveryType from '../models/DeliveryType'
 
 export const init = async () => {
   try {
-    const _init = async (deliveryType: wexcommerceTypes.DeliveryType, enabled: boolean) => {
+    const _init = async (deliveryType: lebobeautycoTypes.DeliveryType, enabled: boolean) => {
       const dt = await DeliveryType.findOne({ name: deliveryType })
 
       if (!dt) {
@@ -15,8 +15,8 @@ export const init = async () => {
       }
     }
 
-    await _init(wexcommerceTypes.DeliveryType.Shipping, true)
-    await _init(wexcommerceTypes.DeliveryType.Withdrawal, true)
+    await _init(lebobeautycoTypes.DeliveryType.Shipping, true)
+    await _init(lebobeautycoTypes.DeliveryType.Withdrawal, true)
 
     return true
   } catch (err) {
@@ -49,7 +49,7 @@ export const getEnabledDeliveryTypes = async (req: Request, res: Response) => {
 
 export const updateDeliveryTypes = async (req: Request, res: Response) => {
   try {
-    const deliveryTypes: wexcommerceTypes.UpdateDeliveryTypesPayload = req.body
+    const deliveryTypes: lebobeautycoTypes.UpdateDeliveryTypesPayload = req.body
 
     for (const deliveryType of deliveryTypes) {
       const dt = await DeliveryType.findOne({ name: deliveryType.name })

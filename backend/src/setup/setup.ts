@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as env from '../config/env.config'
 import * as databaseHelper from '../utils/databaseHelper'
 import User from '../models/User'
@@ -26,7 +26,7 @@ try {
       email: env.ADMIN_EMAIL,
       password: passwordHash,
       language: env.DEFAULT_LANGUAGE,
-      type: wexcommerceTypes.UserType.Admin,
+      type: lebobeautycoTypes.UserType.Admin,
       active: true,
       verified: true,
     })

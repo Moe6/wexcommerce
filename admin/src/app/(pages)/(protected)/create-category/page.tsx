@@ -12,8 +12,8 @@ import {
   Switch,
   FormControlLabel,
 } from '@mui/material'
-import * as wexcommerceTypes from ':wexcommerce-types'
-import * as wexcommerceHelper from ':wexcommerce-helper'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
+import * as lebobeautycoHelper from ':lebobeautyco-helper'
 import env from '@/config/env.config'
 import * as helper from '@/utils/helper'
 import * as CategoryService from '@/lib/CategoryService'
@@ -26,7 +26,7 @@ import ImageEditor from '@/components/ImageEditor'
 const CreateCategory: React.FC = () => {
   const router = useRouter()
 
-  const [values, setValues] = useState<wexcommerceTypes.Value[]>([])
+  const [values, setValues] = useState<lebobeautycoTypes.Value[]>([])
   const [valueErrors, setValueErrors] = useState<boolean[]>([])
   const [image, setImage] = useState<ImageItem>()
   const [featured, setFeatured] = useState(false)
@@ -37,7 +37,7 @@ const CreateCategory: React.FC = () => {
     try {
       let isValid = true
 
-      const _valueErrors = wexcommerceHelper.cloneArray(valueErrors) as boolean[]
+      const _valueErrors = lebobeautycoHelper.cloneArray(valueErrors) as boolean[]
 
       for (let i = 0; i < _valueErrors.length; i++) {
         _valueErrors[i] = false
@@ -55,7 +55,7 @@ const CreateCategory: React.FC = () => {
       setValueErrors(_valueErrors)
 
       if (isValid) {
-        const payload: wexcommerceTypes.UpsertCategoryPayload = {
+        const payload: lebobeautycoTypes.UpsertCategoryPayload = {
           values,
           image: image?.filename,
           featured,
@@ -63,7 +63,7 @@ const CreateCategory: React.FC = () => {
         const status = await CategoryService.create(payload)
 
         if (status === 200) {
-          const _values = wexcommerceHelper.cloneArray(values) as wexcommerceTypes.Value[]
+          const _values = lebobeautycoHelper.cloneArray(values) as lebobeautycoTypes.Value[]
           for (let i = 0; i < _values.length; i++) {
             _values[i].value = ''
           }
@@ -101,9 +101,9 @@ const CreateCategory: React.FC = () => {
                 error={valueErrors[index]}
                 required
                 onChange={(e) => {
-                  const _values = wexcommerceHelper.cloneArray(values) as wexcommerceTypes.Value[]
+                  const _values = lebobeautycoHelper.cloneArray(values) as lebobeautycoTypes.Value[]
                   _values[index] = { language: language.code, value: e.target.value }
-                  const _valueErrors = wexcommerceHelper.cloneArray(valueErrors) as boolean[]
+                  const _valueErrors = lebobeautycoHelper.cloneArray(valueErrors) as boolean[]
                   _valueErrors[index] = false
                   setValues(_values)
                   setValueErrors(_valueErrors)

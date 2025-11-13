@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import { Request, Response } from 'express'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as logger from '../utils/logger'
 import i18n from '../lang/i18n'
 import * as helper from '../utils/helper'
@@ -17,7 +17,7 @@ import User from '../models/User'
  */
 export const addItem = async (req: Request, res: Response) => {
   try {
-    const { body }: { body: wexcommerceTypes.AddWishlistItemPayload } = req
+    const { body }: { body: lebobeautycoTypes.AddWishlistItemPayload } = req
     const { userId, productId } = body
 
     if (!helper.isValidObjectId(userId)) {
@@ -99,7 +99,7 @@ export const getWishlist = async (req: Request, res: Response) => {
 
     const wishlist = await Wishlist
       .findById(id)
-      .populate<{ products: wexcommerceTypes.Product[] }>('products')
+      .populate<{ products: lebobeautycoTypes.Product[] }>('products')
       .lean()
 
     if (wishlist) {

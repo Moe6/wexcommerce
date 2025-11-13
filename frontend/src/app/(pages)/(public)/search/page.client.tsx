@@ -14,7 +14,7 @@ import {
   Home as HomeIcon,
   Clear as CloseIcon,
 } from '@mui/icons-material'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as CategoryService from '@/lib/CategoryService'
 import { LanguageContextType, useLanguageContext } from '@/context/LanguageContext'
 import env from '@/config/env.config'
@@ -37,7 +37,7 @@ interface PagerProps {
   rowCount: number
   categoryId?: string
   keyword: string
-  sortBy?: wexcommerceTypes.SortProductBy
+  sortBy?: lebobeautycoTypes.SortProductBy
   className?: string
 }
 
@@ -84,10 +84,10 @@ const ProductsWrapper: React.FC<ProductsWrapperProps> = (
 
   const { language } = useLanguageContext() as LanguageContextType
 
-  const [categories, setCategories] = useState<wexcommerceTypes.CategoryInfo[]>([])
+  const [categories, setCategories] = useState<lebobeautycoTypes.CategoryInfo[]>([])
   const [keyword, setKeyword] = useState('')
   const [categoryId, setCategoryId] = useState('')
-  const [sortBy, setSortBy] = useState<wexcommerceTypes.SortProductBy>()
+  const [sortBy, setSortBy] = useState<lebobeautycoTypes.SortProductBy>()
 
   const leftPanelRef = useRef<HTMLDivElement>(null)
   const closeIconRef = useRef<SVGSVGElement>(null)
@@ -97,17 +97,17 @@ const ProductsWrapper: React.FC<ProductsWrapperProps> = (
     setCategoryId(searchParams.get('c') || '')
     setKeyword(searchParams.get('s') || '')
 
-    let _sortBy = wexcommerceTypes.SortProductBy.featured
+    let _sortBy = lebobeautycoTypes.SortProductBy.featured
     const sb = searchParams.get('sb')
     if (sb) {
-      if (sb.toLowerCase() === wexcommerceTypes.SortProductBy.priceAsc.toLowerCase()) {
-        _sortBy = wexcommerceTypes.SortProductBy.priceAsc
-      } else if (sb.toLowerCase() === wexcommerceTypes.SortProductBy.priceDesc.toLowerCase()) {
-        _sortBy = wexcommerceTypes.SortProductBy.priceDesc
-      } else if (sb.toLowerCase() === wexcommerceTypes.SortProductBy.dateDesc.toLowerCase()) {
-        _sortBy = wexcommerceTypes.SortProductBy.dateDesc
+      if (sb.toLowerCase() === lebobeautycoTypes.SortProductBy.priceAsc.toLowerCase()) {
+        _sortBy = lebobeautycoTypes.SortProductBy.priceAsc
+      } else if (sb.toLowerCase() === lebobeautycoTypes.SortProductBy.priceDesc.toLowerCase()) {
+        _sortBy = lebobeautycoTypes.SortProductBy.priceDesc
+      } else if (sb.toLowerCase() === lebobeautycoTypes.SortProductBy.dateDesc.toLowerCase()) {
+        _sortBy = lebobeautycoTypes.SortProductBy.dateDesc
       } else {
-        _sortBy = wexcommerceTypes.SortProductBy.featured
+        _sortBy = lebobeautycoTypes.SortProductBy.featured
       }
     }
     setSortBy(_sortBy)
@@ -251,10 +251,10 @@ const ProductsWrapper: React.FC<ProductsWrapperProps> = (
                         router.push(url)
                       }}
                     >
-                      <MenuItem value={wexcommerceTypes.SortProductBy.featured.toString()}>{strings.ORDER_BY_FEATURED}</MenuItem>
-                      <MenuItem value={wexcommerceTypes.SortProductBy.dateDesc.toString()}>{strings.ORDER_BY_DATE_DESC}</MenuItem>
-                      <MenuItem value={wexcommerceTypes.SortProductBy.priceAsc.toString()}>{strings.ORDER_BY_PRICE_ASC}</MenuItem>
-                      <MenuItem value={wexcommerceTypes.SortProductBy.priceDesc.toString()}>{strings.ORDER_BY_PRICE_DESC}</MenuItem>
+                      <MenuItem value={lebobeautycoTypes.SortProductBy.featured.toString()}>{strings.ORDER_BY_FEATURED}</MenuItem>
+                      <MenuItem value={lebobeautycoTypes.SortProductBy.dateDesc.toString()}>{strings.ORDER_BY_DATE_DESC}</MenuItem>
+                      <MenuItem value={lebobeautycoTypes.SortProductBy.priceAsc.toString()}>{strings.ORDER_BY_PRICE_ASC}</MenuItem>
+                      <MenuItem value={lebobeautycoTypes.SortProductBy.priceDesc.toString()}>{strings.ORDER_BY_PRICE_DESC}</MenuItem>
                     </Select>
                   </FormControl>}
               </div>

@@ -8,8 +8,8 @@ import {
   DialogContent,
   DialogTitle,
 } from '@mui/material'
-import * as wexcommerceTypes from ':wexcommerce-types'
-import * as wexcommerceHelper from ':wexcommerce-helper'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
+import * as lebobeautycoHelper from ':lebobeautyco-helper'
 import { strings } from '@/lang/wishlist'
 import { strings as commonStrings } from '@/lang/common'
 import * as helper from '@/utils/helper'
@@ -25,13 +25,13 @@ export const EmptyWishlist: React.FC = () => (
 )
 
 interface WishlistProps {
-  wishlist: wexcommerceTypes.Wishlist
+  wishlist: lebobeautycoTypes.Wishlist
 }
 
 const Wishlist: React.FC<WishlistProps> = ({ wishlist }) => {
   const { setWishlistCount } = useWishlistContext() as WishlistContextType
   const [openClearDialog, setOpenClearDialog] = useState(false)
-  const [products, setProducts] = useState<wexcommerceTypes.Product[]>(wishlist.products)
+  const [products, setProducts] = useState<lebobeautycoTypes.Product[]>(wishlist.products)
 
   return (!products || (products && products.length === 0)) ? (
     <EmptyWishlist />
@@ -59,7 +59,7 @@ const Wishlist: React.FC<WishlistProps> = ({ wishlist }) => {
                   key={product._id}
                   product={product}
                   onRemoveWishlistItem={(productId) => {
-                    const _products = wexcommerceHelper.cloneArray(products) as wexcommerceTypes.Product[]
+                    const _products = lebobeautycoHelper.cloneArray(products) as lebobeautycoTypes.Product[]
                     const index = _products.findIndex((p) => p._id === productId)
                     _products.splice(index, 1)
                     setProducts(_products)

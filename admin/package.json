@@ -1,6 +1,6 @@
 {
-  "name": "wexcommerce-admin",
-  "description": "Admin panel for managing wexCommerce",
+  "name": "lebobeautyco-admin",
+  "description": "Admin panel for managing lebobeautyco",
   "version": "3.9.0",
   "private": true,
   "type": "module",

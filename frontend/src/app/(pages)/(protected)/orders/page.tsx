@@ -4,8 +4,8 @@ import Image from 'next/image'
 import { fr, enUS } from 'date-fns/locale'
 import { format } from 'date-fns'
 import slugify from '@sindresorhus/slugify'
-import * as wexcommerceTypes from ':wexcommerce-types'
-import * as wexcommerceHelper from ':wexcommerce-helper'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
+import * as lebobeautycoHelper from ':lebobeautyco-helper'
 import * as helper from '@/utils/helper'
 import env from '@/config/env.config'
 import * as SettingService from '@/lib/SettingService'
@@ -51,10 +51,10 @@ const Orders = async (props: { searchParams: Promise<SearchParams> }) => {
   const from = _from ? new Date(Number.parseInt(_from, 10)) : null
   const _to = searchParams['to'] as string
   const to = _to ? new Date(Number.parseInt(_to, 10)) : null
-  let paymentTypes: wexcommerceTypes.PaymentType[] = []
+  let paymentTypes: lebobeautycoTypes.PaymentType[] = []
   const _pt = searchParams['pt'] as string
   if (_pt) {
-    const pts = _pt.split(',').map((pt) => pt as wexcommerceTypes.PaymentType)
+    const pts = _pt.split(',').map((pt) => pt as lebobeautycoTypes.PaymentType)
 
     for (const pt of pts) {
       if (allPaymentTypes.includes(pt)) {
@@ -64,10 +64,10 @@ const Orders = async (props: { searchParams: Promise<SearchParams> }) => {
   } else {
     paymentTypes = allPaymentTypes
   }
-  let deliveryTypes: wexcommerceTypes.DeliveryType[] = []
+  let deliveryTypes: lebobeautycoTypes.DeliveryType[] = []
   const _dt = searchParams['dt'] as string
   if (_dt) {
-    const dts = _dt.split(',').map((dt) => dt as wexcommerceTypes.DeliveryType)
+    const dts = _dt.split(',').map((dt) => dt as lebobeautycoTypes.DeliveryType)
 
     for (const dt of dts) {
       if (allDeliveryTypes.includes(dt)) {
@@ -77,10 +77,10 @@ const Orders = async (props: { searchParams: Promise<SearchParams> }) => {
   } else {
     deliveryTypes = allDeliveryTypes
   }
-  let statuses: wexcommerceTypes.OrderStatus[] = []
+  let statuses: lebobeautycoTypes.OrderStatus[] = []
   const _os = searchParams['os'] as string
   if (_os) {
-    const oss = _os.split(',').map((os) => os as wexcommerceTypes.OrderStatus)
+    const oss = _os.split(',').map((os) => os as lebobeautycoTypes.OrderStatus)
 
     for (const os of oss) {
       if (allStatuses.includes(os)) {
@@ -91,7 +91,7 @@ const Orders = async (props: { searchParams: Promise<SearchParams> }) => {
     statuses = allStatuses
   }
 
-  let orders: wexcommerceTypes.OrderInfo[] = []
+  let orders: lebobeautycoTypes.OrderInfo[] = []
   let rowCount = 0
   let totalRecords = 0
   let noMatch = false
@@ -99,11 +99,11 @@ const Orders = async (props: { searchParams: Promise<SearchParams> }) => {
   const currency = await SettingService.getCurrency()
   const userId = await UserService.getUserId()
 
-  let sortBy = wexcommerceTypes.SortOrderBy.dateDesc
+  let sortBy = lebobeautycoTypes.SortOrderBy.dateDesc
   const sb = searchParams['sb'] as string
   if (sb) {
-    if (sb.toLowerCase() === wexcommerceTypes.SortOrderBy.dateAsc.toLowerCase()) {
-      sortBy = wexcommerceTypes.SortOrderBy.dateAsc
+    if (sb.toLowerCase() === lebobeautycoTypes.SortOrderBy.dateAsc.toLowerCase()) {
+      sortBy = lebobeautycoTypes.SortOrderBy.dateAsc
     }
   }
 
@@ -145,7 +145,7 @@ const Orders = async (props: { searchParams: Promise<SearchParams> }) => {
   }
 
   const _fr = language === 'fr'
-  const _format = wexcommerceHelper.getDateFormat(language)
+  const _format = lebobeautycoHelper.getDateFormat(language)
   const _locale = _fr ? fr : enUS
 
   return (
@@ -201,21 +201,21 @@ const Orders = async (props: { searchParams: Promise<SearchParams> }) => {
                               </div>
                               <div className={styles.orderInfo}>
                                 <span className={styles.orderLabel}>{strings.STATUS}</span>
-                                <OdrerStatusField value={order.status as wexcommerceTypes.OrderStatus} />
+                                <OdrerStatusField value={order.status as lebobeautycoTypes.OrderStatus} />
                               </div>
                               <div className={styles.orderInfo}>
                                 <span className={styles.orderLabel}>{strings.PAYMENT_TYPE}</span>
-                                <PaymentTypeField value={(order.paymentType as wexcommerceTypes.PaymentTypeInfo).name} />
+                                <PaymentTypeField value={(order.paymentType as lebobeautycoTypes.PaymentTypeInfo).name} />
                               </div>
                               <div className={styles.orderInfo}>
                                 <span className={styles.orderLabel}>{strings.DELIVERY_TYPE}</span>
-                                <DeliveryTypeField value={(order.deliveryType as wexcommerceTypes.DeliveryTypeInfo).name} />
+                                <DeliveryTypeField value={(order.deliveryType as lebobeautycoTypes.DeliveryTypeInfo).name} />
                               </div>
                               <div className={styles.orderInfo}>
                                 <span className={styles.orderLabel}>{strings.ORDER_ITEMS}</span>
                                 <div className={styles.orderItems}>
                                   {
-                                    (order.orderItems as wexcommerceTypes.OrderItem[]).map((orderItem) => (
+                                    (order.orderItems as lebobeautycoTypes.OrderItem[]).map((orderItem) => (
                                       <div key={orderItem._id} className={styles.orderItem}>
                                         <div className={styles.orderItemInfo}>
                                           <span className={styles.image}>
@@ -226,7 +226,7 @@ const Orders = async (props: { searchParams: Promise<SearchParams> }) => {
                                               priority={true}
                                               alt=""
                                               className={styles.orderItemInfo}
-                                              src={wexcommerceHelper.joinURL(env.CDN_PRODUCTS, (orderItem.product as wexcommerceTypes.Product).image)}
+                                              src={lebobeautycoHelper.joinURL(env.CDN_PRODUCTS, (orderItem.product as lebobeautycoTypes.Product).image)}
                                             />
                                           </span>
                                         </div>
@@ -235,18 +235,18 @@ const Orders = async (props: { searchParams: Promise<SearchParams> }) => {
                                           <span className={styles.orderItemLabel}>{strings.PRODUCT}</span>
                                           <span>
                                             <Link
-                                              href={`/product/${(orderItem.product as wexcommerceTypes.Product)._id}/${slugify((orderItem.product as wexcommerceTypes.Product).name)}`}
+                                              href={`/product/${(orderItem.product as lebobeautycoTypes.Product)._id}/${slugify((orderItem.product as lebobeautycoTypes.Product).name)}`}
                                               className={styles.orderItemText}
-                                              title={(orderItem.product as wexcommerceTypes.Product).name}>
+                                              title={(orderItem.product as lebobeautycoTypes.Product).name}>
 
-                                              {(orderItem.product as wexcommerceTypes.Product).name}
+                                              {(orderItem.product as lebobeautycoTypes.Product).name}
 
                                             </Link>
                                           </span>
                                         </div>
                                         <div className={styles.orderItemInfo}>
                                           <span className={styles.orderItemLabel}>{commonStrings.PRICE}</span>
-                                          <span>{`${wexcommerceHelper.formatPrice((orderItem.product as wexcommerceTypes.Product).price, currency, language)}`}</span>
+                                          <span>{`${lebobeautycoHelper.formatPrice((orderItem.product as lebobeautycoTypes.Product).price, currency, language)}`}</span>
                                         </div>
                                         <div className={styles.orderItemInfo}>
                                           <span className={styles.orderItemLabel}>{commonStrings.QUANTITY}</span>
@@ -259,11 +259,11 @@ const Orders = async (props: { searchParams: Promise<SearchParams> }) => {
                               </div>
                               <div className={styles.orderInfo}>
                                 <span className={styles.orderLabel}>{strings.ORDERED_AT}</span>
-                                <span>{wexcommerceHelper.capitalize(format(new Date(order.createdAt!), _format, { locale: _locale }))}</span>
+                                <span>{lebobeautycoHelper.capitalize(format(new Date(order.createdAt!), _format, { locale: _locale }))}</span>
                               </div>
                               <div className={styles.orderInfo}>
                                 <span className={styles.orderLabel}>{strings.TOTAL}</span>
-                                <span>{`${wexcommerceHelper.formatPrice(order.total, currency, language)}`}</span>
+                                <span>{`${lebobeautycoHelper.formatPrice(order.total, currency, language)}`}</span>
                               </div>
                             </div>
                           </div>

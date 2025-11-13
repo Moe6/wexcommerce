@@ -10,7 +10,7 @@ import {
   Input,
   Button
 } from '@mui/material'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import { UserContextType, useUserContext } from '@/context/UserContext'
 import { strings as commonStrings } from '@/lang/common'
 import { strings } from '@/lang/sign-in'
@@ -85,7 +85,7 @@ const SignIn: React.FC = () => {
     try {
       e.preventDefault()
 
-      const data: wexcommerceTypes.SignInPayload = { email, password, stayConnected }
+      const data: lebobeautycoTypes.SignInPayload = { email, password, stayConnected }
 
       const res = await UserService.signin(data)
 

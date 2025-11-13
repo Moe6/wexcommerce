@@ -4,7 +4,7 @@ import React, { ComponentType, useEffect, useState } from 'react'
 import { EditorProps } from 'react-draft-wysiwyg'
 import { EditorState, convertToRaw, ContentState } from 'draft-js'
 import draftToHtml from 'draftjs-to-html'
-import * as wexcommerceHelper from ':wexcommerce-helper'
+import * as lebobeautycoHelper from ':lebobeautyco-helper'
 
 let htmlToDraft = null
 let Editor: ComponentType<EditorProps> | null = null
@@ -41,7 +41,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = (
 
   const handleEditorStateChange = (state: EditorState) => {
     const content = draftToHtml(convertToRaw(state.getCurrentContent()))
-    const value = wexcommerceHelper.trimCarriageReturn(content).trim() === '<p></p>' ? '' : content
+    const value = lebobeautycoHelper.trimCarriageReturn(content).trim() === '<p></p>' ? '' : content
 
     setEditorState(state)
 

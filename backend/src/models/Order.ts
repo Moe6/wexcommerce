@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as env from '../config/env.config'
 
 export const ORDER_EXPIRE_AT_INDEX_NAME = 'expireAt'
@@ -27,12 +27,12 @@ const orderSchema = new Schema<env.Order>({
   status: {
     type: String,
     enum: [
-      wexcommerceTypes.OrderStatus.Pending,
-      wexcommerceTypes.OrderStatus.Paid,
-      wexcommerceTypes.OrderStatus.Confirmed,
-      wexcommerceTypes.OrderStatus.InProgress,
-      wexcommerceTypes.OrderStatus.Cancelled,
-      wexcommerceTypes.OrderStatus.Shipped,
+      lebobeautycoTypes.OrderStatus.Pending,
+      lebobeautycoTypes.OrderStatus.Paid,
+      lebobeautycoTypes.OrderStatus.Confirmed,
+      lebobeautycoTypes.OrderStatus.InProgress,
+      lebobeautycoTypes.OrderStatus.Cancelled,
+      lebobeautycoTypes.OrderStatus.Shipped,
     ],
     required: [true, "can't be blank"],
   },

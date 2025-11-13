@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useState, useRef, useEffect } from 'react'
-import * as wexcommerceTypes from ':wexcommerce-types'
-import * as wexcommerceHelper from ':wexcommerce-helper'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
+import * as lebobeautycoHelper from ':lebobeautyco-helper'
 import { strings as commonStrings } from '@/lang/common'
 import Accordion from './Accordion'
 import DeliveryType from './DeliveryType'
@@ -11,11 +11,11 @@ import * as helper from '@/utils/helper'
 import styles from '@/styles/delivery-type-filter.module.css'
 
 interface DeliveryTypeFilterProps {
-  selectedOptions: wexcommerceTypes.DeliveryType[]
+  selectedOptions: lebobeautycoTypes.DeliveryType[]
   collapse?: boolean
   className?: string
   // eslint-disable-next-line no-unused-vars
-  onChange?: (values: wexcommerceTypes.DeliveryType[]) => void
+  onChange?: (values: lebobeautycoTypes.DeliveryType[]) => void
 }
 
 const deliveryTypes = helper.getDeliveryTypes()
@@ -37,7 +37,7 @@ const DeliveryTypeFilter: React.FC<DeliveryTypeFilterProps> = (
 
     if (selectedOptions) {
       refs.current.forEach((checkbox) => {
-        const deliveryType = checkbox.getAttribute('data-value') as wexcommerceTypes.DeliveryType
+        const deliveryType = checkbox.getAttribute('data-value') as lebobeautycoTypes.DeliveryType
         if (selectedOptions.includes(deliveryType)) {
           checkbox.checked = true
         }
@@ -64,9 +64,9 @@ const DeliveryTypeFilter: React.FC<DeliveryTypeFilterProps> = (
   }
 
   const handleCheckDeliveryTypeChange = (e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLElement>) => {
-    const deliveryType = e.currentTarget.getAttribute('data-value') as wexcommerceTypes.DeliveryType
+    const deliveryType = e.currentTarget.getAttribute('data-value') as lebobeautycoTypes.DeliveryType
 
-    const _checkedDeliveryTypes = wexcommerceHelper.cloneArray(checkedDeliveryTypes) as wexcommerceTypes.DeliveryType[]
+    const _checkedDeliveryTypes = lebobeautycoHelper.cloneArray(checkedDeliveryTypes) as lebobeautycoTypes.DeliveryType[]
     if ((e.currentTarget as HTMLInputElement).checked) {
       _checkedDeliveryTypes.push(deliveryType)
 

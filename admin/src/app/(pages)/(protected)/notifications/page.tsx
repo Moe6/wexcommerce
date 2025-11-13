@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import env from '@/config/env.config'
 import * as UserService from '@/lib/UserService'
 import * as NotificationService from '@/lib/NotificationService'
@@ -18,7 +18,7 @@ const Notifications = async (props: { searchParams: Promise<SearchParams> }) => 
       page = _p
     }
   }
-  let notifications: wexcommerceTypes.Notification[] = []
+  let notifications: lebobeautycoTypes.Notification[] = []
   let rowCount = 0
   let totalRecords = 0
   let noMatch = false

@@ -2,7 +2,7 @@ import 'dotenv/config'
 import { jest } from '@jest/globals'
 import request from 'supertest'
 import mongoose from 'mongoose'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as paymentTypeController from '../src/controllers/paymentTypeController'
 import * as databaseHelper from '../src/utils/databaseHelper'
 import * as testHelper from './testHelper'
@@ -40,11 +40,11 @@ describe('Initialize paymentTypes', () => {
     // test success
     let res = await paymentTypeController.init()
     expect(res).toBeTruthy()
-    const creditCard = await PaymentType.findOne({ name: wexcommerceTypes.PaymentType.CreditCard })
+    const creditCard = await PaymentType.findOne({ name: lebobeautycoTypes.PaymentType.CreditCard })
     expect(creditCard).not.toBeNull()
-    const cod = await PaymentType.findOne({ name: wexcommerceTypes.PaymentType.Cod })
+    const cod = await PaymentType.findOne({ name: lebobeautycoTypes.PaymentType.Cod })
     expect(cod).not.toBeNull()
-    const wireTransfer = await PaymentType.findOne({ name: wexcommerceTypes.PaymentType.WireTransfer })
+    const wireTransfer = await PaymentType.findOne({ name: lebobeautycoTypes.PaymentType.WireTransfer })
     expect(wireTransfer).not.toBeNull()
 
     // test failure
@@ -110,11 +110,11 @@ describe('GET /api/payment-types', () => {
 describe('GET /api/enabled-payment-types', () => {
   it('should get enabled payment types', async () => {
     // init
-    const creditCard = await PaymentType.findOne({ name: wexcommerceTypes.PaymentType.CreditCard })
+    const creditCard = await PaymentType.findOne({ name: lebobeautycoTypes.PaymentType.CreditCard })
     expect(creditCard).not.toBeNull()
-    const cod = await PaymentType.findOne({ name: wexcommerceTypes.PaymentType.Cod })
+    const cod = await PaymentType.findOne({ name: lebobeautycoTypes.PaymentType.Cod })
     expect(cod).not.toBeNull()
-    const wireTransfer = await PaymentType.findOne({ name: wexcommerceTypes.PaymentType.WireTransfer })
+    const wireTransfer = await PaymentType.findOne({ name: lebobeautycoTypes.PaymentType.WireTransfer })
     expect(wireTransfer).not.toBeNull()
 
     const creditCardEnabled = creditCard!.enabled
@@ -155,15 +155,15 @@ describe('PUT /api/update-payment-types', () => {
   it('should update payment types', async () => {
     const token = await testHelper.signinAsAdmin()
     // init
-    let creditCard = await PaymentType.findOne({ name: wexcommerceTypes.PaymentType.CreditCard })
+    let creditCard = await PaymentType.findOne({ name: lebobeautycoTypes.PaymentType.CreditCard })
     expect(creditCard).not.toBeNull()
     const creditCardEnabled = creditCard!.enabled
-    let cod = await PaymentType.findOne({ name: wexcommerceTypes.PaymentType.Cod })
+    let cod = await PaymentType.findOne({ name: lebobeautycoTypes.PaymentType.Cod })
     expect(cod).not.toBeNull()
     const codEnabled = cod!.enabled
 
     // test success
-    const payload: wexcommerceTypes.UpdatePaymentTypesPayload = [
+    const payload: lebobeautycoTypes.UpdatePaymentTypesPayload = [
       {
         _id: creditCard!.id,
         name: creditCard!.name,
@@ -181,10 +181,10 @@ describe('PUT /api/update-payment-types', () => {
       .set(env.X_ACCESS_TOKEN, token)
       .send(payload)
     expect(res.statusCode).toBe(200)
-    creditCard = await PaymentType.findOne({ name: wexcommerceTypes.PaymentType.CreditCard })
+    creditCard = await PaymentType.findOne({ name: lebobeautycoTypes.PaymentType.CreditCard })
     expect(creditCard).not.toBeNull()
     expect(creditCard!.enabled).toBe(!creditCardEnabled)
-    cod = await PaymentType.findOne({ name: wexcommerceTypes.PaymentType.Cod })
+    cod = await PaymentType.findOne({ name: lebobeautycoTypes.PaymentType.Cod })
     expect(cod).not.toBeNull()
     expect(cod!.enabled).toBe(!codEnabled)
 
@@ -195,7 +195,7 @@ describe('PUT /api/update-payment-types', () => {
     await cod!.save()
 
     // test unknown paymentType
-    payload[0].name = 'unknown' as wexcommerceTypes.PaymentType
+    payload[0].name = 'unknown' as lebobeautycoTypes.PaymentType
     res = await request(app)
       .put('/api/update-payment-types')
       .set(env.X_ACCESS_TOKEN, token)

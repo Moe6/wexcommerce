@@ -1,6 +1,6 @@
 'use server'
 
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as fetchInstance from './fetchInstance'
 import * as UserService from './UserService'
 
@@ -31,9 +31,9 @@ export const getCurrency = async (): Promise<string> =>
 /**
  * Get settings.
  *
- * @returns {Promise<wexcommerceTypes.Setting>}
+ * @returns {Promise<lebobeautycoTypes.Setting>}
  */
-export const getSettings = async (): Promise<wexcommerceTypes.Setting> =>
+export const getSettings = async (): Promise<lebobeautycoTypes.Setting> =>
   fetchInstance
     .GET(
       '/api/settings',
@@ -44,10 +44,10 @@ export const getSettings = async (): Promise<wexcommerceTypes.Setting> =>
 /**
  * Update settings.
  *
- * @param {wexcommerceTypes.UpdateSettingsPayload} data
+ * @param {lebobeautycoTypes.UpdateSettingsPayload} data
  * @returns {Promise<number>}
  */
-export const updateSettings = async (data: wexcommerceTypes.UpdateSettingsPayload): Promise<number> =>
+export const updateSettings = async (data: lebobeautycoTypes.UpdateSettingsPayload): Promise<number> =>
   fetchInstance
     .PUT(
       '/api/update-settings',
@@ -60,10 +60,10 @@ export const updateSettings = async (data: wexcommerceTypes.UpdateSettingsPayloa
 /**
  * Update bank settings.
  *
- * @param {wexcommerceTypes.UpdateBankSettingsPayload} data
+ * @param {lebobeautycoTypes.UpdateBankSettingsPayload} data
  * @returns {Promise<number>}
  */
-export const updateBankSettings = async (data: wexcommerceTypes.UpdateBankSettingsPayload): Promise<number> =>
+export const updateBankSettings = async (data: lebobeautycoTypes.UpdateBankSettingsPayload): Promise<number> =>
   fetchInstance
     .PUT(
       '/api/update-bank-settings',

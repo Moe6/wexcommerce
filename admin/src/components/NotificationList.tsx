@@ -20,8 +20,8 @@ import {
 } from '@mui/icons-material'
 import { format } from 'date-fns'
 import { fr, enUS } from 'date-fns/locale'
-import * as wexcommerceTypes from ':wexcommerce-types'
-import * as wexcommerceHelper from ':wexcommerce-helper'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
+import * as lebobeautycoHelper from ':lebobeautyco-helper'
 import { LanguageContextType, useLanguageContext } from '@/context/LanguageContext'
 import { UserContextType, useUserContext } from '@/context/UserContext'
 import { NotificationContextType, useNotificationContext } from '@/context/NotificationContext'
@@ -42,10 +42,10 @@ interface NotificationListProps {
   page: number
   rowCount: number
   totalRecords: number
-  notifications: wexcommerceTypes.Notification[]
+  notifications: lebobeautycoTypes.Notification[]
 }
 
-interface NotificationRow extends wexcommerceTypes.Notification {
+interface NotificationRow extends lebobeautycoTypes.Notification {
   checked?: boolean
 }
 
@@ -84,7 +84,7 @@ const NotificationList: React.FC<NotificationListProps> = (
 
   const _fr = language === 'fr'
   const _locale = _fr ? fr : enUS
-  const _format = wexcommerceHelper.getDateFormat(language)
+  const _format = lebobeautycoHelper.getDateFormat(language)
 
   const checkedRows = notifications.filter((row) => row.checked)
   const allChecked = notifications.length > 0 && checkedRows.length === notifications.length
@@ -116,7 +116,7 @@ const NotificationList: React.FC<NotificationListProps> = (
                         row.checked = event.target.checked
                       })
                     }
-                    setNotifications(wexcommerceHelper.cloneArray(notifications) as NotificationRow[])
+                    setNotifications(lebobeautycoHelper.cloneArray(notifications) as NotificationRow[])
                   }} />
               </div>
               {
@@ -132,7 +132,7 @@ const NotificationList: React.FC<NotificationListProps> = (
                           const status = await NotificationService.markAsRead(user._id!, ids)
 
                           if (status === 200) {
-                            const __notifications = wexcommerceHelper.clone(notifications) as wexcommerceTypes.Notification[]
+                            const __notifications = lebobeautycoHelper.clone(notifications) as lebobeautycoTypes.Notification[]
                             __notifications.filter((row) => ids.includes(row._id)).forEach((row) => {
                               row.isRead = true
                             })
@@ -159,7 +159,7 @@ const NotificationList: React.FC<NotificationListProps> = (
                           const status = await NotificationService.markAsUnread(user._id!, ids)
 
                           if (status === 200) {
-                            const __notifications = wexcommerceHelper.clone(notifications) as wexcommerceTypes.Notification[]
+                            const __notifications = lebobeautycoHelper.clone(notifications) as lebobeautycoTypes.Notification[]
                             __notifications.filter((row) => ids.includes(row._id)).forEach((row) => {
                               row.isRead = false
                             })
@@ -195,12 +195,12 @@ const NotificationList: React.FC<NotificationListProps> = (
                   <div className={styles.notificationCheckbox}>
                     <Checkbox checked={row.checked} onChange={(event) => {
                       row.checked = event.target.checked
-                      setNotifications(wexcommerceHelper.cloneArray(notifications) as NotificationRow[])
+                      setNotifications(lebobeautycoHelper.cloneArray(notifications) as NotificationRow[])
                     }} />
                   </div>
                   <div className={`${styles.notification}${!row.isRead ? ` ${styles.unread}` : ''}`}>
                     <div className={styles.date}>
-                      {wexcommerceHelper.capitalize(format(new Date(row.createdAt!), _format, { locale: _locale }))}
+                      {lebobeautycoHelper.capitalize(format(new Date(row.createdAt!), _format, { locale: _locale }))}
                     </div>
                     <div className={styles.messageContainer}>
                       <div className={styles.message}>
@@ -244,7 +244,7 @@ const NotificationList: React.FC<NotificationListProps> = (
                                   const status = await NotificationService.markAsRead(user._id!, [row._id])
 
                                   if (status === 200) {
-                                    const _notifications = wexcommerceHelper.cloneArray(notifications) as NotificationRow[]
+                                    const _notifications = lebobeautycoHelper.cloneArray(notifications) as NotificationRow[]
                                     _notifications[index].isRead = true
                                     setNotifications(_notifications)
                                     setNotificationCount(notificationCount - 1)
@@ -265,7 +265,7 @@ const NotificationList: React.FC<NotificationListProps> = (
                                   const status = await NotificationService.markAsUnread(user._id!, [row._id])
 
                                   if (status === 200) {
-                                    const _notifications = wexcommerceHelper.cloneArray(notifications) as NotificationRow[]
+                                    const _notifications = lebobeautycoHelper.cloneArray(notifications) as NotificationRow[]
                                     _notifications[index].isRead = false
                                     setNotifications(_notifications)
                                     setNotificationCount(notificationCount + 1)

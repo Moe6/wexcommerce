@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
-import * as wexcommerceTypes from ':wexcommerce-types'
-import * as wexcommerceHelper from ':wexcommerce-helper'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
+import * as lebobeautycoHelper from ':lebobeautyco-helper'
 import env from '@/config/env.config'
 import * as serverHelper from '@/utils/serverHelper'
 import * as SettingService from '@/lib/SettingService'
@@ -30,9 +30,9 @@ const Home = async () => {
   const language = await SettingService.getLanguage()
   strings.setLanguage(language)
 
-  let featuredProducts: wexcommerceTypes.Product[] = []
-  let categories: wexcommerceTypes.CategoryInfo[] = []
-  let categoryGroups: wexcommerceTypes.FeaturedCategory[] = []
+  let featuredProducts: lebobeautycoTypes.Product[] = []
+  let categories: lebobeautycoTypes.CategoryInfo[] = []
+  let categoryGroups: lebobeautycoTypes.FeaturedCategory[] = []
 
   try {
     const cartId = await CartService.getCartId()
@@ -46,13 +46,13 @@ const Home = async () => {
       CategoryService.getFeaturedCategories(language, env.FEATURED_PRODUCTS_SIZE, cartId, wishlistId),
     ])
 
-    featuredProducts = wexcommerceHelper.getPromiseResult(featuredProductsRes)
+    featuredProducts = lebobeautycoHelper.getPromiseResult(featuredProductsRes)
 
     for (const product of featuredProducts) {
       product.url = await serverHelper.getProductURL(product)
     }
 
-    categoryGroups = wexcommerceHelper.getPromiseResult(categoryGroupsRes)
+    categoryGroups = lebobeautycoHelper.getPromiseResult(categoryGroupsRes)
 
     for (const categoryGroup of categoryGroups) {
       for (const product of categoryGroup.products) {
@@ -60,7 +60,7 @@ const Home = async () => {
       }
     }
 
-    categories = wexcommerceHelper.getPromiseResult(categoriesRes)
+    categories = lebobeautycoHelper.getPromiseResult(categoriesRes)
   } catch (err) {
     console.error(err)
   }

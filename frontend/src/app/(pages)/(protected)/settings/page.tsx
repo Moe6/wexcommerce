@@ -11,7 +11,7 @@ import {
   Paper
 } from '@mui/material'
 import validator from 'validator'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as UserService from '@/lib/UserService'
 import { strings } from '@/lang/settings'
 import { strings as commonStrings } from '@/lang/common'
@@ -69,7 +69,7 @@ const Settings: React.FC = () => {
         return
       }
 
-      const payload: wexcommerceTypes.UpdateUserPayload = { _id: user._id!, fullName, phone, address }
+      const payload: lebobeautycoTypes.UpdateUserPayload = { _id: user._id!, fullName, phone, address }
       const status = await UserService.updateUser(payload)
 
       if (status === 200) {

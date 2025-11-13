@@ -12,7 +12,7 @@ import {
   Switch,
 } from '@mui/material'
 import RichTextEditor from '@/components/RichTextEditor'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import { LanguageContextType, useLanguageContext } from '@/context/LanguageContext'
 import { CurrencyContextType, useCurrencyContext } from '@/context/CurrencyContext'
 import * as ProductService from '@/lib/ProductService'
@@ -35,7 +35,7 @@ const CreateProduct: React.FC = () => {
   const [initialDescription, setInitialDescription] = useState('')
   const [description, setDescription] = useState('')
   const [descriptionError, setDescriptionError] = useState(false)
-  const [categories, setCategories] = useState<wexcommerceTypes.CategoryInfo[]>([])
+  const [categories, setCategories] = useState<lebobeautycoTypes.CategoryInfo[]>([])
   const [price, setPrice] = useState('')
   const [quantity, setQuantity] = useState('')
   const [soldOut, setSoldOut] = useState(false)
@@ -81,7 +81,7 @@ const CreateProduct: React.FC = () => {
       const _price = Number.parseFloat(price)
       const _quantity = Number.parseInt(quantity)
 
-      const data: wexcommerceTypes.CreateProductPayload = {
+      const data: lebobeautycoTypes.CreateProductPayload = {
         name,
         description,
         categories: _categories,
@@ -185,7 +185,7 @@ const CreateProduct: React.FC = () => {
               variant="standard"
               selectedOptions={categories}
               onChange={(values) => {
-                setCategories(values as wexcommerceTypes.CategoryInfo[])
+                setCategories(values as lebobeautycoTypes.CategoryInfo[])
               }}
             />
           </FormControl>

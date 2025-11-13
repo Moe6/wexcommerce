@@ -1,13 +1,13 @@
 'use server'
 
 import env from '@/config/env.config'
-import * as wexcommerceHelper from ':wexcommerce-helper'
+import * as lebobeautycoHelper from ':lebobeautyco-helper'
 import * as UserService from '@/lib/UserService'
 
 const skipStatuses = [204, 400, 500]
 
 const getURL = (url: string) =>
-  `${wexcommerceHelper.trimEnd(env.isServer() ? env.SERVER_API_HOST! : env.CLIENT_API_HOST!, '/')}/${wexcommerceHelper.trimStart(url, '/')}`
+  `${lebobeautycoHelper.trimEnd(env.isServer() ? env.SERVER_API_HOST! : env.CLIENT_API_HOST!, '/')}/${lebobeautycoHelper.trimStart(url, '/')}`
 
 const getContentType = (headers?: Record<string, string>[]) => {
   let contentType = 'text/plain'

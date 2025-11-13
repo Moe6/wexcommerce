@@ -1,6 +1,6 @@
 {
-  "name": "wexcommerce-backend",
-  "description": "Backend server for wexCommerce",
+  "name": "lebobeautyco-backend",
+  "description": "Backend server for lebobeautyco",
   "type": "module",
   "version": "3.9.0",
   "main": "app.js",

@@ -12,8 +12,8 @@ import {
   Switch,
   FormControlLabel,
 } from '@mui/material'
-import * as wexcommerceTypes from ':wexcommerce-types'
-import * as wexcommerceHelper from ':wexcommerce-helper'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
+import * as lebobeautycoHelper from ':lebobeautyco-helper'
 import { strings } from '@/lang/category'
 import { strings as ccStrings } from '@/lang/create-category'
 import { strings as commonStrings } from '@/lang/common'
@@ -25,14 +25,14 @@ import styles from '@/styles/category.module.css'
 import ImageEditor from '@/components/ImageEditor'
 
 interface CategoryFormProps {
-  category: wexcommerceTypes.CategoryInfo
+  category: lebobeautycoTypes.CategoryInfo
 }
 
 const CategoryForm: React.FC<CategoryFormProps> = ({ category }) => {
   const router = useRouter()
 
   const [image, setImage] = useState<ImageItem>()
-  const [values, setValues] = useState<wexcommerceTypes.Value[]>([])
+  const [values, setValues] = useState<lebobeautycoTypes.Value[]>([])
   const [valueErrors, setValueErrors] = useState<boolean[]>([])
   const [featured, setFeatured] = useState(false)
 
@@ -89,7 +89,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ category }) => {
         return
       }
 
-      const _valueErrors = wexcommerceHelper.cloneArray(valueErrors) as boolean[]
+      const _valueErrors = lebobeautycoHelper.cloneArray(valueErrors) as boolean[]
 
       for (let i = 0; i < _valueErrors.length; i++) {
         _valueErrors[i] = false
@@ -109,14 +109,14 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ category }) => {
       setValueErrors(_valueErrors)
 
       if (isValid) {
-        const payload: wexcommerceTypes.UpsertCategoryPayload = {
+        const payload: lebobeautycoTypes.UpsertCategoryPayload = {
           values,
           featured,
         }
         const status = await CategoryService.update(category._id, payload)
 
         if (status === 200) {
-          const _category = wexcommerceHelper.clone(category) as wexcommerceTypes.CategoryInfo
+          const _category = lebobeautycoHelper.clone(category) as lebobeautycoTypes.CategoryInfo
           for (let i = 0; i < values.length; i++) {
             const value = values[i]
             _category.values![i].value = value.value
@@ -158,9 +158,9 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ category }) => {
                 error={valueErrors[index]}
                 required
                 onChange={(e) => {
-                  const _values = wexcommerceHelper.cloneArray(values) as wexcommerceTypes.Value[]
+                  const _values = lebobeautycoHelper.cloneArray(values) as lebobeautycoTypes.Value[]
                   _values[index].value = e.target.value
-                  const _valueErrors = wexcommerceHelper.cloneArray(valueErrors) as boolean[]
+                  const _valueErrors = lebobeautycoHelper.cloneArray(valueErrors) as boolean[]
                   _valueErrors[index] = false
                   setValues(_values)
                   setValueErrors(_valueErrors)

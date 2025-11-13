@@ -9,7 +9,7 @@
 import { mkdir, writeFile } from 'fs/promises'
 import https from 'https'
 
-const repo = 'aelassas/wexcommerce'
+const repo = 'aelassas/lebobeautyco'
 const url = `https://api.github.com/repos/${repo}/releases`
 
 /**

@@ -6,7 +6,7 @@ import {
   Button,
   Paper,
 } from '@mui/material'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import { UserContextType, useUserContext } from '@/context/UserContext'
 import * as UserService from '@/lib/UserService'
 import { strings } from '@/lang/change-password'
@@ -63,7 +63,7 @@ const ChangePassword: React.FC = () => {
         setConfirmPasswordError(false)
       }
 
-      const payload: wexcommerceTypes.ChangePasswordPayload = {
+      const payload: lebobeautycoTypes.ChangePasswordPayload = {
         _id: user._id!,
         password: currentPassword,
         newPassword,

@@ -1,10 +1,10 @@
 'use server'
 
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as fetchInstance from './fetchInstance'
 import * as UserService from './UserService'
 
-export const getDeliveryTypes = async (): Promise<wexcommerceTypes.DeliveryTypeInfo[]> => (
+export const getDeliveryTypes = async (): Promise<lebobeautycoTypes.DeliveryTypeInfo[]> => (
   fetchInstance
     .GET(
       '/api/delivery-types',
@@ -16,10 +16,10 @@ export const getDeliveryTypes = async (): Promise<wexcommerceTypes.DeliveryTypeI
 /**
  * Update delivery types.
  *
- * @param {wexcommerceTypes.UpdateDeliveryTypesPayload} data
+ * @param {lebobeautycoTypes.UpdateDeliveryTypesPayload} data
  * @returns {Promise<number>}
  */
-export const updateDeliveryTypes = async (data: wexcommerceTypes.UpdateDeliveryTypesPayload): Promise<number> => (
+export const updateDeliveryTypes = async (data: lebobeautycoTypes.UpdateDeliveryTypesPayload): Promise<number> => (
   fetchInstance
     .PUT(
       '/api/update-delivery-types',

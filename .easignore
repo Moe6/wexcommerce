@@ -72,10 +72,10 @@ dist/
 !google-services.json
 !/**/google-services.json
 
-!/wexcommerce-types/index.js
-!/wexcommerce-types/index.d.ts
-!/wexcommerce-helper/index.js
-!/wexcommerce-helper/index.d.ts
+!/lebobeautyco-types/index.js
+!/lebobeautyco-types/index.d.ts
+!/lebobeautyco-helper/index.js
+!/lebobeautyco-helper/index.d.ts
 
 # @end expo-cli
 

@@ -16,7 +16,7 @@ import {
   DialogActions,
 } from '@mui/material'
 import RichTextEditor from '@/components/RichTextEditor'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import { LanguageContextType, useLanguageContext } from '@/context/LanguageContext'
 import { CurrencyContextType, useCurrencyContext } from '@/context/CurrencyContext'
 import * as ProductService from '@/lib/ProductService'
@@ -31,7 +31,7 @@ import ImageEditor from '@/components/ImageEditor'
 import styles from '@/styles/product.module.css'
 
 interface CreateProductFormProps {
-  product: wexcommerceTypes.Product
+  product: lebobeautycoTypes.Product
 }
 
 const CreateProductForm: React.FC<CreateProductFormProps> = ({ product }) => {
@@ -45,7 +45,7 @@ const CreateProductForm: React.FC<CreateProductFormProps> = ({ product }) => {
   const [initialDescription, setInitialDescription] = useState('')
   const [description, setDescription] = useState('')
   const [descriptionError, setDescriptionError] = useState(false)
-  const [categories, setCategories] = useState<wexcommerceTypes.CategoryInfo[]>([])
+  const [categories, setCategories] = useState<lebobeautycoTypes.CategoryInfo[]>([])
   const [price, setPrice] = useState('')
   const [quantity, setQuantity] = useState('')
   const [soldOut, setSoldOut] = useState(false)
@@ -68,7 +68,7 @@ const CreateProductForm: React.FC<CreateProductFormProps> = ({ product }) => {
     setName(product.name)
     setInitialDescription(product.description)
     setDescription(product.description)
-    setCategories(product.categories as wexcommerceTypes.CategoryInfo[])
+    setCategories(product.categories as lebobeautycoTypes.CategoryInfo[])
     setPrice(product.price.toString())
     setQuantity(product.quantity.toString())
     setSoldOut(product.soldOut)
@@ -107,7 +107,7 @@ const CreateProductForm: React.FC<CreateProductFormProps> = ({ product }) => {
       const _price = Number.parseFloat(price)
       const _quantity = Number.parseInt(quantity)
 
-      const data: wexcommerceTypes.UpdateProductPayload = {
+      const data: lebobeautycoTypes.UpdateProductPayload = {
         _id: productId,
         name,
         description,
@@ -210,7 +210,7 @@ const CreateProductForm: React.FC<CreateProductFormProps> = ({ product }) => {
             variant="standard"
             selectedOptions={categories}
             onChange={(values) => {
-              setCategories(values as wexcommerceTypes.CategoryInfo[])
+              setCategories(values as lebobeautycoTypes.CategoryInfo[])
             }}
           />
         </FormControl>

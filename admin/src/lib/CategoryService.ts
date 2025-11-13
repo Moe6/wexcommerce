@@ -1,16 +1,16 @@
 'use server'
 
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as fetchInstance from './fetchInstance'
 import * as UserService from './UserService'
 
 /**
  * Validate category name.
  *
- * @param {wexcommerceTypes.ValidateCategoryPayload} data
+ * @param {lebobeautycoTypes.ValidateCategoryPayload} data
  * @returns {Promise<number>}
  */
-export const validate = async (data: wexcommerceTypes.ValidateCategoryPayload): Promise<number> =>
+export const validate = async (data: lebobeautycoTypes.ValidateCategoryPayload): Promise<number> =>
   fetchInstance
     .POST(
       '/api/validate-category',
@@ -38,10 +38,10 @@ export const check = async (id: string): Promise<number> =>
 /**
  * Create a category.
  *
- * @param {wexcommerceTypes.UpsertCategoryPayload} data
+ * @param {lebobeautycoTypes.UpsertCategoryPayload} data
  * @returns {Promise<number>}
  */
-export const create = async (data: wexcommerceTypes.UpsertCategoryPayload): Promise<number> => (
+export const create = async (data: lebobeautycoTypes.UpsertCategoryPayload): Promise<number> => (
   fetchInstance
     .POST(
       '/api/create-category',
@@ -56,10 +56,10 @@ export const create = async (data: wexcommerceTypes.UpsertCategoryPayload): Prom
  * Update a category.
  *
  * @param {string} id
- * @param {wexcommerceTypes.UpsertCategoryPayload} data
+ * @param {lebobeautycoTypes.UpsertCategoryPayload} data
  * @returns {Promise<number>}
  */
-export const update = async (id: string, data: wexcommerceTypes.UpsertCategoryPayload): Promise<number> => (
+export const update = async (id: string, data: lebobeautycoTypes.UpsertCategoryPayload): Promise<number> => (
   fetchInstance
     .PUT(
       `/api/update-category/${id}`,
@@ -91,9 +91,9 @@ export const deleteCategory = async (id: string): Promise<number> => (
  *
  * @param {string} language
  * @param {string} id
- * @returns {Promise<wexcommerceTypes.CategoryInfo>}
+ * @returns {Promise<lebobeautycoTypes.CategoryInfo>}
  */
-export const getCategory = async (language: string, id: string): Promise<wexcommerceTypes.CategoryInfo> => (
+export const getCategory = async (language: string, id: string): Promise<lebobeautycoTypes.CategoryInfo> => (
   fetchInstance
     .GET(
       `/api/category/${id}/${language}`,
@@ -106,9 +106,9 @@ export const getCategory = async (language: string, id: string): Promise<wexcomm
  * Get categories.
  *
  * @param {string} language
- * @returns {Promise<wexcommerceTypes.CategoryInfo[]>}
+ * @returns {Promise<lebobeautycoTypes.CategoryInfo[]>}
  */
-export const getCategories = async (language: string): Promise<wexcommerceTypes.CategoryInfo[]> => (
+export const getCategories = async (language: string): Promise<lebobeautycoTypes.CategoryInfo[]> => (
   fetchInstance.GET(
     `/api/categories/${language}/${false}`
   )
@@ -120,9 +120,9 @@ export const getCategories = async (language: string): Promise<wexcommerceTypes.
  *
  * @param {string} language
  * @param {string} keyword
- * @returns {Promise<wexcommerceTypes.CategoryInfo[]>}
+ * @returns {Promise<lebobeautycoTypes.CategoryInfo[]>}
  */
-export const searchCategories = async (language: string, keyword: string): Promise<wexcommerceTypes.CategoryInfo[]> => (
+export const searchCategories = async (language: string, keyword: string): Promise<lebobeautycoTypes.CategoryInfo[]> => (
   fetchInstance
     .GET(
       `/api/search-categories/${language}/?s=${keyword}`,

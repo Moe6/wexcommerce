@@ -4,7 +4,7 @@ import React from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { IResolveParams } from ':reactjs-social-login'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import { strings as commonStrings } from '@/lang/common'
 import env from '@/config/env.config'
 import * as UserService from '@/lib/UserService'
@@ -47,8 +47,8 @@ const SocialLogin: React.FC<SocialLoginProps> = ({
 }) => {
   const router = useRouter()
 
-  const loginSuccess = async (socialSignInType: wexcommerceTypes.SocialSignInType, accessToken: string, email: string, fullName: string, avatar?: string) => {
-    const data: wexcommerceTypes.SignInPayload = {
+  const loginSuccess = async (socialSignInType: lebobeautycoTypes.SocialSignInType, accessToken: string, email: string, fullName: string, avatar?: string) => {
+    const data: lebobeautycoTypes.SignInPayload = {
       socialSignInType,
       accessToken,
       email,
@@ -102,7 +102,7 @@ const SocialLogin: React.FC<SocialLoginProps> = ({
             appId={env.FB_APP_ID}
             redirect_uri={REDIRECT_URI}
             onResolve={({ data }: IResolveParams) => {
-              loginSuccess(wexcommerceTypes.SocialSignInType.Facebook, data?.signedRequest, data?.email, data?.name, data?.picture?.data?.url)
+              loginSuccess(lebobeautycoTypes.SocialSignInType.Facebook, data?.signedRequest, data?.email, data?.name, data?.picture?.data?.url)
             }}
             onReject={(err: any) => {
               loginError(err)
@@ -128,7 +128,7 @@ const SocialLogin: React.FC<SocialLoginProps> = ({
             redirect_uri={REDIRECT_URI}
             onResolve={({ data }: IResolveParams) => {
               const email = data?.user?.email || getEmail(String(data?.id_token))
-              loginSuccess(wexcommerceTypes.SocialSignInType.Apple, data?.id_token, email, data?.user ? `${data?.user?.firstName} ${data?.user?.lastName}` : email)
+              loginSuccess(lebobeautycoTypes.SocialSignInType.Apple, data?.id_token, email, data?.user ? `${data?.user?.firstName} ${data?.user?.lastName}` : email)
             }}
             onReject={(err: any) => {
               loginError(err)
@@ -154,7 +154,7 @@ const SocialLogin: React.FC<SocialLoginProps> = ({
             scope="openid profile email"
             discoveryDocs="claims_supported"
             onResolve={({ data }: IResolveParams) => {
-              loginSuccess(wexcommerceTypes.SocialSignInType.Google, data?.access_token, data?.email, data?.name || data?.email, data?.picture)
+              loginSuccess(lebobeautycoTypes.SocialSignInType.Google, data?.access_token, data?.email, data?.name || data?.email, data?.picture)
             }}
             onReject={(err: any) => {
               loginError(err)

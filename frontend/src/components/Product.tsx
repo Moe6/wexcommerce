@@ -14,8 +14,8 @@ import {
   FavoriteBorder as WishlistIcon,
   Favorite as RemoveFromWishlistIcon,
 } from '@mui/icons-material'
-import * as wexcommerceTypes from ':wexcommerce-types'
-import * as wexcommerceHelper from ':wexcommerce-helper'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
+import * as lebobeautycoHelper from ':lebobeautyco-helper'
 import * as CartService from '@/lib/CartService'
 import * as WishlistService from '@/lib/WishlistService'
 import { strings as commonStrings } from '@/lang/common'
@@ -34,7 +34,7 @@ import ToastWishlist from '@/components/ToastWishlist'
 import styles from '@/styles/product.module.css'
 
 interface ProductProps {
-  product: wexcommerceTypes.Product
+  product: lebobeautycoTypes.Product
 }
 
 const Product: React.FC<ProductProps> = ({ product: productFromProps }) => {
@@ -54,7 +54,7 @@ const Product: React.FC<ProductProps> = ({ product: productFromProps }) => {
   const productRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const src = (imageFilename: string) => wexcommerceHelper.joinURL(Env.CDN_PRODUCTS, imageFilename)
+    const src = (imageFilename: string) => lebobeautycoHelper.joinURL(Env.CDN_PRODUCTS, imageFilename)
 
     if (product) {
       const image = src(product.image!)
@@ -128,7 +128,7 @@ const Product: React.FC<ProductProps> = ({ product: productFromProps }) => {
           <div className={styles.rightPanel}>
             <div className={styles.name}>
               <span className={styles.name}>{product.name}</span>
-              <span className={styles.price}>{`${wexcommerceHelper.formatPrice(product.price, currency, language)}`}</span>
+              <span className={styles.price}>{`${lebobeautycoHelper.formatPrice(product.price, currency, language)}`}</span>
               {
                 product.soldOut
                   ? <SoldOut />
@@ -153,7 +153,7 @@ const Product: React.FC<ProductProps> = ({ product: productFromProps }) => {
 
                           if (res.status === 200) {
                             const _cartItemCount = cartItemCount - res.data.quantity
-                            const _product = wexcommerceHelper.clone(product) as wexcommerceTypes.Product
+                            const _product = lebobeautycoHelper.clone(product) as lebobeautycoTypes.Product
                             _product.inCart = false
                             setProduct(_product)
                             setCartItemCount(_cartItemCount)
@@ -199,7 +199,7 @@ const Product: React.FC<ProductProps> = ({ product: productFromProps }) => {
                             if (!cartId) {
                               await CartService.setCartId(res.data)
                             }
-                            const _product = wexcommerceHelper.clone(product) as wexcommerceTypes.Product
+                            const _product = lebobeautycoHelper.clone(product) as lebobeautycoTypes.Product
                             _product.inCart = true
                             setProduct(_product)
                             setCartItemCount(cartItemCount + 1)
@@ -236,7 +236,7 @@ const Product: React.FC<ProductProps> = ({ product: productFromProps }) => {
 
                             if (res === 200) {
                               const _wishlistCount = wishlistCount - 1
-                              const _product = wexcommerceHelper.clone(product) as wexcommerceTypes.Product
+                              const _product = lebobeautycoHelper.clone(product) as lebobeautycoTypes.Product
                               _product.inWishlist = false
                               setProduct(_product)
                               setWishlistCount(_wishlistCount)
@@ -271,7 +271,7 @@ const Product: React.FC<ProductProps> = ({ product: productFromProps }) => {
                             const res = await WishlistService.addItem(userId, product._id)
 
                             if (res.status === 200) {
-                              const _product = wexcommerceHelper.clone(product) as wexcommerceTypes.Product
+                              const _product = lebobeautycoHelper.clone(product) as lebobeautycoTypes.Product
                               _product.inWishlist = true
                               setProduct(_product)
                               setWishlistCount(wishlistCount + 1)
@@ -331,7 +331,7 @@ const Product: React.FC<ProductProps> = ({ product: productFromProps }) => {
                 const res = await CartService.deleteItem(cartId, product._id)
 
                 if (res.status === 200) {
-                  const _product = wexcommerceHelper.clone(product) as wexcommerceTypes.Product
+                  const _product = lebobeautycoHelper.clone(product) as lebobeautycoTypes.Product
                   _product.inCart = false
                   setProduct(_product)
                   setCartItemCount(cartItemCount - 1)

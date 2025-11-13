@@ -1,10 +1,10 @@
 # syntax=docker/dockerfile:1
 
 FROM node:lts-alpine
-WORKDIR /wexcommerce/backend
+WORKDIR /lebobeautyco/backend
 COPY ./backend ./
 COPY ./backend/.env.docker .env
-COPY ./packages /wexcommerce/packages
+COPY ./packages /lebobeautyco/packages
 RUN npm install
 
 CMD [ "npm", "run", "start:setup"]

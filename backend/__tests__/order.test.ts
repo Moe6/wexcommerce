@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import { jest } from '@jest/globals'
 import request from 'supertest'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as databaseHelper from '../src/utils/databaseHelper'
 import * as testHelper from './testHelper'
 import app from '../src/app'
@@ -71,13 +71,13 @@ describe('POST /api/checkout', () => {
     const product = await Product.findById(PRODUCT_ID)
 
     // test success (cod)
-    const payload: wexcommerceTypes.CheckoutPayload = {
+    const payload: lebobeautycoTypes.CheckoutPayload = {
       order: {
         user: USER_ID,
-        deliveryType: (await DeliveryType.findOne({ name: wexcommerceTypes.DeliveryType.Withdrawal }))!.id,
-        paymentType: (await PaymentType.findOne({ name: wexcommerceTypes.PaymentType.Cod }))!.id,
+        deliveryType: (await DeliveryType.findOne({ name: lebobeautycoTypes.DeliveryType.Withdrawal }))!.id,
+        paymentType: (await PaymentType.findOne({ name: lebobeautycoTypes.PaymentType.Cod }))!.id,
         total: product!.price,
-        status: wexcommerceTypes.OrderStatus.Pending,
+        status: lebobeautycoTypes.OrderStatus.Pending,
         orderItems: [{ product: PRODUCT_ID, quantity: 1 }],
       },
     }
@@ -146,8 +146,8 @@ describe('POST /api/checkout', () => {
     // test success (Shipping, WireTransfer)
     payload.order.user = USER_ID
     payload.user = undefined
-    payload.order.deliveryType = (await DeliveryType.findOne({ name: wexcommerceTypes.DeliveryType.Shipping }))!.id
-    payload.order.paymentType = (await PaymentType.findOne({ name: wexcommerceTypes.PaymentType.WireTransfer }))!.id
+    payload.order.deliveryType = (await DeliveryType.findOne({ name: lebobeautycoTypes.DeliveryType.Shipping }))!.id
+    payload.order.paymentType = (await PaymentType.findOne({ name: lebobeautycoTypes.PaymentType.WireTransfer }))!.id
     res = await request(app)
       .post('/api/checkout')
       .send(payload)
@@ -159,7 +159,7 @@ describe('POST /api/checkout', () => {
     await order!.deleteOne()
 
     // test success (stripe with no payment intent)
-    const crediCardPaymentType = (await PaymentType.findOne({ name: wexcommerceTypes.PaymentType.CreditCard }))!.id
+    const crediCardPaymentType = (await PaymentType.findOne({ name: lebobeautycoTypes.PaymentType.CreditCard }))!.id
     payload.order.paymentType = crediCardPaymentType
     payload.paymentIntentId = undefined
     SESSION_ID = testHelper.GetRandromObjectIdAsString()
@@ -174,12 +174,12 @@ describe('POST /api/checkout', () => {
 
     // test failure (stripe with payment intent)
     const receiptEmail = testHelper.GetRandomEmail()
-    const paymentIntentPayload: wexcommerceTypes.CreatePaymentPayload = {
+    const paymentIntentPayload: lebobeautycoTypes.CreatePaymentPayload = {
       amount: 234,
       currency: 'usd',
       receiptEmail,
       customerName: 'John Doe',
-      description: 'wexCommerce Testing Service',
+      description: 'lebobeautyco Testing Service',
       locale: 'en',
       name: 'Test',
     }
@@ -271,15 +271,15 @@ describe('PUT /api/update-order/:user/:id', () => {
     const token = await testHelper.signinAsAdmin()
 
     // test success
-    const payload: wexcommerceTypes.UpdateOrderPayload = {
-      status: wexcommerceTypes.OrderStatus.Shipped,
+    const payload: lebobeautycoTypes.UpdateOrderPayload = {
+      status: lebobeautycoTypes.OrderStatus.Shipped,
     }
     let res = await request(app)
       .put(`/api/update-order/${ADMIN_ID}/${ORDER_ID}`)
       .set(env.X_ACCESS_TOKEN, token)
       .send(payload)
     expect(res.statusCode).toBe(200)
-    expect((await Order.findById(ORDER_ID))!.status).toBe(wexcommerceTypes.OrderStatus.Shipped)
+    expect((await Order.findById(ORDER_ID))!.status).toBe(lebobeautycoTypes.OrderStatus.Shipped)
 
     // test success (no admin notification counter)
     const admin = new User({
@@ -287,16 +287,16 @@ describe('PUT /api/update-order/:user/:id', () => {
       email: testHelper.GetRandomEmail(),
       language: testHelper.LANGUAGE,
       password: 'xxxxxxxxxxxxxxxx',
-      type: wexcommerceTypes.UserType.Admin,
+      type: lebobeautycoTypes.UserType.Admin,
     })
     await admin.save()
-    payload.status = wexcommerceTypes.OrderStatus.Cancelled
+    payload.status = lebobeautycoTypes.OrderStatus.Cancelled
     res = await request(app)
       .put(`/api/update-order/${admin.id}/${ORDER_ID}`)
       .set(env.X_ACCESS_TOKEN, token)
       .send(payload)
     expect(res.statusCode).toBe(200)
-    expect((await Order.findById(ORDER_ID))!.status).toBe(wexcommerceTypes.OrderStatus.Cancelled)
+    expect((await Order.findById(ORDER_ID))!.status).toBe(lebobeautycoTypes.OrderStatus.Cancelled)
     await Notification.deleteMany({ user: admin.id })
     await NotificationCounter.deleteMany({ user: admin.id })
     await admin.deleteOne()
@@ -380,11 +380,11 @@ describe('POST /api/orders/:user/:page/:size', () => {
     const token = await testHelper.signinAsAdmin()
 
     // test success with admin
-    const payload: wexcommerceTypes.GetOrdersPayload = {
-      paymentTypes: [wexcommerceTypes.PaymentType.Cod],
-      deliveryTypes: [wexcommerceTypes.DeliveryType.Withdrawal],
-      statuses: [wexcommerceTypes.OrderStatus.Cancelled],
-      sortBy: wexcommerceTypes.SortOrderBy.dateDesc,
+    const payload: lebobeautycoTypes.GetOrdersPayload = {
+      paymentTypes: [lebobeautycoTypes.PaymentType.Cod],
+      deliveryTypes: [lebobeautycoTypes.DeliveryType.Withdrawal],
+      statuses: [lebobeautycoTypes.OrderStatus.Cancelled],
+      sortBy: lebobeautycoTypes.SortOrderBy.dateDesc,
       from: null,
       to: null,
     }
@@ -405,7 +405,7 @@ describe('POST /api/orders/:user/:page/:size', () => {
     expect(res.body[0].resultData.length).toBeGreaterThanOrEqual(1)
 
     // test success with user
-    payload.sortBy = wexcommerceTypes.SortOrderBy.dateAsc
+    payload.sortBy = lebobeautycoTypes.SortOrderBy.dateAsc
     res = await request(app)
       .post(`/api/orders/${USER_ID}/1/10/?s=${ORDER_ID}`)
       .set(env.X_ACCESS_TOKEN, token)
@@ -520,8 +520,8 @@ describe('DELETE /api/delete-temp-order/:orderId/:sessionId', () => {
 
 describe('notify', () => {
   it('should test notify', async () => {
-    const deliveryType = (await DeliveryType.findOne({ name: wexcommerceTypes.DeliveryType.Shipping }))?._id
-    const paymentType = (await PaymentType.findOne({ name: wexcommerceTypes.PaymentType.CreditCard }))?._id
+    const deliveryType = (await DeliveryType.findOne({ name: lebobeautycoTypes.DeliveryType.Shipping }))?._id
+    const paymentType = (await PaymentType.findOne({ name: lebobeautycoTypes.PaymentType.CreditCard }))?._id
     const user = await User.findById(testHelper.getUserId())
     expect(user).not.toBeNull()
     const order = new Order({
@@ -529,7 +529,7 @@ describe('notify', () => {
       deliveryType,
       paymentType,
       total: 312,
-      status: wexcommerceTypes.OrderStatus.Pending,
+      status: lebobeautycoTypes.OrderStatus.Pending,
       orderItems: [testHelper.GetRandromObjectId()],
     })
     const settings = await Setting.findOne({})
@@ -551,7 +551,7 @@ describe('notify', () => {
       email: testHelper.GetRandomEmail(),
       language: testHelper.LANGUAGE,
       password: 'xxxxxxxxxxxxxxxx',
-      type: wexcommerceTypes.UserType.Admin,
+      type: lebobeautycoTypes.UserType.Admin,
     })
     await admin.save()
     try {

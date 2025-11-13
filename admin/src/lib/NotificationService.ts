@@ -1,6 +1,6 @@
 'use server'
 
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as fetchInstance from './fetchInstance'
 import env from '@/config/env.config'
 import * as UserService from './UserService'
@@ -9,9 +9,9 @@ import * as UserService from './UserService'
  * Get NotificationCounter by UserID.
  *
  * @param {string} userId
- * @returns {Promise<wexcommerceTypes.NotificationCounter>}
+ * @returns {Promise<lebobeautycoTypes.NotificationCounter>}
  */
-export const getNotificationCounter = async (userId: string): Promise<wexcommerceTypes.NotificationCounter> => (
+export const getNotificationCounter = async (userId: string): Promise<lebobeautycoTypes.NotificationCounter> => (
   fetchInstance
     .GET(
       `/api/notification-counter/${encodeURIComponent(userId)}`,
@@ -79,9 +79,9 @@ export const deleteNotifications = async (userId: string, ids: string[]): Promis
  *
  * @param {string} userId
  * @param {number} page
- * @returns {Promise<wexcommerceTypes.Result<wexcommerceTypes.Notification>>}
+ * @returns {Promise<lebobeautycoTypes.Result<lebobeautycoTypes.Notification>>}
  */
-export const getNotifications = async (userId: string, page: number): Promise<wexcommerceTypes.Result<wexcommerceTypes.Notification>> => (
+export const getNotifications = async (userId: string, page: number): Promise<lebobeautycoTypes.Result<lebobeautycoTypes.Notification>> => (
   fetchInstance
     .GET(
       `/api/notifications/${encodeURIComponent(userId)}/${page}/${env.PAGE_SIZE}`,

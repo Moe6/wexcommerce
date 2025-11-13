@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import i18n from '../lang/i18n'
 import * as logger from '../utils/logger'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as env from '../config/env.config'
 import Order from '../models/Order'
 import OrderItem from '../models/OrderItem'
@@ -24,7 +24,7 @@ import * as ipinfoHelper from '../utils/ipinfoHelper'
 export const createPayPalOrder = async (req: Request, res: Response) => {
   try {
     const paypal = await import('../payment/paypal.js')
-    const { orderId, amount, currency, name, description }: wexcommerceTypes.CreatePayPalOrderPayload = req.body
+    const { orderId, amount, currency, name, description }: lebobeautycoTypes.CreatePayPalOrderPayload = req.body
 
     const clientIp = ipinfoHelper.getClientIp(req)
     const countryCode = await ipinfoHelper.getCountryCode(clientIp)
@@ -102,7 +102,7 @@ export const checkPayPalOrder = async (req: Request, res: Response) => {
         await orderItem!.save()
       }
       order.expireAt = undefined
-      order.status = wexcommerceTypes.OrderStatus.Paid
+      order.status = lebobeautycoTypes.OrderStatus.Paid
       await order.save()
 
       // Update product quantity
@@ -134,7 +134,7 @@ export const checkPayPalOrder = async (req: Request, res: Response) => {
       await orderController.confirm(user, order, order.orderItems, settings, paymentType, deliveryType)
 
       // Notify admin
-      // const admin = !!env.ADMIN_EMAIL && (await User.findOne({ email: env.ADMIN_EMAIL, type: wexcommerceTypes.UserType.Admin }))
+      // const admin = !!env.ADMIN_EMAIL && (await User.findOne({ email: env.ADMIN_EMAIL, type: lebobeautycoTypes.UserType.Admin }))
       // if (admin) {
       //   await orderController.notify(env.ADMIN_EMAIL, order, user, settings)
       // }

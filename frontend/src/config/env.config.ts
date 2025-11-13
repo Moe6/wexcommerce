@@ -1,15 +1,15 @@
 import { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 
 const getPaymentGateway = () => {
   const paymentGateway = String(process.env.NEXT_PUBLIC_WC_PAYMENT_GATEWAY || 'stripe').toUpperCase()
 
   if (paymentGateway === 'PAYPAL') {
-    return wexcommerceTypes.PaymentGateway.PayPal
+    return lebobeautycoTypes.PaymentGateway.PayPal
   }
 
   // Default is Stripe
-  return wexcommerceTypes.PaymentGateway.Stripe
+  return lebobeautycoTypes.PaymentGateway.Stripe
 }
 
 const PAYMENT_GATEWAY = getPaymentGateway()
@@ -23,7 +23,7 @@ const env = {
   isSafari: typeof navigator !== 'undefined' && /^((?!chrome|android).)*safari/i.test(navigator.userAgent),
 
   BASE_URL: String(process.env.NEXT_PUBLIC_BASE_URL),
-  WEBSITE_NAME: String(process.env.NEXT_PUBLIC_WC_WEBSITE_NAME || 'wexCommerce'),
+  WEBSITE_NAME: String(process.env.NEXT_PUBLIC_WC_WEBSITE_NAME || 'lebobeautyco'),
   APP_TYPE: 'frontend',
   SERVER_API_HOST: String(process.env.NEXT_PUBLIC_WC_SERVER_API_HOST),
   CLIENT_API_HOST: String(process.env.NEXT_PUBLIC_WC_CLIENT_API_HOST),

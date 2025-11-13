@@ -17,8 +17,8 @@ import {
   FavoriteBorder as WishlistIcon,
   Favorite as RemoveFromWishlistIcon,
 } from '@mui/icons-material'
-import * as wexcommerceTypes from ':wexcommerce-types'
-import * as wexcommerceHelper from ':wexcommerce-helper'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
+import * as lebobeautycoHelper from ':lebobeautyco-helper'
 import env from '@/config/env.config'
 import { strings as commonStrings } from '@/lang/common'
 import * as helper from '@/utils/helper'
@@ -36,7 +36,7 @@ import ToastWishlist from '@/components/ToastWishlist'
 import styles from '@/styles/product-list-item.module.css'
 
 interface ProductListItemProps {
-  product: wexcommerceTypes.Product
+  product: lebobeautycoTypes.Product
   hideActions?: boolean
   disableDragAndDrop?: boolean
   style?: React.CSSProperties
@@ -78,7 +78,7 @@ const ProductListItem: React.FC<ProductListItemProps> = (
         <div className={styles.thumbnail}>
           <Image
             alt=""
-            src={wexcommerceHelper.joinURL(env.CDN_PRODUCTS, product.image)}
+            src={lebobeautycoHelper.joinURL(env.CDN_PRODUCTS, product.image)}
             width={0}
             height={0}
             sizes="100vw"
@@ -88,7 +88,7 @@ const ProductListItem: React.FC<ProductListItemProps> = (
         </div>
         {product.soldOut && <SoldOut className={styles.label} />}
         <span className={styles.name} title={product.name}>{product.name}</span>
-        <span className={styles.price}>{`${wexcommerceHelper.formatPrice(product.price, currency, language)}`}</span>
+        <span className={styles.price}>{`${lebobeautycoHelper.formatPrice(product.price, currency, language)}`}</span>
       </Link>
       {
         !hideActions &&

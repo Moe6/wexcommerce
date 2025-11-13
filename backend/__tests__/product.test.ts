@@ -4,7 +4,7 @@ import path from 'node:path'
 import asyncFs from 'node:fs/promises'
 import request from 'supertest'
 import mongoose from 'mongoose'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as databaseHelper from '../src/utils/databaseHelper'
 import * as testHelper from './testHelper'
 import app from '../src/app'
@@ -204,7 +204,7 @@ describe('POST /api/create-product', () => {
     }
 
     // test success
-    const payload: wexcommerceTypes.CreateProductPayload = {
+    const payload: lebobeautycoTypes.CreateProductPayload = {
       name: 'Product',
       description: 'Description',
       categories: [CATEGORY_ID],
@@ -289,7 +289,7 @@ describe('PUT /api/update-product', () => {
     }
 
     // test success
-    const payload: wexcommerceTypes.UpdateProductPayload = {
+    const payload: lebobeautycoTypes.UpdateProductPayload = {
       _id: PRODUCT_ID,
       categories: [testHelper.GetRandromObjectIdAsString()],
       name: 'Product updated',
@@ -441,7 +441,7 @@ describe('POST /api/product/:id/:language', () => {
     await wishlist.save()
 
     // test success
-    const payload: wexcommerceTypes.GetProductPayload = { cart: cart.id, wishlist: wishlist.id }
+    const payload: lebobeautycoTypes.GetProductPayload = { cart: cart.id, wishlist: wishlist.id }
     let res = await request(app)
       .post(`/api/product/${PRODUCT_ID}/en`)
       .send(payload)
@@ -496,7 +496,7 @@ describe('POST /api/admin-products/:user/:page/:size/:category?', () => {
     const token = await testHelper.signinAsAdmin()
 
     // test success
-    const payload: wexcommerceTypes.GetAdminProductsPayload = { sortBy: wexcommerceTypes.SortProductBy.priceAsc }
+    const payload: lebobeautycoTypes.GetAdminProductsPayload = { sortBy: lebobeautycoTypes.SortProductBy.priceAsc }
     let res = await request(app)
       .post(`/api/admin-products/${ADMIN_ID}/1/10/${CATEGORY_ID}`)
       .set(env.X_ACCESS_TOKEN, token)
@@ -505,7 +505,7 @@ describe('POST /api/admin-products/:user/:page/:size/:category?', () => {
     expect(res.body.length).toBe(1)
 
     // test success (sort by feaured)
-    payload.sortBy = wexcommerceTypes.SortProductBy.featured
+    payload.sortBy = lebobeautycoTypes.SortProductBy.featured
     res = await request(app)
     .post(`/api/admin-products/${ADMIN_ID}/1/10/${CATEGORY_ID}`)
       .set(env.X_ACCESS_TOKEN, token)
@@ -514,7 +514,7 @@ describe('POST /api/admin-products/:user/:page/:size/:category?', () => {
     expect(res.body.length).toBe(1)
 
     // test success (sort by date)
-    payload.sortBy = wexcommerceTypes.SortProductBy.dateDesc
+    payload.sortBy = lebobeautycoTypes.SortProductBy.dateDesc
     res = await request(app)
     .post(`/api/admin-products/${ADMIN_ID}/1/10/${CATEGORY_ID}`)
       .set(env.X_ACCESS_TOKEN, token)
@@ -523,7 +523,7 @@ describe('POST /api/admin-products/:user/:page/:size/:category?', () => {
     expect(res.body.length).toBe(1)
 
     // test success (no category and sort by priceDesc)
-    payload.sortBy = wexcommerceTypes.SortProductBy.priceDesc
+    payload.sortBy = lebobeautycoTypes.SortProductBy.priceDesc
     res = await request(app)
       .post(`/api/admin-products/${ADMIN_ID}/1/10`)
       .set(env.X_ACCESS_TOKEN, token)
@@ -568,7 +568,7 @@ describe('POST /api/frontend-products/:page/:size/:category?', () => {
     await wishlist.save()
 
     // test success
-    const payload: wexcommerceTypes.GetProductsPayload = { cart: cart.id, wishlist: wishlist.id, sortBy: wexcommerceTypes.SortProductBy.priceAsc }
+    const payload: lebobeautycoTypes.GetProductsPayload = { cart: cart.id, wishlist: wishlist.id, sortBy: lebobeautycoTypes.SortProductBy.priceAsc }
     let res = await request(app)
       .post(`/api/frontend-products/1/10/${CATEGORY_ID}`)
       .send(payload)
@@ -578,7 +578,7 @@ describe('POST /api/frontend-products/:page/:size/:category?', () => {
     // test success (sort by featured)
     payload.cart = undefined
     payload.wishlist = undefined
-    payload.sortBy = wexcommerceTypes.SortProductBy.featured
+    payload.sortBy = lebobeautycoTypes.SortProductBy.featured
     res = await request(app)
       .post(`/api/frontend-products/1/10/${CATEGORY_ID}`)
       .send(payload)
@@ -588,7 +588,7 @@ describe('POST /api/frontend-products/:page/:size/:category?', () => {
     // test success (sort by date)
     payload.cart = undefined
     payload.wishlist = undefined
-    payload.sortBy = wexcommerceTypes.SortProductBy.dateDesc
+    payload.sortBy = lebobeautycoTypes.SortProductBy.dateDesc
     res = await request(app)
       .post(`/api/frontend-products/1/10/${CATEGORY_ID}`)
       .send(payload)
@@ -598,7 +598,7 @@ describe('POST /api/frontend-products/:page/:size/:category?', () => {
     // test success (no cart, no wishlist and sort by price desc)
     payload.cart = undefined
     payload.wishlist = undefined
-    payload.sortBy = wexcommerceTypes.SortProductBy.priceDesc
+    payload.sortBy = lebobeautycoTypes.SortProductBy.priceDesc
     res = await request(app)
       .post(`/api/frontend-products/1/10/${CATEGORY_ID}`)
       .send(payload)
@@ -648,7 +648,7 @@ describe('POST /api/featured-products', () => {
     await wishlist.save()
 
     // test success
-    const payload: wexcommerceTypes.GetProductsPayload = { cart: cart.id, wishlist: wishlist.id, sortBy: wexcommerceTypes.SortProductBy.priceAsc }
+    const payload: lebobeautycoTypes.GetProductsPayload = { cart: cart.id, wishlist: wishlist.id, sortBy: lebobeautycoTypes.SortProductBy.priceAsc }
     let res = await request(app)
       .post('/api/featured-products')
       .send(payload)
@@ -658,7 +658,7 @@ describe('POST /api/featured-products', () => {
     // test success (no cart, no wishlist)
     payload.cart = undefined
     payload.wishlist = undefined
-    payload.sortBy = wexcommerceTypes.SortProductBy.priceDesc
+    payload.sortBy = lebobeautycoTypes.SortProductBy.priceDesc
     res = await request(app)
       .post('/api/featured-products')
       .send(payload)
@@ -707,9 +707,9 @@ describe('DELETE /api/delete-product/:id', () => {
     const order = new Order({
       user: USER_ID,
       orderItems: [orderItem.id],
-      status: wexcommerceTypes.OrderStatus.Paid,
-      deliveryType: (await DeliveryType.findOne({ name: wexcommerceTypes.DeliveryType.Withdrawal }))?._id,
-      paymentType: (await PaymentType.findOne({ name: wexcommerceTypes.PaymentType.CreditCard }))?._id,
+      status: lebobeautycoTypes.OrderStatus.Paid,
+      deliveryType: (await DeliveryType.findOne({ name: lebobeautycoTypes.DeliveryType.Withdrawal }))?._id,
+      paymentType: (await PaymentType.findOne({ name: lebobeautycoTypes.PaymentType.CreditCard }))?._id,
       total: product!.price,
     })
     await order.save()

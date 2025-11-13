@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useState, useRef, useEffect } from 'react'
-import * as wexcommerceTypes from ':wexcommerce-types'
-import * as wexcommerceHelper from ':wexcommerce-helper'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
+import * as lebobeautycoHelper from ':lebobeautyco-helper'
 import { strings as commonStrings } from '@/lang/common'
 import Accordion from './Accordion'
 import PaymentType from './PaymentType'
@@ -11,11 +11,11 @@ import * as helper from '@/utils/helper'
 import styles from '@/styles/payment-type-filter.module.css'
 
 interface PaymentTypeFilterProps {
-  selectedOptions: wexcommerceTypes.PaymentType[]
+  selectedOptions: lebobeautycoTypes.PaymentType[]
   collapse?: boolean
   className?: string
   // eslint-disable-next-line no-unused-vars
-  onChange: (values: wexcommerceTypes.PaymentType[]) => void
+  onChange: (values: lebobeautycoTypes.PaymentType[]) => void
 }
 
 const paymentTypes = helper.getPaymentTypes()
@@ -37,7 +37,7 @@ const PaymentTypeFilter: React.FC<PaymentTypeFilterProps> = (
 
     if (selectedOptions) {
       refs.current.forEach((checkbox) => {
-        const paymentType = checkbox.getAttribute('data-value') as wexcommerceTypes.PaymentType
+        const paymentType = checkbox.getAttribute('data-value') as lebobeautycoTypes.PaymentType
         if (selectedOptions.includes(paymentType)) {
           checkbox.checked = true
         }
@@ -64,9 +64,9 @@ const PaymentTypeFilter: React.FC<PaymentTypeFilterProps> = (
   }
 
   const handleCheckPaymentTypeChange = (e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLElement>) => {
-    const paymentType = e.currentTarget.getAttribute('data-value') as wexcommerceTypes.PaymentType
+    const paymentType = e.currentTarget.getAttribute('data-value') as lebobeautycoTypes.PaymentType
 
-    const _checkedPaymentTypes = wexcommerceHelper.cloneArray(checkedPaymentTypes) as wexcommerceTypes.PaymentType[]
+    const _checkedPaymentTypes = lebobeautycoHelper.cloneArray(checkedPaymentTypes) as lebobeautycoTypes.PaymentType[]
     if ((e.currentTarget as HTMLInputElement).checked) {
       _checkedPaymentTypes.push(paymentType)
 

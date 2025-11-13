@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { PayPalScriptProvider } from '@paypal/react-paypal-js'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import env from '@/config/env.config'
 import * as PayPalService from '@/lib/PayPalService'
 import * as SettingService from '@/lib/SettingService'
@@ -28,7 +28,7 @@ const PayPalProvider = ({ children }: PayPalProviderProps) => {
   }, [])
 
   return locale && currency && (
-    env.PAYMENT_GATEWAY === wexcommerceTypes.PaymentGateway.PayPal ? (
+    env.PAYMENT_GATEWAY === lebobeautycoTypes.PaymentGateway.PayPal ? (
       <PayPalScriptProvider
         options={{
           clientId: env.PAYPAL_CLIENT_ID,

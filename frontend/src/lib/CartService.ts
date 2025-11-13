@@ -1,7 +1,7 @@
 'use server'
 
 import { cookies } from 'next/headers'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as fetchInstance from './fetchInstance'
 import { CookieOptions } from '@/config/env.config'
 import * as UserService from './UserService'
@@ -12,10 +12,10 @@ import * as UserService from './UserService'
  * @param {string} cartId
  * @param {string} userId
  * @param {string} productId
- * @returns {Promise<wexcommerceTypes.Response<string>>}
+ * @returns {Promise<lebobeautycoTypes.Response<string>>}
  */
-export const addItem = async (cartId: string, userId: string, productId: string): Promise<wexcommerceTypes.Response<string>> => {
-  const data: wexcommerceTypes.AddItemPayload = { cartId, userId, productId }
+export const addItem = async (cartId: string, userId: string, productId: string): Promise<lebobeautycoTypes.Response<string>> => {
+  const data: lebobeautycoTypes.AddItemPayload = { cartId, userId, productId }
 
   return fetchInstance
     .POST(
@@ -48,9 +48,9 @@ export const updateQuantity = async (cartItemId: string, quantity: number): Prom
  *
  * @param {string} cartId
  * @param {string} productId
- * @returns {Promise<wexcommerceTypes.Response<{ cartDeleted: boolean }>>}
+ * @returns {Promise<lebobeautycoTypes.Response<{ cartDeleted: boolean }>>}
  */
-export const deleteItem = async (cartId: string, productId: string): Promise<wexcommerceTypes.Response<{ cartDeleted: boolean, quantity: number }>> => (
+export const deleteItem = async (cartId: string, productId: string): Promise<lebobeautycoTypes.Response<{ cartDeleted: boolean, quantity: number }>> => (
   fetchInstance
     .DELETE(
       `/api/delete-cart-item/${cartId}/${productId}`
@@ -78,9 +78,9 @@ export const clearCart = async (cartId?: string): Promise<number> => (
  * Get cart.
  *
  * @param {string} cartId
- * @returns {Promise<wexcommerceTypes.Cart>}
+ * @returns {Promise<lebobeautycoTypes.Cart>}
  */
-export const getCart = async (cartId: string): Promise<wexcommerceTypes.Cart> => (
+export const getCart = async (cartId: string): Promise<lebobeautycoTypes.Cart> => (
   fetchInstance
     .GET(
       `/api/cart/${cartId}`

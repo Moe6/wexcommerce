@@ -22,4 +22,4 @@
 #
 # m h  dom mon dow   command
 00 00,03,06,09,12,15,18,21 * * * /usr/local/bin/free-mem 2>&1 | /usr/bin/logger -t CRON-FREE-MEM
-00 00,12 * * * certbot renew --post-hook "systemctl restart nginx wexcommerce"
+00 00,12 * * * certbot renew --post-hook "systemctl restart nginx lebobeautyco"

@@ -1,6 +1,6 @@
 {
-  "name": "wexcommerce-frontend",
-  "description": "Public web frontend for wexCommerce (customer-facing website)",
+  "name": "lebobeautyco-frontend",
+  "description": "Public web frontend for lebobeautyco (customer-facing website)",
   "private": true,
   "version": "3.9.0",
   "type": "module",
@@ -12,7 +12,7 @@
     "ts:docker-build": "tsc --build --verbose",
     "dev:docker": "npm run ts:docker-build && next dev -p 8006",
     "build": "rimraf .next && npm run ts:build && cross-env NODE_OPTIONS=--max-old-space-size=1024 next build",
-    "start": "next start -p 8006",
+    "start": "next start -H 0.0.0.0 -p 8006",
     "lint": "eslint . --cache --cache-location .eslintcache",
     "fix": "eslint --fix",
     "ncu": "ncu -u",

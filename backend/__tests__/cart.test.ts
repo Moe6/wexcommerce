@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import request from 'supertest'
 import mongoose from 'mongoose'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as databaseHelper from '../src/utils/databaseHelper'
 import * as testHelper from './testHelper'
 import app from '../src/app'
@@ -72,7 +72,7 @@ describe('POST /api/add-cart-item', () => {
     await cart.save()
 
     // test success (no cart, user)
-    const payload: wexcommerceTypes.AddItemPayload = { userId: USER_ID, cartId: '', productId: PRODUCT1_ID }
+    const payload: lebobeautycoTypes.AddItemPayload = { userId: USER_ID, cartId: '', productId: PRODUCT1_ID }
     let res = await request(app)
       .post('/api/add-cart-item')
       .send(payload)

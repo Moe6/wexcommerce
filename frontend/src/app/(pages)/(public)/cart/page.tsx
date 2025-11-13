@@ -1,12 +1,12 @@
 import React, { Suspense } from 'react'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as CartService from '@/lib/CartService'
 import CartComponent, { EmptyCart } from '@/components/Cart'
 import Indicator from '@/components/Indicator'
 import ScrollToTop from '@/components/ScrollToTop'
 
 const Cart = async () => {
-  let cart: wexcommerceTypes.Cart | undefined = undefined
+  let cart: lebobeautycoTypes.Cart | undefined = undefined
 
   try {
     const cartId = await CartService.getCartId()

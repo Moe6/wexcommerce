@@ -8,7 +8,7 @@ import {
   MenuItem,
   Select,
 } from '@mui/material'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import env from '@/config/env.config'
 import { strings } from '@/lang/orders'
 import { strings as commonStrings } from '@/lang/common'
@@ -27,13 +27,13 @@ import RowCount from '@/components/RowCount'
 import styles from '@/styles/orders.module.css'
 
 interface FiltersProps {
-  paymentTypes: wexcommerceTypes.PaymentType[]
-  deliveryTypes: wexcommerceTypes.DeliveryType[]
-  statuses: wexcommerceTypes.OrderStatus[]
+  paymentTypes: lebobeautycoTypes.PaymentType[]
+  deliveryTypes: lebobeautycoTypes.DeliveryType[]
+  statuses: lebobeautycoTypes.OrderStatus[]
   from: Date | null
   to: Date | null
   keyword: string
-  sortBy: wexcommerceTypes.SortOrderBy
+  sortBy: lebobeautycoTypes.SortOrderBy
 }
 
 export const Filters: React.FC<FiltersProps> = ({
@@ -50,7 +50,7 @@ export const Filters: React.FC<FiltersProps> = ({
   return (
     <>
       <PaymentTypeFilter
-        onChange={(__paymentTypes: wexcommerceTypes.PaymentType[]) => {
+        onChange={(__paymentTypes: lebobeautycoTypes.PaymentType[]) => {
           const pt = __paymentTypes.join(',')
           const dt = deliveryTypes.join(',')
           const os = statuses.join(',')
@@ -63,7 +63,7 @@ export const Filters: React.FC<FiltersProps> = ({
       />
 
       <OrderStatusFilter
-        onChange={(__statuses: wexcommerceTypes.OrderStatus[]) => {
+        onChange={(__statuses: lebobeautycoTypes.OrderStatus[]) => {
           const pt = paymentTypes.join(',')
           const dt = deliveryTypes.join(',')
           const os = __statuses.join(',')
@@ -76,7 +76,7 @@ export const Filters: React.FC<FiltersProps> = ({
       />
 
       <DeliveryTypeFilter
-        onChange={(__deliveryTypes: wexcommerceTypes.DeliveryType[]) => {
+        onChange={(__deliveryTypes: lebobeautycoTypes.DeliveryType[]) => {
           const dt = __deliveryTypes.join(',')
           const pt = paymentTypes.join(',')
           const os = statuses.join(',')
@@ -111,13 +111,13 @@ interface OrdersHeaderProps {
   page: number
   rowCount: number
   totalRecords: number
-  paymentTypes: wexcommerceTypes.PaymentType[]
-  deliveryTypes: wexcommerceTypes.DeliveryType[]
-  statuses: wexcommerceTypes.OrderStatus[]
+  paymentTypes: lebobeautycoTypes.PaymentType[]
+  deliveryTypes: lebobeautycoTypes.DeliveryType[]
+  statuses: lebobeautycoTypes.OrderStatus[]
   from: Date | null
   to: Date | null
   keyword: string
-  sortBy: wexcommerceTypes.SortOrderBy
+  sortBy: lebobeautycoTypes.SortOrderBy
 }
 
 export const Header: React.FC<OrdersHeaderProps> = (
@@ -165,8 +165,8 @@ export const Header: React.FC<OrdersHeaderProps> = (
               router.push(url)
             }}
           >
-            <MenuItem value={wexcommerceTypes.SortOrderBy.dateDesc.toString()}>{strings.ORDER_BY_DATE_DESC}</MenuItem>
-            <MenuItem value={wexcommerceTypes.SortOrderBy.dateAsc.toString()}>{strings.ORDER_BY_DATE_ASC}</MenuItem>
+            <MenuItem value={lebobeautycoTypes.SortOrderBy.dateDesc.toString()}>{strings.ORDER_BY_DATE_DESC}</MenuItem>
+            <MenuItem value={lebobeautycoTypes.SortOrderBy.dateAsc.toString()}>{strings.ORDER_BY_DATE_ASC}</MenuItem>
           </Select>
         </FormControl>
       )}
@@ -183,12 +183,12 @@ interface PagerProps {
   totalRecords: number
   rowCount: number
   keyword: string
-  paymentTypes: wexcommerceTypes.PaymentType[]
-  deliveryTypes: wexcommerceTypes.DeliveryType[]
-  statuses: wexcommerceTypes.OrderStatus[]
+  paymentTypes: lebobeautycoTypes.PaymentType[]
+  deliveryTypes: lebobeautycoTypes.DeliveryType[]
+  statuses: lebobeautycoTypes.OrderStatus[]
   from?: number
   to?: number
-  sortBy?: wexcommerceTypes.SortOrderBy
+  sortBy?: lebobeautycoTypes.SortOrderBy
   className?: string
 }
 
@@ -221,7 +221,7 @@ export const Pager: React.FC<PagerProps> = ({
 }
 
 interface OdrerStatusFieldProps {
-  value: wexcommerceTypes.OrderStatus
+  value: lebobeautycoTypes.OrderStatus
 }
 
 export const OdrerStatusField: React.FC<OdrerStatusFieldProps> = ({ value }) => (
@@ -229,7 +229,7 @@ export const OdrerStatusField: React.FC<OdrerStatusFieldProps> = ({ value }) => 
 )
 
 interface PaymentTypeFieldProps {
-  value: wexcommerceTypes.PaymentType
+  value: lebobeautycoTypes.PaymentType
 }
 
 export const PaymentTypeField: React.FC<PaymentTypeFieldProps> = ({ value }) => (
@@ -237,7 +237,7 @@ export const PaymentTypeField: React.FC<PaymentTypeFieldProps> = ({ value }) => 
 )
 
 interface DeliveryTypeFieldProps {
-  value: wexcommerceTypes.DeliveryType
+  value: lebobeautycoTypes.DeliveryType
 }
 
 export const DeliveryTypeField: React.FC<DeliveryTypeFieldProps> = ({ value }) => (

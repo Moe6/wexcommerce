@@ -5,7 +5,7 @@ import path from 'node:path'
 import asyncFs from 'node:fs/promises'
 import request from 'supertest'
 import mongoose from 'mongoose'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as databaseHelper from '../src/utils/databaseHelper'
 import * as testHelper from './testHelper'
 import app from '../src/app'
@@ -60,7 +60,7 @@ describe('POST /api/validate-category', () => {
 
     // test success
     const name = testHelper.getRandomString()
-    const payload: wexcommerceTypes.ValidateCategoryPayload = { language: 'en', value: name }
+    const payload: lebobeautycoTypes.ValidateCategoryPayload = { language: 'en', value: name }
     let res = await request(app)
       .post('/api/validate-category')
       .set(env.X_ACCESS_TOKEN, token)
@@ -142,7 +142,7 @@ describe('POST /api/create-category', () => {
     if (!(await helper.pathExists(image))) {
       await asyncFs.copyFile(IMAGE1_PATH, image)
     }
-    let payload: wexcommerceTypes.UpsertCategoryPayload = {
+    let payload: lebobeautycoTypes.UpsertCategoryPayload = {
       values: [
         { language: 'en', value: 'test.category1' },
         { language: 'fr', value: 'test.categorie1' },
@@ -215,7 +215,7 @@ describe('PUT /api/update-category/:id', () => {
     const token = await testHelper.signinAsAdmin()
 
     // test success
-    const payload: wexcommerceTypes.UpsertCategoryPayload = {
+    const payload: lebobeautycoTypes.UpsertCategoryPayload = {
       values: [
         { language: 'en', value: 'test.category1-updated' },
         { language: 'fr', value: 'test.categorie1-updated' },

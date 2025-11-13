@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic'
 export const fetchCache = 'force-no-store'
 
 export const metadata: Metadata = {
-  title: 'wexCommerce Admin Panel',
+  title: 'lebobeautyco Admin Panel',
   description: 'Single Vendor Marketplace',
 }
 

@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import Stripe from 'stripe'
 import i18n from '../lang/i18n'
 import * as logger from '../utils/logger'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as env from '../config/env.config'
 import * as helper from '../utils/helper'
 import OrderItem from '../models/OrderItem'
@@ -33,7 +33,7 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
       name,
       description,
       customerName,
-    }: wexcommerceTypes.CreatePaymentPayload = req.body
+    }: lebobeautycoTypes.CreatePaymentPayload = req.body
 
     //
     // 1. Create the customer if he does not already exist
@@ -79,7 +79,7 @@ export const createCheckoutSession = async (req: Request, res: Response) => {
       expires_at: expireAt,
     })
 
-    const result: wexcommerceTypes.PaymentResult = {
+    const result: lebobeautycoTypes.PaymentResult = {
       sessionId: session.id,
       customerId: customer.id,
       clientSecret: session.client_secret,
@@ -156,7 +156,7 @@ export const checkCheckoutSession = async (req: Request, res: Response) => {
         await orderItem!.save()
       }
       order.expireAt = undefined
-      order.status = wexcommerceTypes.OrderStatus.Paid
+      order.status = lebobeautycoTypes.OrderStatus.Paid
       await order.save()
 
       // Update product quantity
@@ -188,7 +188,7 @@ export const checkCheckoutSession = async (req: Request, res: Response) => {
       await orderController.confirm(user, order, order.orderItems, settings, paymentType, deliveryType)
 
       // Notify admin
-      // const admin = !!env.ADMIN_EMAIL && (await User.findOne({ email: env.ADMIN_EMAIL, type: wexcommerceTypes.UserType.Admin }))
+      // const admin = !!env.ADMIN_EMAIL && (await User.findOne({ email: env.ADMIN_EMAIL, type: lebobeautycoTypes.UserType.Admin }))
       // if (admin) {
       //   await orderController.notify(env.ADMIN_EMAIL, order, user, settings)
       // }
@@ -226,7 +226,7 @@ export const createPaymentIntent = async (req: Request, res: Response) => {
       receiptEmail,
       description,
       customerName,
-    }: wexcommerceTypes.CreatePaymentPayload = req.body
+    }: lebobeautycoTypes.CreatePaymentPayload = req.body
 
     //
     // 1. Create the customer if he does not already exist
@@ -265,7 +265,7 @@ export const createPaymentIntent = async (req: Request, res: Response) => {
     //
     // 3. Send result
     //
-    const result: wexcommerceTypes.PaymentResult = {
+    const result: lebobeautycoTypes.PaymentResult = {
       paymentIntentId: paymentIntent.id,
       customerId: customer.id,
       clientSecret: paymentIntent.client_secret,

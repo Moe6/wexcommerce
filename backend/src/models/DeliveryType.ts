@@ -1,13 +1,13 @@
 import { Schema, model } from 'mongoose'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as env from '../config/env.config'
 
 const deliveryTypeSchema = new Schema<env.DeliveryType>({
   name: {
     type: String,
     enum: [
-      wexcommerceTypes.DeliveryType.Shipping,
-      wexcommerceTypes.DeliveryType.Withdrawal,
+      lebobeautycoTypes.DeliveryType.Shipping,
+      lebobeautycoTypes.DeliveryType.Withdrawal,
     ],
     required: [true, "can't be blank"],
     unique: true,

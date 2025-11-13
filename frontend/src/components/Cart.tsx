@@ -18,8 +18,8 @@ import {
   Remove as DecrementIcon,
   ShoppingCartCheckout as CheckoutIcon,
 } from '@mui/icons-material'
-import * as wexcommerceTypes from ':wexcommerce-types'
-import * as wexcommerceHelper from ':wexcommerce-helper'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
+import * as lebobeautycoHelper from ':lebobeautyco-helper'
 import { CartContextType, useCartContext } from '@/context/CartContext'
 import { strings } from '@/lang/cart'
 import { strings as commonStrings } from '@/lang/common'
@@ -38,7 +38,7 @@ export const EmptyCart: React.FC = () => (
 )
 
 interface CartProps {
-  cart: wexcommerceTypes.Cart
+  cart: lebobeautycoTypes.Cart
 }
 
 const iconStyle = { borderRadius: 1 }
@@ -49,7 +49,7 @@ const Cart: React.FC<CartProps> = ({ cart }) => {
   const { language } = useLanguageContext() as LanguageContextType
   const { currency } = useCurrencyContext() as CurrencyContextType
   const { cartItemCount, setCartItemCount } = useCartContext() as CartContextType
-  const [cartItems, setCartItems] = useState<wexcommerceTypes.CartItem[]>([])
+  const [cartItems, setCartItems] = useState<lebobeautycoTypes.CartItem[]>([])
   const [productId, setProductId] = useState<string>()
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
   const [openClearDialog, setOpenClearDialog] = useState(false)
@@ -82,7 +82,7 @@ const Cart: React.FC<CartProps> = ({ cart }) => {
                         priority={true}
                         className={styles.thumbnail}
                         alt=""
-                        src={wexcommerceHelper.joinURL(Env.CDN_PRODUCTS, cartItem.product.image)}
+                        src={lebobeautycoHelper.joinURL(Env.CDN_PRODUCTS, cartItem.product.image)}
                       />
                     </div>
                     <div className={styles.name}>
@@ -95,7 +95,7 @@ const Cart: React.FC<CartProps> = ({ cart }) => {
                   </div>
 
                 </Link>
-                <span className={styles.price}>{wexcommerceHelper.formatPrice(cartItem.product.price, currency, language)}</span>
+                <span className={styles.price}>{lebobeautycoHelper.formatPrice(cartItem.product.price, currency, language)}</span>
               </div>
               <div className={styles.actions}>
                 <Button
@@ -117,7 +117,7 @@ const Cart: React.FC<CartProps> = ({ cart }) => {
                         disabled={cartItem.quantity === 1}
                         sx={iconStyle}
                         onClick={async () => {
-                          const _cartItems = wexcommerceHelper.cloneArray(cartItems) as wexcommerceTypes.CartItem[]
+                          const _cartItems = lebobeautycoHelper.cloneArray(cartItems) as lebobeautycoTypes.CartItem[]
                           const _cartItem = _cartItems.find((item) => item._id === cartItem._id)
                           const quantity = _cartItem!.quantity - 1
 
@@ -144,7 +144,7 @@ const Cart: React.FC<CartProps> = ({ cart }) => {
                         disabled={cartItem.quantity >= cartItem.product.quantity}
                         sx={iconStyle}
                         onClick={async () => {
-                          const _cartItems = wexcommerceHelper.cloneArray(cartItems) as wexcommerceTypes.CartItem[]
+                          const _cartItems = lebobeautycoHelper.cloneArray(cartItems) as lebobeautycoTypes.CartItem[]
                           const _cartItem = _cartItems.find((item) => item._id === cartItem._id)
                           const quantity = _cartItem!.quantity + 1
 
@@ -176,7 +176,7 @@ const Cart: React.FC<CartProps> = ({ cart }) => {
         <div className={styles.title}>{strings.SUMMARY}</div>
         <div className={styles.price}>
           <span>{commonStrings.SUBTOTAL}</span>
-          <span className={styles.price}>{wexcommerceHelper.formatPrice(total, currency, language)}</span>
+          <span className={styles.price}>{lebobeautycoHelper.formatPrice(total, currency, language)}</span>
         </div>
         <div className={styles.action}>
           <Button
@@ -221,7 +221,7 @@ const Cart: React.FC<CartProps> = ({ cart }) => {
                 const res = await CartService.deleteItem(cartId, productId!)
 
                 if (res.status === 200) {
-                  const _cartItems = wexcommerceHelper.cloneArray(cartItems) as wexcommerceTypes.CartItem[]
+                  const _cartItems = lebobeautycoHelper.cloneArray(cartItems) as lebobeautycoTypes.CartItem[]
                   const cartItem = _cartItems.find((item) => item.product._id === productId)
                   const index = _cartItems.findIndex((item) => item.product._id === productId)
                   _cartItems.splice(index, 1)

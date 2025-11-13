@@ -2,7 +2,7 @@ import 'dotenv/config'
 import { jest } from '@jest/globals'
 import request from 'supertest'
 import mongoose from 'mongoose'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as deliveryTypeController from '../src/controllers/deliveryTypeController'
 import * as databaseHelper from '../src/utils/databaseHelper'
 import * as testHelper from './testHelper'
@@ -40,9 +40,9 @@ describe('Initialize deliveryTypes', () => {
     // test success
     let res = await deliveryTypeController.init()
     expect(res).toBeTruthy()
-    const shipping = await DeliveryType.findOne({ name: wexcommerceTypes.DeliveryType.Shipping })
+    const shipping = await DeliveryType.findOne({ name: lebobeautycoTypes.DeliveryType.Shipping })
     expect(shipping).not.toBeNull()
-    const withdrawal = await DeliveryType.findOne({ name: wexcommerceTypes.DeliveryType.Withdrawal })
+    const withdrawal = await DeliveryType.findOne({ name: lebobeautycoTypes.DeliveryType.Withdrawal })
     expect(withdrawal).not.toBeNull()
 
     // test failure
@@ -108,9 +108,9 @@ describe('GET /api/delivery-types', () => {
 describe('GET /api/enabled-delivery-types', () => {
   it('should get enabled delivery types', async () => {
     // init
-    const shipping = await DeliveryType.findOne({ name: wexcommerceTypes.DeliveryType.Shipping })
+    const shipping = await DeliveryType.findOne({ name: lebobeautycoTypes.DeliveryType.Shipping })
     expect(shipping).not.toBeNull()
-    const withdrawal = await DeliveryType.findOne({ name: wexcommerceTypes.DeliveryType.Withdrawal })
+    const withdrawal = await DeliveryType.findOne({ name: lebobeautycoTypes.DeliveryType.Withdrawal })
     expect(withdrawal).not.toBeNull()
     const shippingEnabled = shipping!.enabled
     shipping!.enabled = true
@@ -145,17 +145,17 @@ describe('PUT /api/update-delivery-types', () => {
   it('should update delivery types', async () => {
     const token = await testHelper.signinAsAdmin()
     // init
-    let shipping = await DeliveryType.findOne({ name: wexcommerceTypes.DeliveryType.Shipping })
+    let shipping = await DeliveryType.findOne({ name: lebobeautycoTypes.DeliveryType.Shipping })
     expect(shipping).not.toBeNull()
     const shippingEnabled = shipping!.enabled
     const shippingPrice = shipping!.price
-    let withdrawal = await DeliveryType.findOne({ name: wexcommerceTypes.DeliveryType.Withdrawal })
+    let withdrawal = await DeliveryType.findOne({ name: lebobeautycoTypes.DeliveryType.Withdrawal })
     expect(withdrawal).not.toBeNull()
     const withdrawalEnabled = withdrawal!.enabled
     const withdrawalPrice = withdrawal!.price
 
     // test success
-    const payload: wexcommerceTypes.UpdateDeliveryTypesPayload = [
+    const payload: lebobeautycoTypes.UpdateDeliveryTypesPayload = [
       {
         _id: shipping!.id,
         name: shipping!.name,
@@ -176,19 +176,19 @@ describe('PUT /api/update-delivery-types', () => {
       .send(payload)
     expect(res.statusCode).toBe(200)
 
-    shipping = await DeliveryType.findOne({ name: wexcommerceTypes.DeliveryType.Shipping })
+    shipping = await DeliveryType.findOne({ name: lebobeautycoTypes.DeliveryType.Shipping })
     expect(shipping).not.toBeNull()
     expect(shipping!.enabled).toBe(!shippingEnabled)
     expect(shipping!.price).toBe(shippingPrice + 5)
 
-    withdrawal = await DeliveryType.findOne({ name: wexcommerceTypes.DeliveryType.Withdrawal })
+    withdrawal = await DeliveryType.findOne({ name: lebobeautycoTypes.DeliveryType.Withdrawal })
     expect(withdrawal).not.toBeNull()
     expect(withdrawal!.enabled).toBe(!withdrawalEnabled)
     expect(withdrawal!.price).toBe(withdrawalPrice + 5)
 
     // success (delivery type not found)
     const dtName = payload[0]!.name
-    payload[0].name = 'xxxxxxxxxxx' as wexcommerceTypes.DeliveryType
+    payload[0].name = 'xxxxxxxxxxx' as lebobeautycoTypes.DeliveryType
     res = await request(app)
       .put('/api/update-delivery-types')
       .set(env.X_ACCESS_TOKEN, token)

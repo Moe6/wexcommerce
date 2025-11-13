@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useRef } from 'react'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import Slick from './Slick'
 import ReactSlick from 'react-slick'
 import env from '@/config/env.config'
@@ -12,7 +12,7 @@ import styles from '@/styles/featured-products.module.css'
 
 interface FeaturedProductsProps {
   title?: string
-  products: wexcommerceTypes.Product[]
+  products: lebobeautycoTypes.Product[]
   autoplay?: boolean
   autoplaySpeed?: number // in milliseconds
   showNavigation?: boolean

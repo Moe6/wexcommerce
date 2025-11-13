@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import request from 'supertest'
 import mongoose from 'mongoose'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as databaseHelper from '../src/utils/databaseHelper'
 import * as testHelper from './testHelper'
 import app from '../src/app'
@@ -72,7 +72,7 @@ describe('POST /api/add-wishlist-item', () => {
     await wishlist.save()
 
     // test success (wishlist exists)
-    const payload: wexcommerceTypes.AddWishlistItemPayload = { userId: USER_ID, productId: PRODUCT2_ID }
+    const payload: lebobeautycoTypes.AddWishlistItemPayload = { userId: USER_ID, productId: PRODUCT2_ID }
     let res = await request(app)
       .post('/api/add-wishlist-item')
       .set(env.X_ACCESS_TOKEN, token)

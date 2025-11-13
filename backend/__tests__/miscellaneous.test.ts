@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import mongoose from 'mongoose'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as env from '../src/config/env.config'
 import * as databaseHelper from '../src/utils/databaseHelper'
 import * as mailHelper from '../src/utils/mailHelper'
@@ -28,7 +28,7 @@ afterAll(async () => {
 describe('Test User phone validation', () => {
   it('should test User phone validation', async () => {
     let res = true
-    const USER: wexcommerceTypes.User = {
+    const USER: lebobeautycoTypes.User = {
       email: testHelper.GetRandomEmail(),
       fullName: 'User 1',
       phone: '',

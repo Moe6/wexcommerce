@@ -6,7 +6,7 @@ import {
   PhotoCamera as ImageIcon
 } from '@mui/icons-material'
 import Image from 'next/image'
-import * as wexcommerceHelper from ':wexcommerce-helper'
+import * as lebobeautycoHelper from ':lebobeautyco-helper'
 import { strings } from '@/lang/image-editor'
 import { strings as commonStrings } from '@/lang/common'
 import ImageViewer from './ImageViewer'
@@ -79,7 +79,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({
               }
             }
             const filename = await ImageService.uploadProductImage(file)
-            const mainImg = wexcommerceHelper.clone(image) as ImageItem
+            const mainImg = lebobeautycoHelper.clone(image) as ImageItem
             mainImg.filename = filename
             mainImg.temp = true
             setImage(mainImg)
@@ -97,7 +97,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({
             const filename = !categoryId ?
               await ImageService.createCategoryImage(file) :
               await ImageService.updateCategoryImage(categoryId!, file)
-            const mainImg = wexcommerceHelper.clone(image) as ImageItem
+            const mainImg = lebobeautycoHelper.clone(image) as ImageItem
             mainImg.filename = filename
             mainImg.temp = !categoryId
             setImage(mainImg)
@@ -128,8 +128,8 @@ const ImageEditor: React.FC<ImageEditorProps> = ({
               filenames.push(file.name)
               const imgItem = { temp: true, filename }
               images.push(imgItem)
-              setImages(wexcommerceHelper.cloneArray(images) as ImageItem[])
-              setFilenames(wexcommerceHelper.cloneArray(filenames) as string[])
+              setImages(lebobeautycoHelper.cloneArray(images) as ImageItem[])
+              setFilenames(lebobeautycoHelper.cloneArray(filenames) as string[])
               if (onAdd) {
                 onAdd(imgItem)
               }
@@ -145,7 +145,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({
   }
 
   const src = (_image: ImageItem) =>
-    wexcommerceHelper.joinURL(
+    lebobeautycoHelper.joinURL(
       _image.temp ? env.CDN_TEMP_PRODUCTS : env.CDN_PRODUCTS,
       _image.filename
     )
@@ -154,16 +154,16 @@ const ImageEditor: React.FC<ImageEditorProps> = ({
     if (type === 'product') {
       if (image) {
         return image.temp
-          ? wexcommerceHelper.joinURL(env.CDN_TEMP_PRODUCTS, image.filename)
-          : wexcommerceHelper.joinURL(env.CDN_PRODUCTS, image.filename)
+          ? lebobeautycoHelper.joinURL(env.CDN_TEMP_PRODUCTS, image.filename)
+          : lebobeautycoHelper.joinURL(env.CDN_PRODUCTS, image.filename)
       } else {
         return '/product.png'
       }
     } else if (type === 'category') {
       if (image) {
         return image.temp
-          ? wexcommerceHelper.joinURL(env.CDN_TEMP_CATEGORIES, image.filename)
-          : wexcommerceHelper.joinURL(env.CDN_CATEGORIES, image.filename)
+          ? lebobeautycoHelper.joinURL(env.CDN_TEMP_CATEGORIES, image.filename)
+          : lebobeautycoHelper.joinURL(env.CDN_CATEGORIES, image.filename)
       } else {
         return '/category.png'
       }
@@ -301,11 +301,11 @@ const ImageEditor: React.FC<ImageEditorProps> = ({
                       }
 
                       if (status === 200) {
-                        const _images = wexcommerceHelper.cloneArray(images) || []
+                        const _images = lebobeautycoHelper.cloneArray(images) || []
                         _images.splice(index, 1)
                         setImages(_images)
 
-                        const _filenames = wexcommerceHelper.cloneArray(filenames) || []
+                        const _filenames = lebobeautycoHelper.cloneArray(filenames) || []
                         _filenames.splice(index, 1)
                         setFilenames(_filenames)
 

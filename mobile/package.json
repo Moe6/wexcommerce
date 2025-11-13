@@ -1,6 +1,6 @@
 {
-  "name": "wexcommerce-mobile",
-  "description": "Mobile app for wexCommerce (customer app)",
+  "name": "lebobeautyco-mobile",
+  "description": "Mobile app for lebobeautyco (customer app)",
   "main": "expo-router/entry",
   "version": "3.9.0",
   "scripts": {

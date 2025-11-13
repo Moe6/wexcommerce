@@ -2,7 +2,7 @@ import request from 'supertest'
 import cookieParser from 'cookie-parser'
 import { nanoid } from 'nanoid'
 import mongoose from 'mongoose'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import app from '../src/app'
 import * as env from '../src/config/env.config'
 import User from '../src/models/User'
@@ -24,8 +24,8 @@ export const getRandomString = () => getName(Date.now().toString())
 
 export const getSupplierName = () => getName('supplier')
 
-export const ADMIN_EMAIL = `${getName('admin')}@test.wexcommerce.com`
-export const USER_EMAIL = `${getName('user')}@test.wexcommerce.com`
+export const ADMIN_EMAIL = `${getName('admin')}@test.lebobeautyco.com`
+export const USER_EMAIL = `${getName('user')}@test.lebobeautyco.com`
 export const USER_FULL_NAME = 'user'
 export const PASSWORD = 'Un1tTest5'
 export const LANGUAGE = 'en'
@@ -50,7 +50,7 @@ export const initialize = async () => {
     email: ADMIN_EMAIL,
     language: LANGUAGE,
     password: passwordHash,
-    type: wexcommerceTypes.UserType.Admin,
+    type: lebobeautycoTypes.UserType.Admin,
   })
   await admin.save()
   expect(admin.id).toBeDefined()
@@ -62,7 +62,7 @@ export const initialize = async () => {
     email: USER_EMAIL,
     language: LANGUAGE,
     password: passwordHash,
-    type: wexcommerceTypes.UserType.User,
+    type: lebobeautycoTypes.UserType.User,
   })
   await user.save()
   expect(user.id).toBeDefined()
@@ -94,8 +94,8 @@ export const getToken = (cookie: string) => {
   return token
 }
 
-const signin = async (appType: wexcommerceTypes.AppType, email: string) => {
-  const payload: wexcommerceTypes.SignInPayload = {
+const signin = async (appType: lebobeautycoTypes.AppType, email: string) => {
+  const payload: lebobeautycoTypes.SignInPayload = {
     email,
     password: PASSWORD,
   }
@@ -109,11 +109,11 @@ const signin = async (appType: wexcommerceTypes.AppType, email: string) => {
   return res.body.accessToken
 }
 
-export const signinAsAdmin = () => signin(wexcommerceTypes.AppType.Admin, ADMIN_EMAIL)
+export const signinAsAdmin = () => signin(lebobeautycoTypes.AppType.Admin, ADMIN_EMAIL)
 
-export const signinAsUser = () => signin(wexcommerceTypes.AppType.Frontend, USER_EMAIL)
+export const signinAsUser = () => signin(lebobeautycoTypes.AppType.Frontend, USER_EMAIL)
 
-export const GetRandomEmail = () => `${getName('random')}@test.wexcommerce.com`
+export const GetRandomEmail = () => `${getName('random')}@test.lebobeautyco.com`
 
 export const GetRandromObjectId = () => new mongoose.Types.ObjectId()
 

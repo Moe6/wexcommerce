@@ -1,6 +1,6 @@
 'use server'
 
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as fetchInstance from './fetchInstance'
 import * as UserService from './UserService'
 
@@ -40,10 +40,10 @@ export const deleteImage = async (productId: string, fileName: string): Promise<
 /**
  * Create a product.
  *
- * @param {wexcommerceTypes.CreateProductPayload} data
+ * @param {lebobeautycoTypes.CreateProductPayload} data
  * @returns {Promise<number>}
  */
-export const createProduct = async (data: wexcommerceTypes.CreateProductPayload): Promise<wexcommerceTypes.Response<wexcommerceTypes.Product>> =>
+export const createProduct = async (data: lebobeautycoTypes.CreateProductPayload): Promise<lebobeautycoTypes.Response<lebobeautycoTypes.Product>> =>
   fetchInstance
     .POST(
       '/api/create-product',
@@ -55,10 +55,10 @@ export const createProduct = async (data: wexcommerceTypes.CreateProductPayload)
 /**
  * Update a product.
  *
- * @param {wexcommerceTypes.UpdateProductPayload} data
+ * @param {lebobeautycoTypes.UpdateProductPayload} data
  * @returns {Promise<number>}
  */
-export const updateProduct = async (data: wexcommerceTypes.UpdateProductPayload): Promise<wexcommerceTypes.Response<wexcommerceTypes.Product>> =>
+export const updateProduct = async (data: lebobeautycoTypes.UpdateProductPayload): Promise<lebobeautycoTypes.Response<lebobeautycoTypes.Product>> =>
   fetchInstance
     .PUT(
       '/api/update-product',
@@ -102,9 +102,9 @@ export const deleteProduct = async (id: string): Promise<number> =>
  *
  * @param {string} id
  * @param {string} language
- * @returns {Promise<wexcommerceTypes.Product>}
+ * @returns {Promise<lebobeautycoTypes.Product>}
  */
-export const getProduct = async (id: string, language: string): Promise<wexcommerceTypes.Product> =>
+export const getProduct = async (id: string, language: string): Promise<lebobeautycoTypes.Product> =>
   fetchInstance
     .POST(
       `/api/product/${id}/${language}`
@@ -119,7 +119,7 @@ export const getProduct = async (id: string, language: string): Promise<wexcomme
  * @param {number} page
  * @param {number} size
  * @param {string} categoryId
- * @returns {Promise<wexcommerceTypes.Result<wexcommerceTypes.Product>>}
+ * @returns {Promise<lebobeautycoTypes.Result<lebobeautycoTypes.Product>>}
  */
 export const getProducts = async (
   userId: string,
@@ -127,9 +127,9 @@ export const getProducts = async (
   page: number,
   size: number,
   categoryId: string,
-  sortBy?: wexcommerceTypes.SortProductBy,
-): Promise<wexcommerceTypes.Result<wexcommerceTypes.Product>> => {
-  const data: wexcommerceTypes.GetAdminProductsPayload = { sortBy }
+  sortBy?: lebobeautycoTypes.SortProductBy,
+): Promise<lebobeautycoTypes.Result<lebobeautycoTypes.Product>> => {
+  const data: lebobeautycoTypes.GetAdminProductsPayload = { sortBy }
 
   return fetchInstance
     .POST(

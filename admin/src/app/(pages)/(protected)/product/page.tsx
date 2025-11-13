@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as SettingService from '@/lib/SettingService'
 import * as ProductService from '@/lib/ProductService'
 import { strings } from '@/lang/products'
@@ -13,7 +13,7 @@ const Product = async (props: { searchParams: Promise<SearchParams> }) => {
   const language = await SettingService.getLanguage()
   strings.setLanguage(language)
 
-  let product: wexcommerceTypes.Product | null = null
+  let product: lebobeautycoTypes.Product | null = null
   try {
     const language = await SettingService.getLanguage()
     product = await ProductService.getProduct(searchParams['p'] as string, language)

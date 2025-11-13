@@ -6,7 +6,7 @@ const babel = (api) => {
       'module-resolver',
       {
         alias: {
-          ':wexcommerce-types': '../packages/wexcommerce-types',
+          ':lebobeautyco-types': '../packages/lebobeautyco-types',
         },
       },
     ],

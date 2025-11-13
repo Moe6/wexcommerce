@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import request from 'supertest'
 import mongoose from 'mongoose'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as databaseHelper from '../src/utils/databaseHelper'
 import app from '../src/app'
 import * as env from '../src/config/env.config'
@@ -36,25 +36,25 @@ afterAll(async () => {
 
 describe('POST /api/sign-in/admin', () => {
   it('should authenticate from admin', async () => {
-    const payload: wexcommerceTypes.SignInPayload = {
+    const payload: lebobeautycoTypes.SignInPayload = {
       email: ADMIN_EMAIL,
       password: testHelper.PASSWORD,
     }
 
     let res = await request(app)
-      .post(`/api/sign-in/${wexcommerceTypes.AppType.Admin}`)
+      .post(`/api/sign-in/${lebobeautycoTypes.AppType.Admin}`)
       .send(payload)
     expect(res.statusCode).toBe(200)
 
     res = await request(app)
-      .post(`/api/sign-in/${wexcommerceTypes.AppType.Admin}`)
+      .post(`/api/sign-in/${lebobeautycoTypes.AppType.Admin}`)
       .set('Origin', env.ADMIN_HOST)
       .send(payload)
     expect(res.statusCode).toBe(200)
 
     // Not allowed by CORS
     res = await request(app)
-      .post(`/api/sign-in/${wexcommerceTypes.AppType.Admin}`)
+      .post(`/api/sign-in/${lebobeautycoTypes.AppType.Admin}`)
       .set('Origin', 'http://unknow/')
       .send(payload)
     expect(res.statusCode).toBe(500)
@@ -63,30 +63,30 @@ describe('POST /api/sign-in/admin', () => {
 
 describe('POST /api/sign-in/frontend', () => {
   it('should authenticate to frontend', async () => {
-    const payload: wexcommerceTypes.SignInPayload = {
+    const payload: lebobeautycoTypes.SignInPayload = {
       email: USER_EMAIL,
       password: testHelper.PASSWORD,
     }
 
     let res = await request(app)
-      .post(`/api/sign-in/${wexcommerceTypes.AppType.Frontend}`)
+      .post(`/api/sign-in/${lebobeautycoTypes.AppType.Frontend}`)
       .send(payload)
     expect(res.statusCode).toBe(200)
 
     res = await request(app)
-      .post(`/api/sign-in/${wexcommerceTypes.AppType.Frontend}`)
+      .post(`/api/sign-in/${lebobeautycoTypes.AppType.Frontend}`)
       .set('Origin', env.FRONTEND_HOST)
       .send(payload)
     expect(res.statusCode).toBe(200)
 
     res = await request(app)
-      .post(`/api/sign-in/${wexcommerceTypes.AppType.Frontend}`)
+      .post(`/api/sign-in/${lebobeautycoTypes.AppType.Frontend}`)
       .send(payload)
     expect(res.statusCode).toBe(200)
 
     // Not allowed by CORS
     res = await request(app)
-      .post(`/api/sign-in/${wexcommerceTypes.AppType.Frontend}`)
+      .post(`/api/sign-in/${lebobeautycoTypes.AppType.Frontend}`)
       .set('Origin', 'http://unknow/')
       .send(payload)
     expect(res.statusCode).toBe(500)

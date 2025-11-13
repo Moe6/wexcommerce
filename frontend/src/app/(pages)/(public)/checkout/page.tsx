@@ -29,8 +29,8 @@ import {
 import { loadStripe } from '@stripe/stripe-js'
 import { PayPalButtons } from '@paypal/react-paypal-js'
 import slugify from '@sindresorhus/slugify'
-import * as wexcommerceTypes from ':wexcommerce-types'
-import * as wexcommerceHelper from ':wexcommerce-helper'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
+import * as lebobeautycoHelper from ':lebobeautyco-helper'
 import * as SettingService from '@/lib/SettingService'
 import * as PaymentTypeService from '@/lib/PaymentTypeService'
 import * as DeliveryTypeService from '@/lib/DeliveryTypeService'
@@ -81,11 +81,11 @@ const Checkout: React.FC = () => {
   const [phoneValid, setPhoneValid] = useState(true)
   const [address, setAddress] = useState('')
 
-  const [paymentTypes, setPaymentTypes] = useState<wexcommerceTypes.PaymentTypeInfo[]>()
-  const [deliveryTypes, setDeliveryTypes] = useState<wexcommerceTypes.DeliveryTypeInfo[]>()
-  const [paymentType, setPaymentType] = useState<wexcommerceTypes.PaymentType>()
-  const [deliveryType, setDeliveryType] = useState(wexcommerceTypes.DeliveryType.Shipping)
-  const [cart, setCart] = useState<wexcommerceTypes.Cart>()
+  const [paymentTypes, setPaymentTypes] = useState<lebobeautycoTypes.PaymentTypeInfo[]>()
+  const [deliveryTypes, setDeliveryTypes] = useState<lebobeautycoTypes.DeliveryTypeInfo[]>()
+  const [paymentType, setPaymentType] = useState<lebobeautycoTypes.PaymentType>()
+  const [deliveryType, setDeliveryType] = useState(lebobeautycoTypes.DeliveryType.Shipping)
+  const [cart, setCart] = useState<lebobeautycoTypes.Cart>()
 
   const [total, setTotal] = useState(0)
   const [error, setError] = useState(false)
@@ -106,7 +106,7 @@ const Checkout: React.FC = () => {
     const init = async () => {
       const cartId = await CartService.getCartId()
 
-      let _cart: wexcommerceTypes.Cart | undefined = undefined
+      let _cart: lebobeautycoTypes.Cart | undefined = undefined
       if (cartId) {
         _cart = await CartService.getCart(cartId)
       }
@@ -125,13 +125,13 @@ const Checkout: React.FC = () => {
 
   useEffect(() => {
     if (paymentTypes) {
-      setPaymentType((paymentTypes && paymentTypes.length === 1 ? (paymentTypes[0].name as wexcommerceTypes.PaymentType) : wexcommerceTypes.PaymentType.CreditCard))
+      setPaymentType((paymentTypes && paymentTypes.length === 1 ? (paymentTypes[0].name as lebobeautycoTypes.PaymentType) : lebobeautycoTypes.PaymentType.CreditCard))
     }
   }, [paymentTypes])
 
   useEffect(() => {
-    if (deliveryTypes && !deliveryTypes.some(dt => dt.name === wexcommerceTypes.DeliveryType.Shipping)) {
-      setDeliveryType(wexcommerceTypes.DeliveryType.Withdrawal)
+    if (deliveryTypes && !deliveryTypes.some(dt => dt.name === lebobeautycoTypes.DeliveryType.Shipping)) {
+      setDeliveryType(lebobeautycoTypes.DeliveryType.Withdrawal)
     }
   }, [deliveryTypes])
 
@@ -248,7 +248,7 @@ const Checkout: React.FC = () => {
 
       // user
       const authenticated = !!user
-      let _user: wexcommerceTypes.User | undefined = undefined
+      let _user: lebobeautycoTypes.User | undefined = undefined
       if (!authenticated) {
         _user = {
           email,
@@ -264,14 +264,14 @@ const Checkout: React.FC = () => {
       //
       let _customerId: string | undefined
       let _sessionId: string | undefined
-      if (env.PAYMENT_GATEWAY === wexcommerceTypes.PaymentGateway.Stripe) {
-        if (paymentType === wexcommerceTypes.PaymentType.CreditCard) {
+      if (env.PAYMENT_GATEWAY === lebobeautycoTypes.PaymentGateway.Stripe) {
+        if (paymentType === lebobeautycoTypes.PaymentType.CreditCard) {
           const orderName = `${env.WEBSITE_NAME} - New order from ${email || user!.email}`
-          const name = wexcommerceHelper.truncateString(orderName, StripeService.ORDER_NAME_MAX_LENGTH)
-          const description = wexcommerceHelper.truncateString(orderName, StripeService.ORDER_DESCRIPTION_MAX_LENGTH)
+          const name = lebobeautycoHelper.truncateString(orderName, StripeService.ORDER_NAME_MAX_LENGTH)
+          const description = lebobeautycoHelper.truncateString(orderName, StripeService.ORDER_DESCRIPTION_MAX_LENGTH)
           const _email = (!authenticated ? email : user.email) as string
 
-          const payload: wexcommerceTypes.CreatePaymentPayload = {
+          const payload: lebobeautycoTypes.CreatePaymentPayload = {
             amount: total,
             currency: (await SettingService.getStripeCurrency()),
             locale: language,
@@ -290,12 +290,12 @@ const Checkout: React.FC = () => {
       }
 
       // order
-      const orderItems: wexcommerceTypes.OrderItem[] = cart!
+      const orderItems: lebobeautycoTypes.OrderItem[] = cart!
         .cartItems
         .filter(ci => !ci.product.soldOut)
         .map(ci => ({ product: ci.product._id!, quantity: ci.quantity }))
 
-      const order: wexcommerceTypes.OrderInfo = {
+      const order: lebobeautycoTypes.OrderInfo = {
         paymentType: paymentTypes.find(pt => pt.name === paymentType)?._id || '',
         deliveryType: deliveryTypes.find(dt => dt.name === deliveryType)?._id || '',
         total,
@@ -307,17 +307,17 @@ const Checkout: React.FC = () => {
       }
 
       // checkout
-      const payload: wexcommerceTypes.CheckoutPayload = {
+      const payload: lebobeautycoTypes.CheckoutPayload = {
         user: _user,
         order,
         sessionId: _sessionId,
         customerId: _customerId,
-        payPal: env.PAYMENT_GATEWAY === wexcommerceTypes.PaymentGateway.PayPal,
+        payPal: env.PAYMENT_GATEWAY === lebobeautycoTypes.PaymentGateway.PayPal,
       }
       const { status, orderId: _orderId } = await OrderService.checkout(payload)
 
       if (status === 200) {
-        if (paymentType === wexcommerceTypes.PaymentType.CreditCard) {
+        if (paymentType === lebobeautycoTypes.PaymentType.CreditCard) {
           setOrderId(_orderId)
           setSessionId(_sessionId)
         } else {
@@ -490,7 +490,7 @@ const Checkout: React.FC = () => {
                                 priority={true}
                                 className={styles.thumbnail}
                                 alt=""
-                                src={wexcommerceHelper.joinURL(env.CDN_PRODUCTS, cartItem.product.image)}
+                                src={lebobeautycoHelper.joinURL(env.CDN_PRODUCTS, cartItem.product.image)}
                               />
                             </div>
 
@@ -501,10 +501,10 @@ const Checkout: React.FC = () => {
                               <span className={styles.name} title={cartItem.product.name}>{cartItem.product.name}</span>
 
                             </Link>
-                            <span className={styles.price}>{wexcommerceHelper.formatPrice(cartItem.product.price, currency, language)}</span>
+                            <span className={styles.price}>{lebobeautycoHelper.formatPrice(cartItem.product.price, currency, language)}</span>
                             <span className={styles.quantity}>
                               <span className={styles.quantityLabel}>{strings.QUANTITY}</span>
-                              <span>{wexcommerceHelper.formatNumber(cartItem.quantity, language)}</span>
+                              <span>{lebobeautycoHelper.formatNumber(cartItem.quantity, language)}</span>
                             </span>
                           </div>
                         </div>
@@ -515,7 +515,7 @@ const Checkout: React.FC = () => {
                     <div className={styles.boxTotal}>
                       <span className={styles.totalLabel}>{commonStrings.SUBTOTAL}</span>
                       <span className={styles.total}>
-                        {wexcommerceHelper.formatPrice(helper.total(cart.cartItems), currency, language)}
+                        {lebobeautycoHelper.formatPrice(helper.total(cart.cartItems), currency, language)}
                       </span>
                     </div>
                   </div>
@@ -530,7 +530,7 @@ const Checkout: React.FC = () => {
                     <RadioGroup
                       value={paymentType}
                       onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        setPaymentType(event.target.value as wexcommerceTypes.PaymentType)
+                        setPaymentType(event.target.value as lebobeautycoTypes.PaymentType)
                       }}>
                       {
                         paymentTypes.map((paymentType) => (
@@ -545,9 +545,9 @@ const Checkout: React.FC = () => {
                                   helper.getPaymentType(paymentType.name, language)
                                 }</span>
                                 <span className={styles.paymentInfo}>{
-                                  paymentType.name === wexcommerceTypes.PaymentType.CreditCard ? strings.CREDIT_CARD_INFO
-                                    : paymentType.name === wexcommerceTypes.PaymentType.Cod ? strings.COD_INFO
-                                      : paymentType.name === wexcommerceTypes.PaymentType.WireTransfer ? strings.WIRE_TRANSFER_INFO
+                                  paymentType.name === lebobeautycoTypes.PaymentType.CreditCard ? strings.CREDIT_CARD_INFO
+                                    : paymentType.name === lebobeautycoTypes.PaymentType.Cod ? strings.COD_INFO
+                                      : paymentType.name === lebobeautycoTypes.PaymentType.WireTransfer ? strings.WIRE_TRANSFER_INFO
                                         : ''
                                 }</span>
                               </span>
@@ -568,7 +568,7 @@ const Checkout: React.FC = () => {
                       value={deliveryType}
                       className={styles.deliveryRadio}
                       onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                        setDeliveryType(event.target.value as wexcommerceTypes.DeliveryType)
+                        setDeliveryType(event.target.value as lebobeautycoTypes.DeliveryType)
                       }}>
                       {
                         deliveryTypes.map((deliveryType) => (
@@ -592,18 +592,18 @@ const Checkout: React.FC = () => {
                 </div>
 
                 {[
-                  wexcommerceTypes.PaymentType.CreditCard,
-                  wexcommerceTypes.PaymentType.Cod,
-                  wexcommerceTypes.PaymentType.WireTransfer
+                  lebobeautycoTypes.PaymentType.CreditCard,
+                  lebobeautycoTypes.PaymentType.Cod,
+                  lebobeautycoTypes.PaymentType.WireTransfer
                 ].includes(paymentType) &&
                   <div className={`${styles.box} ${styles.boxTotal}`}>
                     <span className={styles.totalLabel}>{strings.TOTAL_LABEL}</span>
-                    <span className={styles.total}>{wexcommerceHelper.formatPrice(total, currency, language)}</span>
+                    <span className={styles.total}>{lebobeautycoHelper.formatPrice(total, currency, language)}</span>
                   </div>
                 }
 
                 {
-                  env.PAYMENT_GATEWAY === wexcommerceTypes.PaymentGateway.Stripe
+                  env.PAYMENT_GATEWAY === lebobeautycoTypes.PaymentGateway.Stripe
                     ? (clientSecret && (
                       <div className={styles.paymentForm}>
                         <EmbeddedCheckoutProvider
@@ -618,9 +618,9 @@ const Checkout: React.FC = () => {
                       <div className={styles.paymentForm}>
                         <PayPalButtons
                           createOrder={async () => {
-                            const name = wexcommerceHelper.truncateString(`Order ${orderId}`, PayPalService.ORDER_NAME_MAX_LENGTH)
+                            const name = lebobeautycoHelper.truncateString(`Order ${orderId}`, PayPalService.ORDER_NAME_MAX_LENGTH)
                             const _description = `New order from ${email || user!.email}`
-                            const description = wexcommerceHelper.truncateString(_description, PayPalService.ORDER_DESCRIPTION_MAX_LENGTH)
+                            const description = lebobeautycoHelper.truncateString(_description, PayPalService.ORDER_DESCRIPTION_MAX_LENGTH)
                             const paypalCurrency = await SettingService.getStripeCurrency()
                             const payPalOrderId = await PayPalService.createOrder(orderId!, total, paypalCurrency, name, description)
                             return payPalOrderId
@@ -660,8 +660,8 @@ const Checkout: React.FC = () => {
 
                 <div className={styles.buttons}>
                   {(
-                    (env.PAYMENT_GATEWAY === wexcommerceTypes.PaymentGateway.Stripe && !clientSecret)
-                    || (env.PAYMENT_GATEWAY === wexcommerceTypes.PaymentGateway.PayPal && !payPalInit)
+                    (env.PAYMENT_GATEWAY === lebobeautycoTypes.PaymentGateway.Stripe && !clientSecret)
+                    || (env.PAYMENT_GATEWAY === lebobeautycoTypes.PaymentGateway.PayPal && !payPalInit)
                   ) && (
                       <Button
                         type="submit"
@@ -715,9 +715,9 @@ const Checkout: React.FC = () => {
           {
             success &&
             <Info message={
-              paymentType === wexcommerceTypes.PaymentType.CreditCard ? strings.CREDIT_CARD_SUCCESS
-                : paymentType === wexcommerceTypes.PaymentType.Cod ? strings.COD_SUCCESS
-                  : paymentType === wexcommerceTypes.PaymentType.WireTransfer ? strings.WIRE_TRANSFER_SUCCESS
+              paymentType === lebobeautycoTypes.PaymentType.CreditCard ? strings.CREDIT_CARD_SUCCESS
+                : paymentType === lebobeautycoTypes.PaymentType.Cod ? strings.COD_SUCCESS
+                  : paymentType === lebobeautycoTypes.PaymentType.WireTransfer ? strings.WIRE_TRANSFER_SUCCESS
                     : ''
             } />
           }

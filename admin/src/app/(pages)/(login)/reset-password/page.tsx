@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import { LanguageContextType, useLanguageContext } from '@/context/LanguageContext'
 import * as UserService from '@/lib/UserService'
 import { strings as commonStrings } from '@/lang/common'
@@ -136,7 +136,7 @@ const ResetPassword: React.FC = () => {
         setConfirmPasswordError(false)
       }
 
-      const data: wexcommerceTypes.ActivatePayload = { userId, token, password }
+      const data: lebobeautycoTypes.ActivatePayload = { userId, token, password }
 
       const status = await UserService.activate(data)
 

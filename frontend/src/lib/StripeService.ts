@@ -1,4 +1,4 @@
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as fetchInstance from './fetchInstance'
 
 /**
@@ -20,10 +20,10 @@ export const ORDER_DESCRIPTION_MAX_LENGTH = 500
 /**
  * Create Checkout Session.
  *
- * @param {wexcommerceTypes.CreatePaymentPayload} payload
- * @returns {Promise<wexcommerceTypes.PaymentResult>}
+ * @param {lebobeautycoTypes.CreatePaymentPayload} payload
+ * @returns {Promise<lebobeautycoTypes.PaymentResult>}
  */
-export const createCheckoutSession = async (payload: wexcommerceTypes.CreatePaymentPayload): Promise<wexcommerceTypes.PaymentResult> =>
+export const createCheckoutSession = async (payload: lebobeautycoTypes.CreatePaymentPayload): Promise<lebobeautycoTypes.PaymentResult> =>
   fetchInstance
     .POST(
       '/api/create-checkout-session',
@@ -50,10 +50,10 @@ export const checkCheckoutSession = async (sessionId: string): Promise<number> =
 /**
  * Create Payment Intent.
  *
- * @param {wexcommerceTypes.CreatePaymentPayload} payload
- * @returns {Promise<wexcommerceTypes.CreatePaymentIntentResult>}
+ * @param {lebobeautycoTypes.CreatePaymentPayload} payload
+ * @returns {Promise<lebobeautycoTypes.CreatePaymentIntentResult>}
  */
-export const createPaymentIntent = async (payload: wexcommerceTypes.CreatePaymentPayload): Promise<wexcommerceTypes.PaymentResult> =>
+export const createPaymentIntent = async (payload: lebobeautycoTypes.CreatePaymentPayload): Promise<lebobeautycoTypes.PaymentResult> =>
   fetchInstance
     .POST(
       '/api/create-payment-intent',

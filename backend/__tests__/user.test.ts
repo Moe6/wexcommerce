@@ -6,7 +6,7 @@ import path from 'path'
 import asyncFs from 'node:fs/promises'
 import { nanoid } from 'nanoid'
 import mongoose from 'mongoose'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import app from '../src/app'
 import * as databaseHelper from '../src/utils/databaseHelper'
 import * as testHelper from './testHelper'
@@ -30,9 +30,9 @@ const AVATAR2_PATH = path.resolve(__dirname, `./img/${AVATAR2}`)
 let USER1_ID: string
 let ADMIN_ID: string
 
-const USER1_EMAIL = `${testHelper.getName('user1')}@test.wexcommerce.com`
+const USER1_EMAIL = `${testHelper.getName('user1')}@test.lebobeautyco.com`
 const USER1_PASSWORD = testHelper.PASSWORD
-const ADMIN_EMAIL = `${testHelper.getName('admin')}@test.wexcommerce.com`
+const ADMIN_EMAIL = `${testHelper.getName('admin')}@test.lebobeautyco.com`
 
 //
 // Connecting and initializing the database before running the test suite
@@ -74,7 +74,7 @@ describe('POST /api/sign-up', () => {
       await asyncFs.copyFile(AVATAR1_PATH, tempAvatar)
     }
 
-    const payload: wexcommerceTypes.SignUpPayload = {
+    const payload: lebobeautycoTypes.SignUpPayload = {
       email: USER1_EMAIL,
       password: USER1_PASSWORD,
       fullName: 'user1',
@@ -90,7 +90,7 @@ describe('POST /api/sign-up', () => {
     let user = await User.findOne({ email: USER1_EMAIL })
     expect(user).not.toBeNull()
     USER1_ID = user?.id
-    expect(user?.type).toBe(wexcommerceTypes.UserType.User)
+    expect(user?.type).toBe(lebobeautycoTypes.UserType.User)
     expect(user?.email).toBe(payload.email)
     expect(user?.fullName).toBe(payload.fullName)
     expect(user?.language).toBe(payload.language)
@@ -192,7 +192,7 @@ describe('POST /api/sign-up', () => {
 
 describe('POST /api/admin-sign-up', () => {
   it('should create an admin user', async () => {
-    const payload: wexcommerceTypes.SignUpPayload = {
+    const payload: lebobeautycoTypes.SignUpPayload = {
       email: ADMIN_EMAIL,
       password: testHelper.PASSWORD,
       fullName: 'admin',
@@ -208,7 +208,7 @@ describe('POST /api/admin-sign-up', () => {
     const user = await User.findOne({ email: ADMIN_EMAIL })
     expect(user).not.toBeNull()
     ADMIN_ID = user?.id
-    expect(user?.type).toBe(wexcommerceTypes.UserType.Admin)
+    expect(user?.type).toBe(lebobeautycoTypes.UserType.Admin)
     expect(user?.email).toBe(payload.email)
     expect(user?.fullName).toBe(payload.fullName)
     expect(user?.language).toBe(payload.language)
@@ -232,23 +232,23 @@ describe('GET /api/check-token/:type/:userId/:email/:token', () => {
     expect(token?.length).toBeGreaterThan(1)
 
     let res = await request(app)
-      .get(`/api/check-token/${wexcommerceTypes.AppType.Frontend}/${USER1_ID}/${USER1_EMAIL}/${token}`)
+      .get(`/api/check-token/${lebobeautycoTypes.AppType.Frontend}/${USER1_ID}/${USER1_EMAIL}/${token}`)
     expect(res.statusCode).toBe(200)
 
     res = await request(app)
-      .get(`/api/check-token/${wexcommerceTypes.AppType.Admin}/${USER1_ID}/${USER1_EMAIL}/${token}`)
+      .get(`/api/check-token/${lebobeautycoTypes.AppType.Admin}/${USER1_ID}/${USER1_EMAIL}/${token}`)
     expect(res.statusCode).toBe(204)
 
     res = await request(app)
-      .get(`/api/check-token/${wexcommerceTypes.AppType.Frontend}/${testHelper.GetRandromObjectIdAsString()}/${USER1_EMAIL}/${token}`)
+      .get(`/api/check-token/${lebobeautycoTypes.AppType.Frontend}/${testHelper.GetRandromObjectIdAsString()}/${USER1_EMAIL}/${token}`)
     expect(res.statusCode).toBe(204)
 
     res = await request(app)
-      .get(`/api/check-token/${wexcommerceTypes.AppType.Frontend}/${USER1_ID}/${USER1_EMAIL}/${nanoid()}`)
+      .get(`/api/check-token/${lebobeautycoTypes.AppType.Frontend}/${USER1_ID}/${USER1_EMAIL}/${nanoid()}`)
     expect(res.statusCode).toBe(204)
 
     res = await request(app)
-      .get(`/api/check-token/${wexcommerceTypes.AppType.Frontend}/0/${USER1_EMAIL}/${token}`)
+      .get(`/api/check-token/${lebobeautycoTypes.AppType.Frontend}/0/${USER1_EMAIL}/${token}`)
     expect(res.statusCode).toBe(400)
   })
 })
@@ -260,7 +260,7 @@ describe('POST /api/activate', () => {
     const token = userToken?.token
     expect(token?.length).toBeGreaterThan(1)
 
-    const payload: wexcommerceTypes.ActivatePayload = {
+    const payload: lebobeautycoTypes.ActivatePayload = {
       userId: USER1_ID,
       password: testHelper.PASSWORD,
       token: token!,
@@ -335,7 +335,7 @@ describe('POST /api/resend/:type/:email/:reset', () => {
     await user!.save()
     let reset = true
     let res = await request(app)
-      .post(`/api/resend/${wexcommerceTypes.AppType.Frontend}/${USER1_EMAIL}/${reset}`)
+      .post(`/api/resend/${lebobeautycoTypes.AppType.Frontend}/${USER1_EMAIL}/${reset}`)
     expect(res.statusCode).toBe(200)
     user = await User.findById(USER1_ID)
     expect(user).not.toBeNull()
@@ -343,22 +343,22 @@ describe('POST /api/resend/:type/:email/:reset', () => {
 
     reset = false
     res = await request(app)
-      .post(`/api/resend/${wexcommerceTypes.AppType.Admin}/${ADMIN_EMAIL}/${reset}`)
+      .post(`/api/resend/${lebobeautycoTypes.AppType.Admin}/${ADMIN_EMAIL}/${reset}`)
     expect(res.statusCode).toBe(200)
     user = await User.findById(ADMIN_ID)
     expect(user).not.toBeNull()
     expect(user?.active).toBeFalsy()
 
     res = await request(app)
-      .post(`/api/resend/${wexcommerceTypes.AppType.Admin}/${USER1_EMAIL}/${reset}`)
+      .post(`/api/resend/${lebobeautycoTypes.AppType.Admin}/${USER1_EMAIL}/${reset}`)
     expect(res.statusCode).toBe(403)
 
     res = await request(app)
-      .post(`/api/resend/${wexcommerceTypes.AppType.Frontend}/${testHelper.GetRandomEmail()}/${reset}`)
+      .post(`/api/resend/${lebobeautycoTypes.AppType.Frontend}/${testHelper.GetRandomEmail()}/${reset}`)
     expect(res.statusCode).toBe(204)
 
     res = await request(app)
-      .post(`/api/resend/${wexcommerceTypes.AppType.Frontend}/unknown/${reset}`)
+      .post(`/api/resend/${lebobeautycoTypes.AppType.Frontend}/unknown/${reset}`)
     expect(res.statusCode).toBe(400)
   })
 })
@@ -367,7 +367,7 @@ describe('POST /api/resend-link', () => {
   it('should resend activation link', async () => {
     const token = await testHelper.signinAsAdmin()
 
-    const payload: wexcommerceTypes.ResendLinkPayload = {
+    const payload: lebobeautycoTypes.ResendLinkPayload = {
       email: USER1_EMAIL,
     }
 
@@ -434,52 +434,52 @@ describe('DELETE /api/delete-tokens/:userId', () => {
 
 describe('POST /api/sign-in/:type', () => {
   it('should sign in', async () => {
-    const payload: wexcommerceTypes.SignInPayload = {
+    const payload: lebobeautycoTypes.SignInPayload = {
       email: USER1_EMAIL,
       password: USER1_PASSWORD,
     }
 
     let res = await request(app)
-      .post(`/api/sign-in/${wexcommerceTypes.AppType.Frontend}`)
+      .post(`/api/sign-in/${lebobeautycoTypes.AppType.Frontend}`)
       .send(payload)
     expect(res.statusCode).toBe(200)
     expect(res.body.accessToken).toBeDefined()
 
     payload.email = undefined
     res = await request(app)
-      .post(`/api/sign-in/${wexcommerceTypes.AppType.Frontend}`)
+      .post(`/api/sign-in/${lebobeautycoTypes.AppType.Frontend}`)
       .send(payload)
     expect(res.statusCode).toBe(400)
     payload.email = USER1_EMAIL
 
     payload.password = 'wrong-password'
     res = await request(app)
-      .post(`/api/sign-in/${wexcommerceTypes.AppType.Frontend}`)
+      .post(`/api/sign-in/${lebobeautycoTypes.AppType.Frontend}`)
       .send(payload)
     expect(res.statusCode).toBe(204)
 
     payload.password = USER1_PASSWORD
     res = await request(app)
-      .post(`/api/sign-in/${wexcommerceTypes.AppType.Admin}`)
+      .post(`/api/sign-in/${lebobeautycoTypes.AppType.Admin}`)
       .send(payload)
     expect(res.statusCode).toBe(204)
 
     payload.stayConnected = true
     res = await request(app)
-      .post(`/api/sign-in/${wexcommerceTypes.AppType.Frontend}`)
+      .post(`/api/sign-in/${lebobeautycoTypes.AppType.Frontend}`)
       .send(payload)
     expect(res.statusCode).toBe(200)
 
     payload.stayConnected = false
     payload.mobile = true
     res = await request(app)
-      .post(`/api/sign-in/${wexcommerceTypes.AppType.Frontend}`)
+      .post(`/api/sign-in/${lebobeautycoTypes.AppType.Frontend}`)
       .send(payload)
     expect(res.statusCode).toBe(200)
 
     payload.email = 'unknown'
     res = await request(app)
-      .post(`/api/sign-in/${wexcommerceTypes.AppType.Frontend}`)
+      .post(`/api/sign-in/${lebobeautycoTypes.AppType.Frontend}`)
       .send(payload)
     expect(res.statusCode).toBe(400)
   })
@@ -488,9 +488,9 @@ describe('POST /api/sign-in/:type', () => {
 describe('POST /api/social-sign-in/:type', () => {
   it('should sign in', async () => {
     // test failure (google)
-    const payload: wexcommerceTypes.SignInPayload = {
+    const payload: lebobeautycoTypes.SignInPayload = {
       email: USER1_EMAIL,
-      socialSignInType: wexcommerceTypes.SocialSignInType.Google,
+      socialSignInType: lebobeautycoTypes.SocialSignInType.Google,
       accessToken: testHelper.GetRandromObjectIdAsString(),
     }
     let res = await request(app)
@@ -499,14 +499,14 @@ describe('POST /api/social-sign-in/:type', () => {
     expect(res.statusCode).toBe(400)
 
     // test failure (facebook)
-    payload.socialSignInType = wexcommerceTypes.SocialSignInType.Facebook
+    payload.socialSignInType = lebobeautycoTypes.SocialSignInType.Facebook
     res = await request(app)
       .post('/api/social-sign-in')
       .send(payload)
     expect(res.statusCode).toBe(400)
 
     // test failure (apple)
-    payload.socialSignInType = wexcommerceTypes.SocialSignInType.Apple
+    payload.socialSignInType = lebobeautycoTypes.SocialSignInType.Apple
     res = await request(app)
       .post('/api/social-sign-in')
       .send(payload)
@@ -558,7 +558,7 @@ describe('POST /api/social-sign-in/:type', () => {
       .post('/api/social-sign-in')
       .send(payload)
     expect(res.statusCode).toBe(400)
-    payload.socialSignInType = wexcommerceTypes.SocialSignInType.Google
+    payload.socialSignInType = lebobeautycoTypes.SocialSignInType.Google
 
     // test failure (no accessToken)
     payload.accessToken = undefined
@@ -598,9 +598,9 @@ describe('POST /api/social-sign-in/:type', () => {
       await dbh.close()
       await dbh.connect(env.DB_URI, false, false)
 
-      const payload: wexcommerceTypes.SignInPayload = {
+      const payload: lebobeautycoTypes.SignInPayload = {
         email: USER1_EMAIL,
-        socialSignInType: wexcommerceTypes.SocialSignInType.Google,
+        socialSignInType: lebobeautycoTypes.SocialSignInType.Google,
         accessToken: testHelper.GetRandromObjectIdAsString(),
       }
 
@@ -616,7 +616,7 @@ describe('POST /api/social-sign-in/:type', () => {
 
 describe('POST /api/validate-email', () => {
   it('should validate email', async () => {
-    const payload: wexcommerceTypes.ValidateEmailPayload = {
+    const payload: lebobeautycoTypes.ValidateEmailPayload = {
       email: USER1_EMAIL,
     }
     let res = await request(app)
@@ -674,7 +674,7 @@ describe('POST /api/update-user', () => {
   it('should update user', async () => {
     const token = await testHelper.signinAsAdmin()
 
-    const payload: wexcommerceTypes.UpdateUserPayload = {
+    const payload: lebobeautycoTypes.UpdateUserPayload = {
       _id: USER1_ID,
       fullName: 'user1-1',
       phone: '09090908',
@@ -687,7 +687,7 @@ describe('POST /api/update-user', () => {
     expect(res.statusCode).toBe(200)
     const user = await User.findById(USER1_ID)
     expect(user).not.toBeNull()
-    expect(user?.type).toBe(wexcommerceTypes.UserType.User)
+    expect(user?.type).toBe(lebobeautycoTypes.UserType.User)
     expect(user?.fullName).toBe(payload.fullName)
 
     expect(user?.phone).toBe(payload.phone)
@@ -716,7 +716,7 @@ describe('POST /api/update-language', () => {
     let user = await User.findById(USER1_ID)
     expect(user).not.toBeNull()
     expect(user?.language).toBe(testHelper.LANGUAGE)
-    const payload: wexcommerceTypes.UpdateLanguagePayload = {
+    const payload: lebobeautycoTypes.UpdateLanguagePayload = {
       id: USER1_ID,
       language: 'fr',
     }
@@ -920,7 +920,7 @@ describe('POST /api/change-password', () => {
 
     const newPassword = `#${testHelper.PASSWORD}#`
 
-    const payload: wexcommerceTypes.ChangePasswordPayload = {
+    const payload: lebobeautycoTypes.ChangePasswordPayload = {
       _id: USER1_ID,
       password: USER1_PASSWORD,
       newPassword,
@@ -1059,7 +1059,7 @@ describe('GET /api/users/:page/:size', () => {
 
 describe('POST /api/is-user', () => {
   it('should check user', async () => {
-    const payload: wexcommerceTypes.IsUserPayload = {
+    const payload: lebobeautycoTypes.IsUserPayload = {
       email: USER1_EMAIL,
     }
     let res = await request(app)
@@ -1087,7 +1087,7 @@ describe('POST /api/is-user', () => {
 
 describe('POST /api/is-admin', () => {
   it('should check admin', async () => {
-    const payload: wexcommerceTypes.IsAdminPayload = {
+    const payload: lebobeautycoTypes.IsAdminPayload = {
       email: ADMIN_EMAIL,
     }
     let res = await request(app)
@@ -1142,10 +1142,10 @@ describe('POST /api/delete-users', () => {
 
     const order = new Order({
       user: USER1_ID,
-      deliveryType: (await DeliveryType.findOne({ name: wexcommerceTypes.DeliveryType.Shipping }))?._id,
-      paymentType: (await PaymentType.findOne({ name: wexcommerceTypes.PaymentType.CreditCard }))?._id,
+      deliveryType: (await DeliveryType.findOne({ name: lebobeautycoTypes.DeliveryType.Shipping }))?._id,
+      paymentType: (await PaymentType.findOne({ name: lebobeautycoTypes.PaymentType.CreditCard }))?._id,
       total: 312,
-      status: wexcommerceTypes.OrderStatus.Pending,
+      status: lebobeautycoTypes.OrderStatus.Pending,
       orderItems: [testHelper.GetRandromObjectId()],
     })
     await order.save()
@@ -1241,8 +1241,8 @@ describe('POST /api/verify-recaptcha/:token/:ip', () => {
 describe('POST /api/send-email', () => {
   it('should send an email', async () => {
     // test success (contact form)
-    const payload: wexcommerceTypes.SendEmailPayload = {
-      from: 'no-reply@wexcommerce.ma',
+    const payload: lebobeautycoTypes.SendEmailPayload = {
+      from: 'no-reply@lebobeautyco.ma',
       to: 'test@test.com',
       subject: 'test',
       message: 'test message',

@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import { jest } from '@jest/globals'
 import { SignJWT } from 'jose'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as authHelper from '../src/utils/authHelper'
 import * as env from '../src/config/env.config'
 
@@ -26,17 +26,17 @@ describe('Test validateAccessToken', () => {
     const email = 'unknow@unknown.com'
 
     // test failure
-    expect(await authHelper.validateAccessToken('unknown' as wexcommerceTypes.SocialSignInType, 'token', email)).toBeFalsy()
+    expect(await authHelper.validateAccessToken('unknown' as lebobeautycoTypes.SocialSignInType, 'token', email)).toBeFalsy()
 
     // test success (facebook)
     let payload = {}
     let token = await encryptJWT(payload)
-    expect(await authHelper.validateAccessToken(wexcommerceTypes.SocialSignInType.Facebook, token, email)).toBeTruthy()
+    expect(await authHelper.validateAccessToken(lebobeautycoTypes.SocialSignInType.Facebook, token, email)).toBeTruthy()
 
     // test success (apple)
     payload = { email }
     token = await encryptJWT(payload)
-    expect(await authHelper.validateAccessToken(wexcommerceTypes.SocialSignInType.Apple, token, email)).toBeTruthy()
+    expect(await authHelper.validateAccessToken(lebobeautycoTypes.SocialSignInType.Apple, token, email)).toBeTruthy()
 
     await jest.isolateModulesAsync(async () => {
       // Mock axios with unstable_mockModule
@@ -52,7 +52,7 @@ describe('Test validateAccessToken', () => {
 
       payload = { data: { email } }
       token = await encryptJWT(payload)
-      expect(await authHelper.validateAccessToken(wexcommerceTypes.SocialSignInType.Google, token, email)).toBeTruthy()
+      expect(await authHelper.validateAccessToken(lebobeautycoTypes.SocialSignInType.Google, token, email)).toBeTruthy()
     })
   })
 })

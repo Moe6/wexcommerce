@@ -11,7 +11,7 @@ import {
   Button,
   Paper
 } from '@mui/material'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import { strings as commonStrings } from '@/lang/common'
 import { strings } from '@/lang/sign-up'
 import * as UserService from '@/lib/UserService'
@@ -162,7 +162,7 @@ const SignUp: React.FC = () => {
 
       setLoading(true)
 
-      const data: wexcommerceTypes.SignUpPayload = {
+      const data: lebobeautycoTypes.SignUpPayload = {
         email,
         phone,
         address,

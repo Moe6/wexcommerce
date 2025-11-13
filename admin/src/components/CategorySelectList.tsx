@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as CategoryService from '@/lib/CategoryService'
 import * as helper from '@/utils/helper'
 import MultipleSelect from './MultipleSelect'
@@ -16,9 +16,9 @@ interface CategorySelectListProps {
   hidePopupIcon?: boolean
   freeSolo?: boolean
   variant?: TextFieldVariants
-  selectedOptions?: wexcommerceTypes.Option[]
+  selectedOptions?: lebobeautycoTypes.Option[]
   // eslint-disable-next-line no-unused-vars
-  onChange: (values: wexcommerceTypes.Option[]) => void
+  onChange: (values: lebobeautycoTypes.Option[]) => void
 }
 
 const CategorySelectList: React.FC<CategorySelectListProps> = (
@@ -37,7 +37,7 @@ const CategorySelectList: React.FC<CategorySelectListProps> = (
   const { language } = useLanguageContext() as LanguageContextType
   const [loading, setLoading] = useState(false)
   const [keyword, setKeyword] = useState('')
-  const [rows, setRows] = useState<wexcommerceTypes.CategoryInfo[]>([])
+  const [rows, setRows] = useState<lebobeautycoTypes.CategoryInfo[]>([])
 
   const fetchCategories = async () => {
     if (language) {
@@ -52,7 +52,7 @@ const CategorySelectList: React.FC<CategorySelectListProps> = (
     }
   }
 
-  const handleChange = (values: wexcommerceTypes.Option[]) => {
+  const handleChange = (values: lebobeautycoTypes.Option[]) => {
     if (onChange) {
       onChange(values)
     }

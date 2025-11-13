@@ -19,7 +19,7 @@ import {
   Block as SoldOutIcon,
   VisibilityOff as HiddenIcon
 } from '@mui/icons-material'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as CategoryService from '@/lib/CategoryService'
 import { LanguageContextType, useLanguageContext } from '@/context/LanguageContext'
 import env from '@/config/env.config'
@@ -37,7 +37,7 @@ interface PagerProps {
   rowCount: number
   categoryId?: string
   keyword: string
-  sortBy?: wexcommerceTypes.SortProductBy
+  sortBy?: lebobeautycoTypes.SortProductBy
   className?: string
 }
 
@@ -66,7 +66,7 @@ export const Pager: React.FC<PagerProps> = ({
 }
 
 interface TagsProps {
-  product: wexcommerceTypes.Product
+  product: lebobeautycoTypes.Product
 }
 
 export const Tags: React.FC<TagsProps> = ({ product }) => (
@@ -107,10 +107,10 @@ const ProductsWrapper: React.FC<ProductsWrapperProps> = (
 
   const { language } = useLanguageContext() as LanguageContextType
 
-  const [categories, setCategories] = useState<wexcommerceTypes.CategoryInfo[]>([])
+  const [categories, setCategories] = useState<lebobeautycoTypes.CategoryInfo[]>([])
   const [keyword, setKeyword] = useState('')
   const [categoryId, setCategoryId] = useState('')
-  const [sortBy, setSortBy] = useState<wexcommerceTypes.SortProductBy>()
+  const [sortBy, setSortBy] = useState<lebobeautycoTypes.SortProductBy>()
 
   const leftPanelRef = useRef<HTMLDivElement>(null)
   const closeIconRef = useRef<SVGSVGElement>(null)
@@ -120,17 +120,17 @@ const ProductsWrapper: React.FC<ProductsWrapperProps> = (
     setKeyword(searchParams.get('s') || '')
     setCategoryId(searchParams.get('c') || '')
 
-    let _sortBy = wexcommerceTypes.SortProductBy.dateDesc
+    let _sortBy = lebobeautycoTypes.SortProductBy.dateDesc
     const sb = searchParams.get('sb')
     if (sb) {
-      if (sb.toLowerCase() === wexcommerceTypes.SortProductBy.priceAsc.toLowerCase()) {
-        _sortBy = wexcommerceTypes.SortProductBy.priceAsc
-      } else if (sb.toLowerCase() === wexcommerceTypes.SortProductBy.priceDesc.toLowerCase()) {
-        _sortBy = wexcommerceTypes.SortProductBy.priceDesc
-      } else if (sb.toLowerCase() === wexcommerceTypes.SortProductBy.featured.toLowerCase()) {
-        _sortBy = wexcommerceTypes.SortProductBy.featured
+      if (sb.toLowerCase() === lebobeautycoTypes.SortProductBy.priceAsc.toLowerCase()) {
+        _sortBy = lebobeautycoTypes.SortProductBy.priceAsc
+      } else if (sb.toLowerCase() === lebobeautycoTypes.SortProductBy.priceDesc.toLowerCase()) {
+        _sortBy = lebobeautycoTypes.SortProductBy.priceDesc
+      } else if (sb.toLowerCase() === lebobeautycoTypes.SortProductBy.featured.toLowerCase()) {
+        _sortBy = lebobeautycoTypes.SortProductBy.featured
       } else {
-        _sortBy = wexcommerceTypes.SortProductBy.dateDesc
+        _sortBy = lebobeautycoTypes.SortProductBy.dateDesc
       }
     }
     setSortBy(_sortBy)
@@ -302,10 +302,10 @@ const ProductsWrapper: React.FC<ProductsWrapperProps> = (
                         router.push(url)
                       }}
                     >
-                      <MenuItem value={wexcommerceTypes.SortProductBy.dateDesc.toString()}>{strings.ORDER_BY_DATE_DESC}</MenuItem>
-                      <MenuItem value={wexcommerceTypes.SortProductBy.featured.toString()}>{strings.ORDER_BY_FEATURED}</MenuItem>
-                      <MenuItem value={wexcommerceTypes.SortProductBy.priceAsc.toString()}>{strings.ORDER_BY_PRICE_ASC}</MenuItem>
-                      <MenuItem value={wexcommerceTypes.SortProductBy.priceDesc.toString()}>{strings.ORDER_BY_PRICE_DESC}</MenuItem>
+                      <MenuItem value={lebobeautycoTypes.SortProductBy.dateDesc.toString()}>{strings.ORDER_BY_DATE_DESC}</MenuItem>
+                      <MenuItem value={lebobeautycoTypes.SortProductBy.featured.toString()}>{strings.ORDER_BY_FEATURED}</MenuItem>
+                      <MenuItem value={lebobeautycoTypes.SortProductBy.priceAsc.toString()}>{strings.ORDER_BY_PRICE_ASC}</MenuItem>
+                      <MenuItem value={lebobeautycoTypes.SortProductBy.priceDesc.toString()}>{strings.ORDER_BY_PRICE_DESC}</MenuItem>
                     </Select>
                   </FormControl>}
               </div>

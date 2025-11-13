@@ -10,8 +10,8 @@ import {
 } from '@mui/material'
 import { fr, enUS } from 'date-fns/locale'
 import { format } from 'date-fns'
-import * as wexcommerceTypes from ':wexcommerce-types'
-import * as wexcommerceHelper from ':wexcommerce-helper'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
+import * as lebobeautycoHelper from ':lebobeautyco-helper'
 import * as helper from '@/utils/helper'
 import { strings as cpStrings } from '@/lang/create-product'
 import { strings as commonStrings } from '@/lang/common'
@@ -28,7 +28,7 @@ import { UserContextType, useUserContext } from '@/context/UserContext'
 import styles from '@/styles/order.module.css'
 
 interface OrderFormProps {
-  order: wexcommerceTypes.OrderInfo
+  order: lebobeautycoTypes.OrderInfo
 }
 
 const OrderForm: React.FC<OrderFormProps> = ({ order }) => {
@@ -62,7 +62,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ order }) => {
   }
 
   const _fr = language === 'fr'
-  const _format = wexcommerceHelper.getDateFormat(language)
+  const _format = lebobeautycoHelper.getDateFormat(language)
   const _locale = _fr ? fr : enUS
 
   return (
@@ -83,7 +83,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ order }) => {
                     value={orderStatus}
                     SelectDisplayProps={{ style: { paddingTop: 0, paddingRight: 24, paddingBottom: 4, paddingLeft: 0 } }}
                     onChange={(e) => {
-                      setOrderStatus(e.target.value as wexcommerceTypes.OrderStatus)
+                      setOrderStatus(e.target.value as lebobeautycoTypes.OrderStatus)
                     }}
                   >
                     {helper.getOrderStatuses().map((status) => (
@@ -94,17 +94,17 @@ const OrderForm: React.FC<OrderFormProps> = ({ order }) => {
               </div>
               <div className={styles.orderInfo}>
                 <span className={styles.orderLabel}>{strings.PAYMENT_TYPE}</span>
-                <span><PaymentType value={(order.paymentType as wexcommerceTypes.PaymentTypeInfo).name} /></span>
+                <span><PaymentType value={(order.paymentType as lebobeautycoTypes.PaymentTypeInfo).name} /></span>
               </div>
               <div className={styles.orderInfo}>
                 <span className={styles.orderLabel}>{strings.DELIVERY_TYPE}</span>
-                <span><DeliveryType value={(order.deliveryType as wexcommerceTypes.DeliveryTypeInfo).name} /></span>
+                <span><DeliveryType value={(order.deliveryType as lebobeautycoTypes.DeliveryTypeInfo).name} /></span>
               </div>
               <div className={styles.orderInfo}>
                 <span className={styles.orderLabel}>{strings.CLIENT}</span>
-                <Link href={`/users?s=${(order.user as wexcommerceTypes.User)._id}`}>
+                <Link href={`/users?s=${(order.user as lebobeautycoTypes.User)._id}`}>
 
-                  <span>{(order.user as wexcommerceTypes.User).fullName}</span>
+                  <span>{(order.user as lebobeautycoTypes.User).fullName}</span>
 
                 </Link>
               </div>
@@ -112,24 +112,24 @@ const OrderForm: React.FC<OrderFormProps> = ({ order }) => {
                 <span className={styles.orderLabel}>{strings.ORDER_ITEMS}</span>
                 <div className={styles.orderItems}>
                   {
-                    (order.orderItems as wexcommerceTypes.OrderItem[]).map((orderItem) => (
+                    (order.orderItems as lebobeautycoTypes.OrderItem[]).map((orderItem) => (
                       <div key={orderItem._id} className={styles.orderItem}>
                         <div className={styles.orderItemInfo}>
                           <span className={styles.orderItemLabel}>{strings.PRODUCT}</span>
                           <span>
                             <Link
-                              href={`/product?p=${(orderItem.product as wexcommerceTypes.Product)._id}`}
+                              href={`/product?p=${(orderItem.product as lebobeautycoTypes.Product)._id}`}
                               className={styles.orderItemText}
-                              title={(orderItem.product as wexcommerceTypes.Product).name}>
+                              title={(orderItem.product as lebobeautycoTypes.Product).name}>
 
-                              {(orderItem.product as wexcommerceTypes.Product).name}
+                              {(orderItem.product as lebobeautycoTypes.Product).name}
 
                             </Link>
                           </span>
                         </div>
                         <div className={styles.orderItemInfo}>
                           <span className={styles.orderItemLabel}>{cpStrings.PRICE}</span>
-                          <span>{`${wexcommerceHelper.formatPrice((orderItem.product as wexcommerceTypes.Product).price, currency, language)}`}</span>
+                          <span>{`${lebobeautycoHelper.formatPrice((orderItem.product as lebobeautycoTypes.Product).price, currency, language)}`}</span>
                         </div>
                         <div className={styles.orderItemInfo}>
                           <span className={styles.orderItemLabel}>{commonStrings.QUANTITY}</span>
@@ -142,11 +142,11 @@ const OrderForm: React.FC<OrderFormProps> = ({ order }) => {
               </div>
               <div className={styles.orderInfo}>
                 <span className={styles.orderLabel}>{strings.ORDERED_AT}</span>
-                <span>{wexcommerceHelper.capitalize(format(new Date(order.createdAt!), _format, { locale: _locale }))}</span>
+                <span>{lebobeautycoHelper.capitalize(format(new Date(order.createdAt!), _format, { locale: _locale }))}</span>
               </div>
               <div className={styles.orderInfo}>
                 <span className={styles.orderLabel}>{strings.TOTAL}</span>
-                <span className={styles.total}>{`${wexcommerceHelper.formatPrice(order.total, currency, language)}`}</span>
+                <span className={styles.total}>{`${lebobeautycoHelper.formatPrice(order.total, currency, language)}`}</span>
               </div>
             </div>
 

@@ -1,10 +1,10 @@
 'use server'
 
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as fetchInstance from './fetchInstance'
 import * as UserService from './UserService'
 
-export const getDeliveryTypes = async (): Promise<wexcommerceTypes.DeliveryTypeInfo[]> => (
+export const getDeliveryTypes = async (): Promise<lebobeautycoTypes.DeliveryTypeInfo[]> => (
   fetchInstance
     .GET(
       '/api/enabled-delivery-types',

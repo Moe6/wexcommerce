@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as serverHelper from '@/utils/serverHelper'
 import env from '@/config/env.config'
 import * as ProductService from '@/lib/ProductService'
@@ -28,24 +28,24 @@ const Search = async (props: { searchParams: Promise<SearchParams> }) => {
     page = 1
   }
 
-  let sortBy = wexcommerceTypes.SortProductBy.featured
+  let sortBy = lebobeautycoTypes.SortProductBy.featured
   const sb = searchParams['sb'] as string
   if (sb) {
-    if (sb.toLowerCase() === wexcommerceTypes.SortProductBy.priceAsc.toLowerCase()) {
-      sortBy = wexcommerceTypes.SortProductBy.priceAsc
-    } else if (sb.toLowerCase() === wexcommerceTypes.SortProductBy.priceDesc.toLowerCase()) {
-      sortBy = wexcommerceTypes.SortProductBy.priceDesc
-    } else if (sb.toLowerCase() === wexcommerceTypes.SortProductBy.dateDesc.toLowerCase()) {
-      sortBy = wexcommerceTypes.SortProductBy.dateDesc
+    if (sb.toLowerCase() === lebobeautycoTypes.SortProductBy.priceAsc.toLowerCase()) {
+      sortBy = lebobeautycoTypes.SortProductBy.priceAsc
+    } else if (sb.toLowerCase() === lebobeautycoTypes.SortProductBy.priceDesc.toLowerCase()) {
+      sortBy = lebobeautycoTypes.SortProductBy.priceDesc
+    } else if (sb.toLowerCase() === lebobeautycoTypes.SortProductBy.dateDesc.toLowerCase()) {
+      sortBy = lebobeautycoTypes.SortProductBy.dateDesc
     } else {
-      sortBy = wexcommerceTypes.SortProductBy.featured
+      sortBy = lebobeautycoTypes.SortProductBy.featured
     }
   }
 
   const categoryId = (searchParams['c'] as string) || ''
   const keyword = (searchParams['s'] as string) || ''
 
-  let products: wexcommerceTypes.Product[] = []
+  let products: lebobeautycoTypes.Product[] = []
   let rowCount = 0
   let totalRecords = 0
   let noMatch = false

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import { Request, Response } from 'express'
 import validator from 'validator'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as logger from '../utils/logger'
 import * as env from '../config/env.config'
 import i18n from '../lang/i18n'
@@ -19,8 +19,8 @@ import CartItem from '../models/CartItem'
  */
 export const addItem = async (req: Request, res: Response) => {
   try {
-    const { body }: { body: wexcommerceTypes.AddItemPayload } = req
-    const { cartId, productId }: wexcommerceTypes.AddItemPayload = body
+    const { body }: { body: lebobeautycoTypes.AddItemPayload } = req
+    const { cartId, productId }: lebobeautycoTypes.AddItemPayload = body
 
     if (!helper.isValidObjectId(productId)) {
       throw new Error('Product Id not valid')

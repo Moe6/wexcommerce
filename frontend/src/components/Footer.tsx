@@ -2,7 +2,7 @@ import React from 'react'
 import { redirect } from 'next/navigation'
 import Image from 'next/image'
 import { Phone, Email } from '@mui/icons-material'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import env from '@/config/env.config'
 import { strings } from '../lang/footer'
 import { strings as headerStrings } from '../lang/header'
@@ -44,15 +44,15 @@ const Footer: React.FC = () => {
         </div>
         <div className={styles.copyright}>
           <span>{strings.COPYRIGHT}</span>
-          <div className={env.PAYMENT_GATEWAY === wexcommerceTypes.PaymentGateway.Stripe ? styles.stripe : styles.paypal}>
+          <div className={env.PAYMENT_GATEWAY === lebobeautycoTypes.PaymentGateway.Stripe ? styles.stripe : styles.paypal}>
             <Image
               width={0}
               height={0}
               sizes="100vwh"
               priority={true}
               alt=""
-              src={env.PAYMENT_GATEWAY === wexcommerceTypes.PaymentGateway.Stripe ? '/stripe.png' : '/paypal.png'}
-              className={env.PAYMENT_GATEWAY === wexcommerceTypes.PaymentGateway.Stripe ? styles.stripe : styles.paypal}
+              src={env.PAYMENT_GATEWAY === lebobeautycoTypes.PaymentGateway.Stripe ? '/stripe.png' : '/paypal.png'}
+              className={env.PAYMENT_GATEWAY === lebobeautycoTypes.PaymentGateway.Stripe ? styles.stripe : styles.paypal}
             />
           </div>
         </div>

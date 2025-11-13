@@ -2,7 +2,7 @@ import 'dotenv/config'
 import { jest } from '@jest/globals'
 import request from 'supertest'
 import mongoose from 'mongoose'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as settingController from '../src/controllers/settingController'
 import * as databaseHelper from '../src/utils/databaseHelper'
 import * as testHelper from './testHelper'
@@ -234,7 +234,7 @@ describe('PUT /api/update-settings', () => {
     } = settings!
 
     // test success
-    const payload: wexcommerceTypes.UpdateSettingsPayload = {
+    const payload: lebobeautycoTypes.UpdateSettingsPayload = {
       language: 'fr',
       currency: '€',
       stripeCurrency: 'EUR',
@@ -309,7 +309,7 @@ describe('PUT /api/update-bank-settings', () => {
     } = settings!
 
     // test success
-    const payload: wexcommerceTypes.UpdateBankSettingsPayload = {
+    const payload: lebobeautycoTypes.UpdateBankSettingsPayload = {
       bankName: 'BANK_NAME',
       accountHolder: 'ACCOUNT_HOLDER',
       rib: '007780000125300000000023',

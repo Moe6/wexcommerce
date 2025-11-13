@@ -2,7 +2,7 @@ import 'dotenv/config'
 import { jest } from '@jest/globals'
 import request from 'supertest'
 import { nanoid } from 'nanoid'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import app from '../src/app'
 import * as databaseHelper from '../src/utils/databaseHelper'
 import * as testHelper from './testHelper'
@@ -74,14 +74,14 @@ describe('POST /api/create-checkout-session', () => {
 
     // test success (create checkout session with non existant user)
     let receiptEmail = testHelper.GetRandomEmail()
-    let payload: wexcommerceTypes.CreatePaymentPayload = {
+    let payload: lebobeautycoTypes.CreatePaymentPayload = {
       amount: 234,
       currency: 'usd',
       receiptEmail,
       customerName: 'John Doe',
       locale: 'en',
       name: 'BMW X1',
-      description: 'wexCommerce Testing Service',
+      description: 'lebobeautyco Testing Service',
     }
     let res = await request(app)
       .post('/api/create-checkout-session')
@@ -217,7 +217,7 @@ describe('POST /api/check-checkout-session/:sessionId', () => {
       fullName: 'user',
       email: testHelper.GetRandomEmail(),
       language: testHelper.LANGUAGE,
-      type: wexcommerceTypes.UserType.User,
+      type: lebobeautycoTypes.UserType.User,
     })
     await user.save()
 
@@ -236,15 +236,15 @@ describe('POST /api/check-checkout-session/:sessionId', () => {
     const orderItemProductMissing = new OrderItem({ product: testHelper.GetRandromObjectId(), quantity: 1 })
     await orderItemProductMissing.save()
 
-    const deliveryType = (await DeliveryType.findOne({ name: wexcommerceTypes.DeliveryType.Shipping }))?._id
-    const paymentType = (await PaymentType.findOne({ name: wexcommerceTypes.PaymentType.CreditCard }))?._id
+    const deliveryType = (await DeliveryType.findOne({ name: lebobeautycoTypes.DeliveryType.Shipping }))?._id
+    const paymentType = (await PaymentType.findOne({ name: lebobeautycoTypes.PaymentType.CreditCard }))?._id
 
     let order = new Order({
       user: user.id,
       deliveryType,
       paymentType,
       total: 312,
-      status: wexcommerceTypes.OrderStatus.Pending,
+      status: lebobeautycoTypes.OrderStatus.Pending,
       orderItems: [orderItem.id],
       expireAt,
       sessionId,
@@ -283,7 +283,7 @@ describe('POST /api/check-checkout-session/:sessionId', () => {
         deliveryType,
         paymentType,
         total: 312,
-        status: wexcommerceTypes.OrderStatus.Pending,
+        status: lebobeautycoTypes.OrderStatus.Pending,
         orderItems: [orderItem.id],
         expireAt,
         sessionId,
@@ -318,7 +318,7 @@ describe('POST /api/check-checkout-session/:sessionId', () => {
         deliveryType,
         paymentType,
         total: 312,
-        status: wexcommerceTypes.OrderStatus.Pending,
+        status: lebobeautycoTypes.OrderStatus.Pending,
         orderItems: [orderItem.id],
         expireAt,
         sessionId,
@@ -362,7 +362,7 @@ describe('POST /api/check-checkout-session/:sessionId', () => {
         deliveryType,
         paymentType,
         total: 312,
-        status: wexcommerceTypes.OrderStatus.Pending,
+        status: lebobeautycoTypes.OrderStatus.Pending,
         orderItems: [orderItem.id],
         expireAt,
         sessionId: sessionId2,
@@ -416,7 +416,7 @@ describe('POST /api/check-checkout-session/:sessionId', () => {
         deliveryType,
         paymentType,
         total: 312,
-        status: wexcommerceTypes.OrderStatus.Pending,
+        status: lebobeautycoTypes.OrderStatus.Pending,
         orderItems: [orderItemProductMissing.id],
         expireAt,
         sessionId: sessionId3,
@@ -433,7 +433,7 @@ describe('POST /api/check-checkout-session/:sessionId', () => {
         deliveryType,
         paymentType,
         total: 312,
-        status: wexcommerceTypes.OrderStatus.Pending,
+        status: lebobeautycoTypes.OrderStatus.Pending,
         orderItems: [orderItem.id],
         expireAt,
         sessionId: sessionId3,
@@ -522,13 +522,13 @@ describe('POST /api/create-payment-intent', () => {
     //
     // Test create payment intent with non existant user
     //
-    const payload: wexcommerceTypes.CreatePaymentPayload = {
+    const payload: lebobeautycoTypes.CreatePaymentPayload = {
       amount: 234,
       currency: 'usd',
       receiptEmail,
       customerName: 'John Doe',
       locale: 'en',
-      name: 'wexCommerce Testing Service',
+      name: 'lebobeautyco Testing Service',
       description: '',
     }
     let res = await request(app)

@@ -2,7 +2,7 @@ import 'dotenv/config'
 import { jest } from '@jest/globals'
 import request from 'supertest'
 import { nanoid } from 'nanoid'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as databaseHelper from '../src/utils/databaseHelper'
 import * as testHelper from './testHelper'
 import * as env from '../src/config/env.config'
@@ -55,7 +55,7 @@ describe('POST /api/create-paypal-order', () => {
     )
 
     // test success (create paypal order whith non existant user)
-    const payload: wexcommerceTypes.CreatePayPalOrderPayload = {
+    const payload: lebobeautycoTypes.CreatePayPalOrderPayload = {
       amount: 234,
       currency: 'USD',
       name: 'BMW X1',
@@ -97,7 +97,7 @@ describe('POST /api/check-paypal-order/:orderId/:orderId', () => {
       fullName: 'user',
       email: testHelper.GetRandomEmail(),
       language: testHelper.LANGUAGE,
-      type: wexcommerceTypes.UserType.User,
+      type: lebobeautycoTypes.UserType.User,
     })
     await user.save()
 
@@ -116,15 +116,15 @@ describe('POST /api/check-paypal-order/:orderId/:orderId', () => {
     const orderItemProductMissing = new OrderItem({ product: testHelper.GetRandromObjectId(), quantity: 1 })
     await orderItemProductMissing.save()
 
-    const deliveryType = (await DeliveryType.findOne({ name: wexcommerceTypes.DeliveryType.Shipping }))?._id
-    const paymentType = (await PaymentType.findOne({ name: wexcommerceTypes.PaymentType.CreditCard }))?._id
+    const deliveryType = (await DeliveryType.findOne({ name: lebobeautycoTypes.DeliveryType.Shipping }))?._id
+    const paymentType = (await PaymentType.findOne({ name: lebobeautycoTypes.PaymentType.CreditCard }))?._id
 
     let order = new Order({
       user: user.id,
       deliveryType,
       paymentType,
       total: 312,
-      status: wexcommerceTypes.OrderStatus.Pending,
+      status: lebobeautycoTypes.OrderStatus.Pending,
       orderItems: [orderItem.id],
       expireAt,
     })
@@ -160,7 +160,7 @@ describe('POST /api/check-paypal-order/:orderId/:orderId', () => {
         deliveryType,
         paymentType,
         total: 312,
-        status: wexcommerceTypes.OrderStatus.Pending,
+        status: lebobeautycoTypes.OrderStatus.Pending,
         orderItems: [orderItem.id],
         expireAt,
       })
@@ -189,7 +189,7 @@ describe('POST /api/check-paypal-order/:orderId/:orderId', () => {
         deliveryType,
         paymentType,
         total: 312,
-        status: wexcommerceTypes.OrderStatus.Pending,
+        status: lebobeautycoTypes.OrderStatus.Pending,
         orderItems: [orderItem.id],
         expireAt,
       })
@@ -222,7 +222,7 @@ describe('POST /api/check-paypal-order/:orderId/:orderId', () => {
         deliveryType,
         paymentType,
         total: 312,
-        status: wexcommerceTypes.OrderStatus.Pending,
+        status: lebobeautycoTypes.OrderStatus.Pending,
         orderItems: [orderItem.id],
         expireAt,
       })
@@ -253,7 +253,7 @@ describe('POST /api/check-paypal-order/:orderId/:orderId', () => {
         deliveryType,
         paymentType,
         total: 312,
-        status: wexcommerceTypes.OrderStatus.Pending,
+        status: lebobeautycoTypes.OrderStatus.Pending,
         orderItems: [orderItemProductMissing.id],
         expireAt,
 
@@ -283,7 +283,7 @@ describe('POST /api/check-paypal-order/:orderId/:orderId', () => {
         deliveryType,
         paymentType,
         total: 312,
-        status: wexcommerceTypes.OrderStatus.Pending,
+        status: lebobeautycoTypes.OrderStatus.Pending,
         orderItems: [orderItem.id],
         expireAt,
       })

@@ -2,7 +2,7 @@
 
 import { headers, cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as fetchInstance from './fetchInstance'
 import env, { CookieOptions } from '@/config/env.config'
 
@@ -17,7 +17,7 @@ export const authHeader = async (): Promise<Record<string, string>> => {
   const userCookie = (await cookies()).get('wc-be-user')
 
   if (userCookie) {
-    user = JSON.parse(userCookie.value) as wexcommerceTypes.User
+    user = JSON.parse(userCookie.value) as lebobeautycoTypes.User
   }
 
   if (user && user.accessToken) {
@@ -30,10 +30,10 @@ export const authHeader = async (): Promise<Record<string, string>> => {
 /**
  * Sign up.
  *
- * @param {wexcommerceTypes.SignUpPayload} data
+ * @param {lebobeautycoTypes.SignUpPayload} data
  * @returns {Promise<number>}
  */
-export const signup = async (data: wexcommerceTypes.SignUpPayload): Promise<number> =>
+export const signup = async (data: lebobeautycoTypes.SignUpPayload): Promise<number> =>
   fetchInstance
     .POST(
       '/api/admin-sign-up/',
@@ -46,10 +46,10 @@ export const signup = async (data: wexcommerceTypes.SignUpPayload): Promise<numb
 /**
  * Validate email
  *
- * @param {wexcommerceTypes.ValidateEmailPayload} data
+ * @param {lebobeautycoTypes.ValidateEmailPayload} data
  * @returns {Promise<number>}
  */
-export const validateEmail = async (data: wexcommerceTypes.ValidateEmailPayload): Promise<number> =>
+export const validateEmail = async (data: lebobeautycoTypes.ValidateEmailPayload): Promise<number> =>
   fetchInstance
     .POST(
       '/api/validate-email',
@@ -62,7 +62,7 @@ export const validateEmail = async (data: wexcommerceTypes.ValidateEmailPayload)
 /**
  * Check wether a user is an admin.
  *
- * @param {wexcommerceTypes.IsAdminPayload} data
+ * @param {lebobeautycoTypes.IsAdminPayload} data
  * @returns {Promise<number>}
  */
 export const isAdmin = async (email: string): Promise<number> =>
@@ -78,10 +78,10 @@ export const isAdmin = async (email: string): Promise<number> =>
 /**
  * Sign in.
  *
- * @param {wexcommerceTypes.SignInPayload} data
- * @returns {Promise<{ status: number, data: wexcommerceTypes.User }>}
+ * @param {lebobeautycoTypes.SignInPayload} data
+ * @returns {Promise<{ status: number, data: lebobeautycoTypes.User }>}
  */
-export const signin = async (data: wexcommerceTypes.SignInPayload): Promise<{ status: number, data: wexcommerceTypes.User }> => (
+export const signin = async (data: lebobeautycoTypes.SignInPayload): Promise<{ status: number, data: lebobeautycoTypes.User }> => (
   fetchInstance
     .POST(
       `/api/sign-in/${env.APP_TYPE}`,
@@ -135,10 +135,10 @@ export const validateAccessToken = async (): Promise<number> => fetchInstance
 /**
  * Resend link.
  *
- * @param {wexcommerceTypes.ResendLinkPayload} data
+ * @param {lebobeautycoTypes.ResendLinkPayload} data
  * @returns {Promise<number>}
  */
-export const resendLink = async (data: wexcommerceTypes.ResendLinkPayload): Promise<number> =>
+export const resendLink = async (data: lebobeautycoTypes.ResendLinkPayload): Promise<number> =>
   fetchInstance
     .POST(
       '/api/resend-link',
@@ -168,10 +168,10 @@ export const resend = async (email: string, reset = false): Promise<number> =>
 /**
  * Activate account.
  *
- * @param {wexcommerceTypes.ActivatePayload} data
+ * @param {lebobeautycoTypes.ActivatePayload} data
  * @returns {Promise<number>}
  */
-export const activate = async (data: wexcommerceTypes.ActivatePayload): Promise<number> => (
+export const activate = async (data: lebobeautycoTypes.ActivatePayload): Promise<number> => (
   fetchInstance
     .POST(
       '/api/activate/',
@@ -226,7 +226,7 @@ export const getLanguage = async (): Promise<string> => {
   const userCookie = cookieStore.get('wc-be-user')
 
   if (userCookie) {
-    user = JSON.parse(userCookie.value) as wexcommerceTypes.User
+    user = JSON.parse(userCookie.value) as lebobeautycoTypes.User
   }
 
   if (user && user.language) {
@@ -248,10 +248,10 @@ export const getLanguage = async (): Promise<string> => {
 /**
  * Update language.
  *
- * @param {wexcommerceTypes.UpdateLanguagePayload} data
+ * @param {lebobeautycoTypes.UpdateLanguagePayload} data
  * @returns {Promise<number>}
  */
-export const updateLanguage = async (data: wexcommerceTypes.UpdateLanguagePayload): Promise<number> => {
+export const updateLanguage = async (data: lebobeautycoTypes.UpdateLanguagePayload): Promise<number> => {
   return fetchInstance
     .POST(
       '/api/update-language',
@@ -290,9 +290,9 @@ export const setLanguage = async (lang: string) => {
 /**
  * Get current user.
  *
- * @returns {(wexcommerceTypes.User | null)}
+ * @returns {(lebobeautycoTypes.User | null)}
  */
-export const getCurrentUser = async (): Promise<wexcommerceTypes.User | null> => {
+export const getCurrentUser = async (): Promise<lebobeautycoTypes.User | null> => {
   let user
 
   const userCookie = (await cookies()).get('wc-be-user')
@@ -302,7 +302,7 @@ export const getCurrentUser = async (): Promise<wexcommerceTypes.User | null> =>
   }
 
   if (user && user.accessToken) {
-    return user as wexcommerceTypes.User
+    return user as lebobeautycoTypes.User
   }
   return null
 }
@@ -311,9 +311,9 @@ export const getCurrentUser = async (): Promise<wexcommerceTypes.User | null> =>
  * Get user.
  *
  * @param {string} id
- * @returns {Promise<wexcommerceTypes.User>}
+ * @returns {Promise<lebobeautycoTypes.User>}
  */
-export const getUser = async (id: string): Promise<wexcommerceTypes.User> =>
+export const getUser = async (id: string): Promise<lebobeautycoTypes.User> =>
   fetchInstance
     .GET(
       `/api/user/${id}`,
@@ -327,9 +327,9 @@ export const getUser = async (id: string): Promise<wexcommerceTypes.User> =>
  * @param {string} keyword
  * @param {number} page
  * @param {number} size
- * @returns {Promise<wexcommerceTypes.Result<wexcommerceTypes.User>>}
+ * @returns {Promise<lebobeautycoTypes.Result<lebobeautycoTypes.User>>}
  */
-export const getUsers = async (keyword: string, page: number, size: number): Promise<wexcommerceTypes.Result<wexcommerceTypes.User>> =>
+export const getUsers = async (keyword: string, page: number, size: number): Promise<lebobeautycoTypes.Result<lebobeautycoTypes.User>> =>
   fetchInstance
     .GET(
       `/api/users/${page}/${size}/?s=${encodeURIComponent(keyword)}`,
@@ -340,10 +340,10 @@ export const getUsers = async (keyword: string, page: number, size: number): Pro
 /**
  * Update user.
  *
- * @param {wexcommerceTypes.UpdateUserPayload} data
+ * @param {lebobeautycoTypes.UpdateUserPayload} data
  * @returns {Promise<number>}
  */
-export const updateUser = async (data: wexcommerceTypes.UpdateUserPayload): Promise<number> =>
+export const updateUser = async (data: lebobeautycoTypes.UpdateUserPayload): Promise<number> =>
   fetchInstance
     .POST(
       '/api/update-user',
@@ -372,10 +372,10 @@ export const checkPassword = async (id: string, password: string): Promise<numbe
 /**
  * Change password.
  *
- * @param {wexcommerceTypes.ChangePasswordPayload} data
+ * @param {lebobeautycoTypes.ChangePasswordPayload} data
  * @returns {Promise<number>}
  */
-export const changePassword = async (data: wexcommerceTypes.ChangePasswordPayload): Promise<number> =>
+export const changePassword = async (data: lebobeautycoTypes.ChangePasswordPayload): Promise<number> =>
   fetchInstance
     .POST('/api/change-password/',
       data, [await authHeader()],

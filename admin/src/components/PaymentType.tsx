@@ -1,14 +1,14 @@
 'use client'
 
 import React from 'react'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import { LanguageContextType, useLanguageContext } from '@/context/LanguageContext'
 import * as helper from '@/utils/helper'
 
 import styles from '@/styles/payment-type.module.css'
 
 interface PaymentTypeProps {
-  value: wexcommerceTypes.PaymentType
+  value: lebobeautycoTypes.PaymentType
   className?: string
   // eslint-disable-next-line no-unused-vars
   onClick?: (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void
@@ -26,9 +26,9 @@ const PaymentType: React.FC<PaymentTypeProps> = (
   return language && (
     <span
       className={(className ? className + ' ' : '') +
-        (value === wexcommerceTypes.PaymentType.CreditCard ? styles.creditCard
-          : value === wexcommerceTypes.PaymentType.Cod ? styles.cod
-            : value === wexcommerceTypes.PaymentType.WireTransfer ? styles.wireTransfert
+        (value === lebobeautycoTypes.PaymentType.CreditCard ? styles.creditCard
+          : value === lebobeautycoTypes.PaymentType.Cod ? styles.cod
+            : value === lebobeautycoTypes.PaymentType.WireTransfer ? styles.wireTransfert
               : '')
       }
       onClick={(e) => {

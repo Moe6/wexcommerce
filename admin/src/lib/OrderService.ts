@@ -1,6 +1,6 @@
 'use server'
 
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as fetchInstance from './fetchInstance'
 import * as UserService from './UserService'
 
@@ -9,11 +9,11 @@ import * as UserService from './UserService'
  *
  * @param {string} userId
  * @param {string} orderId
- * @param {wexcommerceTypes.OrderStatus} status
+ * @param {lebobeautycoTypes.OrderStatus} status
  * @returns {Promise<number>}
  */
-export const updateOrder = async (userId: string, orderId: string, status: wexcommerceTypes.OrderStatus): Promise<number> => {
-  const data: wexcommerceTypes.UpdateOrderPayload = { status }
+export const updateOrder = async (userId: string, orderId: string, status: lebobeautycoTypes.OrderStatus): Promise<number> => {
+  const data: lebobeautycoTypes.UpdateOrderPayload = { status }
 
   return fetchInstance
     .PUT(
@@ -46,26 +46,26 @@ export const deleteOrder = async (userId: string, orderId: string): Promise<numb
  * @param {number} page
  * @param {number} size
  * @param {string} keyword
- * @param {wexcommerceTypes.PaymentType[]} paymentTypes
- * @param {wexcommerceTypes.DeliveryType[]} deliveryTypes
- * @param {wexcommerceTypes.OrderStatus[]} statuses
+ * @param {lebobeautycoTypes.PaymentType[]} paymentTypes
+ * @param {lebobeautycoTypes.DeliveryType[]} deliveryTypes
+ * @param {lebobeautycoTypes.OrderStatus[]} statuses
  * @param {?number} [from]
  * @param {?number} [to]
- * @returns {Promise<wexcommerceTypes.Result<wexcommerceTypes.OrderInfo>>}
+ * @returns {Promise<lebobeautycoTypes.Result<lebobeautycoTypes.OrderInfo>>}
  */
 export const getOrders = async (
   userId: string,
   page: number,
   size: number,
   keyword: string,
-  paymentTypes: wexcommerceTypes.PaymentType[],
-  deliveryTypes: wexcommerceTypes.DeliveryType[],
-  statuses: wexcommerceTypes.OrderStatus[],
-  sortBy: wexcommerceTypes.SortOrderBy = wexcommerceTypes.SortOrderBy.dateDesc,
+  paymentTypes: lebobeautycoTypes.PaymentType[],
+  deliveryTypes: lebobeautycoTypes.DeliveryType[],
+  statuses: lebobeautycoTypes.OrderStatus[],
+  sortBy: lebobeautycoTypes.SortOrderBy = lebobeautycoTypes.SortOrderBy.dateDesc,
   from?: number,
   to?: number,
-): Promise<wexcommerceTypes.Result<wexcommerceTypes.OrderInfo>> => {
-  const data: wexcommerceTypes.GetOrdersPayload = {
+): Promise<lebobeautycoTypes.Result<lebobeautycoTypes.OrderInfo>> => {
+  const data: lebobeautycoTypes.GetOrdersPayload = {
     paymentTypes,
     deliveryTypes,
     statuses,
@@ -88,9 +88,9 @@ export const getOrders = async (
  *
  * @async
  * @param {string} orderId
- * @returns {Promise<wexcommerceTypes.Response<wexcommerceTypes.OrderInfo>>}
+ * @returns {Promise<lebobeautycoTypes.Response<lebobeautycoTypes.OrderInfo>>}
  */
-export const getOrder = async (orderId: string): Promise<wexcommerceTypes.Response<wexcommerceTypes.OrderInfo>> => {
+export const getOrder = async (orderId: string): Promise<lebobeautycoTypes.Response<lebobeautycoTypes.OrderInfo>> => {
   return fetchInstance
     .GET(
       `/api/order/${orderId}`,

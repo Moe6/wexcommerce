@@ -4,8 +4,8 @@ import React, { useRef } from 'react'
 import ReactSlick from 'react-slick'
 import Link from 'next/link'
 import Image from 'next/image'
-import * as wexcommerceTypes from ':wexcommerce-types'
-import * as wexcommerceHelper from ':wexcommerce-helper'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
+import * as lebobeautycoHelper from ':lebobeautyco-helper'
 import env from '@/config/env.config'
 import Slick from './Slick'
 import Arrow from './Arrow'
@@ -14,7 +14,7 @@ import styles from '@/styles/category-list.module.css'
 
 interface CategoryListProps {
   title?: string,
-  categories: wexcommerceTypes.CategoryInfo[]
+  categories: lebobeautycoTypes.CategoryInfo[]
   autoplay?: boolean
   autoplaySpeed?: number // in milliseconds
   showNavigation?: boolean
@@ -90,7 +90,7 @@ const CategoryList: React.FC<CategoryListProps> = (
                 <div className={styles.thumbnail}>
                   <Image
                     alt=""
-                    src={wexcommerceHelper.joinURL(env.CDN_CATEGORIES, category.image)}
+                    src={lebobeautycoHelper.joinURL(env.CDN_CATEGORIES, category.image)}
                     width={0}
                     height={0}
                     sizes="100vw"

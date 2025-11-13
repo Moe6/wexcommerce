@@ -1,6 +1,6 @@
 'use server'
 
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as fetchInstance from './fetchInstance'
 
 /**
@@ -9,10 +9,10 @@ import * as fetchInstance from './fetchInstance'
  * @param {string} id
  * @param {string} language
  * @param {string} cartId
- * @returns {Promise<wexcommerceTypes.Product>}
+ * @returns {Promise<lebobeautycoTypes.Product>}
  */
-export const getProduct = async (id: string, language: string, cartId: string, wishlistId: string): Promise<wexcommerceTypes.Product> => {
-  const data: wexcommerceTypes.GetProductPayload = { cart: cartId, wishlist: wishlistId }
+export const getProduct = async (id: string, language: string, cartId: string, wishlistId: string): Promise<lebobeautycoTypes.Product> => {
+  const data: lebobeautycoTypes.GetProductPayload = { cart: cartId, wishlist: wishlistId }
 
   return fetchInstance
     .POST(
@@ -30,7 +30,7 @@ export const getProduct = async (id: string, language: string, cartId: string, w
  * @param {number} size
  * @param {string} categoryId
  * @param {string} cartId
- * @returns {Promise<wexcommerceTypes.Result<wexcommerceTypes.Product>>}
+ * @returns {Promise<lebobeautycoTypes.Result<lebobeautycoTypes.Product>>}
  */
 export const getProducts = async (
   keyword: string,
@@ -39,9 +39,9 @@ export const getProducts = async (
   categoryId: string,
   cartId: string,
   wishlistId: string,
-  sortBy: wexcommerceTypes.SortProductBy,
-): Promise<wexcommerceTypes.Result<wexcommerceTypes.Product>> => {
-  const data: wexcommerceTypes.GetProductsPayload = { cart: cartId, wishlist: wishlistId, sortBy }
+  sortBy: lebobeautycoTypes.SortProductBy,
+): Promise<lebobeautycoTypes.Result<lebobeautycoTypes.Product>> => {
+  const data: lebobeautycoTypes.GetProductsPayload = { cart: cartId, wishlist: wishlistId, sortBy }
 
   return fetchInstance
     .POST(
@@ -55,8 +55,8 @@ export const getFeaturedProducts = async (
   size: number,
   cartId: string,
   wishlistId: string,
-): Promise<wexcommerceTypes.Product[]> => {
-  const data: wexcommerceTypes.GetProductsPayload = { cart: cartId, wishlist: wishlistId, size }
+): Promise<lebobeautycoTypes.Product[]> => {
+  const data: lebobeautycoTypes.GetProductsPayload = { cart: cartId, wishlist: wishlistId, size }
 
   return fetchInstance
     .POST(

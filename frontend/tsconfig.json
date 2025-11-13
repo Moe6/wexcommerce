@@ -20,8 +20,8 @@
     "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"],
-      ":wexcommerce-types": ["../packages/wexcommerce-types"],
-      ":wexcommerce-helper": ["../packages/wexcommerce-helper"],
+      ":lebobeautyco-types": ["../packages/lebobeautyco-types"],
+      ":lebobeautyco-helper": ["../packages/lebobeautyco-helper"],
       ":reactjs-social-login": ["../packages/reactjs-social-login"],
     },
     "downlevelIteration": true,
@@ -35,8 +35,8 @@
   ],
   "exclude": ["node_modules", ".next"],
   "references": [
-    { "path": "../packages/wexcommerce-types" },
-    { "path": "../packages/wexcommerce-helper" },
+    { "path": "../packages/lebobeautyco-types" },
+    { "path": "../packages/lebobeautyco-helper" },
     { "path": "../packages/reactjs-social-login" },
   ]
 }

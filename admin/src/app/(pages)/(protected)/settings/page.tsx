@@ -19,8 +19,8 @@ import {
   DialogActions,
 } from '@mui/material'
 import validator from 'validator'
-import * as wexcommerceTypes from ':wexcommerce-types'
-import * as wexcommerceHelper from ':wexcommerce-helper'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
+import * as lebobeautycoHelper from ':lebobeautyco-helper'
 import { UserContextType, useUserContext } from '@/context/UserContext'
 import { LanguageContextType, useLanguageContext } from '@/context/LanguageContext'
 import { CurrencyContextType, useCurrencyContext } from '@/context/CurrencyContext'
@@ -46,9 +46,9 @@ const Settings: React.FC = () => {
   const [phone, setPhone] = useState('')
   const [phoneValid, setPhoneValid] = useState(true)
   const [address, setAddress] = useState('')
-  const [deliveryTypes, setDeliveryTypes] = useState<wexcommerceTypes.DeliveryTypeInfo[]>([])
+  const [deliveryTypes, setDeliveryTypes] = useState<lebobeautycoTypes.DeliveryTypeInfo[]>([])
   const [deliveryTypesWarning, setDeliveryTypesWarning] = useState(false)
-  const [paymentTypes, setPaymentTypes] = useState<wexcommerceTypes.PaymentTypeInfo[]>([])
+  const [paymentTypes, setPaymentTypes] = useState<lebobeautycoTypes.PaymentTypeInfo[]>([])
   const [paymentTypesWarning, setPaymentTypesWarning] = useState(false)
   const [wireTransferWarning, setWireTransferWarning] = useState(false)
   const [bankName, setBankName] = useState<string>()
@@ -105,7 +105,7 @@ const Settings: React.FC = () => {
         return
       }
 
-      const payload: wexcommerceTypes.UpdateUserPayload = { _id: user._id!, fullName, phone, address }
+      const payload: lebobeautycoTypes.UpdateUserPayload = { _id: user._id!, fullName, phone, address }
       const status = await UserService.updateUser(payload)
 
       if (status === 200) {
@@ -122,7 +122,7 @@ const Settings: React.FC = () => {
     e.preventDefault()
 
     try {
-      const data: wexcommerceTypes.UpdateSettingsPayload = {
+      const data: lebobeautycoTypes.UpdateSettingsPayload = {
         language,
         currency,
         stripeCurrency,
@@ -176,13 +176,13 @@ const Settings: React.FC = () => {
       const count = paymentTypes.filter(pt => pt.enabled).length
 
       if (count > 0) {
-        const index = paymentTypes.findIndex(pt => pt.enabled && pt.name === wexcommerceTypes.PaymentType.WireTransfer)
+        const index = paymentTypes.findIndex(pt => pt.enabled && pt.name === lebobeautycoTypes.PaymentType.WireTransfer)
 
         if (index > -1) {
           const setting = await SettingService.getSettings()
 
           if (!setting.bankName || !setting.accountHolder || !setting.rib || !setting.iban) {
-            const _paymentTypes = wexcommerceHelper.cloneArray(paymentTypes) as wexcommerceTypes.PaymentTypeInfo[]
+            const _paymentTypes = lebobeautycoHelper.cloneArray(paymentTypes) as lebobeautycoTypes.PaymentTypeInfo[]
             _paymentTypes[index].enabled = false
             setPaymentTypes(_paymentTypes)
             return setWireTransferWarning(true)
@@ -208,7 +208,7 @@ const Settings: React.FC = () => {
     e.preventDefault()
 
     try {
-      const data: wexcommerceTypes.UpdateBankSettingsPayload = { bankName, accountHolder, rib, iban }
+      const data: lebobeautycoTypes.UpdateBankSettingsPayload = { bankName, accountHolder, rib, iban }
 
       const status = await SettingService.updateBankSettings(data)
 
@@ -410,8 +410,8 @@ const Settings: React.FC = () => {
                   label={
                     <div className={styles.deliveryTypeControl}>
                       <span>{
-                        deliveryType.name === wexcommerceTypes.DeliveryType.Shipping ? commonStrings.SHIPPING
-                          : deliveryType.name === wexcommerceTypes.DeliveryType.Withdrawal ? commonStrings.WITHDRAWAL
+                        deliveryType.name === lebobeautycoTypes.DeliveryType.Shipping ? commonStrings.SHIPPING
+                          : deliveryType.name === lebobeautycoTypes.DeliveryType.Withdrawal ? commonStrings.WITHDRAWAL
                             : ''
                       }</span>
                       <div className={styles.price}>
@@ -422,7 +422,7 @@ const Settings: React.FC = () => {
                           type="number"
                           required
                           onChange={(e) => {
-                            const __deliveryTypes = wexcommerceHelper.cloneArray(deliveryTypes) as wexcommerceTypes.DeliveryTypeInfo[]
+                            const __deliveryTypes = lebobeautycoHelper.cloneArray(deliveryTypes) as lebobeautycoTypes.DeliveryTypeInfo[]
                             const __deliveryType = __deliveryTypes.find(dt => dt.name === deliveryType.name)
 
                             if (e.target.value) {
@@ -438,7 +438,7 @@ const Settings: React.FC = () => {
                     </div>
                   }
                   onChange={(e) => {
-                    const __deliveryTypes = wexcommerceHelper.cloneArray(deliveryTypes) as wexcommerceTypes.DeliveryTypeInfo[]
+                    const __deliveryTypes = lebobeautycoHelper.cloneArray(deliveryTypes) as lebobeautycoTypes.DeliveryTypeInfo[]
                     __deliveryTypes.filter(pt => pt.name === deliveryType.name)[0].enabled = (e.target as HTMLInputElement).checked
                     setDeliveryTypes(__deliveryTypes)
                   }}
@@ -483,13 +483,13 @@ const Settings: React.FC = () => {
                 <FormControlLabel
                   control={<Checkbox checked={paymentType.enabled} />}
                   label={
-                    paymentType.name === wexcommerceTypes.PaymentType.CreditCard ? commonStrings.CREDIT_CARD
-                      : paymentType.name === wexcommerceTypes.PaymentType.Cod ? commonStrings.COD
-                        : paymentType.name === wexcommerceTypes.PaymentType.WireTransfer ? commonStrings.WIRE_TRANSFER
+                    paymentType.name === lebobeautycoTypes.PaymentType.CreditCard ? commonStrings.CREDIT_CARD
+                      : paymentType.name === lebobeautycoTypes.PaymentType.Cod ? commonStrings.COD
+                        : paymentType.name === lebobeautycoTypes.PaymentType.WireTransfer ? commonStrings.WIRE_TRANSFER
                           : ''
                   }
                   onChange={(e) => {
-                    const __paymentTypes = wexcommerceHelper.cloneArray(paymentTypes) as wexcommerceTypes.PaymentTypeInfo[]
+                    const __paymentTypes = lebobeautycoHelper.cloneArray(paymentTypes) as lebobeautycoTypes.PaymentTypeInfo[]
                     __paymentTypes.filter(pt => pt.name === paymentType.name)[0].enabled = (e.target as HTMLInputElement).checked
                     setPaymentTypes(__paymentTypes)
                   }}

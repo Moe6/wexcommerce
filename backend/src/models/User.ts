@@ -1,6 +1,6 @@
 import validator from 'validator'
 import { Schema, model } from 'mongoose'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as env from '../config/env.config'
 
 export const USER_EXPIRE_AT_INDEX_NAME = 'expireAt'
@@ -67,10 +67,10 @@ const userSchema = new Schema<env.User>(
     type: {
       type: String,
       enum: [
-        wexcommerceTypes.UserType.Admin,
-        wexcommerceTypes.UserType.User,
+        lebobeautycoTypes.UserType.Admin,
+        lebobeautycoTypes.UserType.User,
       ],
-      default: wexcommerceTypes.UserType.User,
+      default: lebobeautycoTypes.UserType.User,
     },
     blacklisted: {
       type: Boolean,

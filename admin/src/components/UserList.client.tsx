@@ -9,7 +9,7 @@ import {
 import { Inventory as OrdersIcon } from '@mui/icons-material'
 import { format } from 'date-fns'
 import { fr, enUS } from 'date-fns/locale'
-import * as wexcommerceHelper from ':wexcommerce-helper'
+import * as lebobeautycoHelper from ':lebobeautyco-helper'
 import { LanguageContextType, useLanguageContext } from '@/context/LanguageContext'
 import { strings as commonStrings } from '@/lang/common'
 import { strings } from '@/lang/user-list'
@@ -94,11 +94,11 @@ interface SubscribedAtProps {
 export const SubscribedAt: React.FC<SubscribedAtProps> = ({ value }) => {
   const { language } = useLanguageContext() as LanguageContextType
   const _fr = language === 'fr'
-  const _format = wexcommerceHelper.getDateFormat(language)
+  const _format = lebobeautycoHelper.getDateFormat(language)
   const _locale = _fr ? fr : enUS
   return (
     <>
       <span className={styles.userLabel}>{strings.SUBSCRIBED_AT}</span>
-      <span>{wexcommerceHelper.capitalize(format(new Date(value), _format, { locale: _locale }))}</span>
+      <span>{lebobeautycoHelper.capitalize(format(new Date(value), _format, { locale: _locale }))}</span>
     </>)
 }

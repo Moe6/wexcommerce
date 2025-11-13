@@ -4,7 +4,7 @@ import path from 'path'
 import { nanoid } from 'nanoid'
 import { Request, Response } from 'express'
 import escapeStringRegexp from 'escape-string-regexp'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as logger from '../utils/logger'
 import * as env from '../config/env.config'
 import i18n from '../lang/i18n'
@@ -127,7 +127,7 @@ export const create = async (req: Request, res: Response) => {
       hidden,
       images,
       featured,
-    }: wexcommerceTypes.CreateProductPayload = req.body
+    }: lebobeautycoTypes.CreateProductPayload = req.body
     const __product = { name, description, categories, price, quantity, soldOut, hidden, featured, images: [] }
 
     product = new Product(__product)
@@ -199,7 +199,7 @@ export const update = async (req: Request, res: Response) => {
       images,
       tempImages,
       featured,
-    }: wexcommerceTypes.UpdateProductPayload = req.body
+    }: lebobeautycoTypes.UpdateProductPayload = req.body
     const product = await Product.findById(_id)
 
     if (product) {
@@ -391,7 +391,7 @@ export const getProduct = async (req: Request, res: Response) => {
 
     const _id = new mongoose.Types.ObjectId(id)
 
-    const body: wexcommerceTypes.GetProductPayload = req.body || {}
+    const body: lebobeautycoTypes.GetProductPayload = req.body || {}
     const { cart: cartId, wishlist: wisthlistId } = body
     let cartProducts: mongoose.Types.ObjectId[] = []
     if (cartId) {
@@ -490,14 +490,14 @@ export const getProduct = async (req: Request, res: Response) => {
  */
 export const getAdminProducts = async (req: Request, res: Response) => {
   try {
-    const { body }: { body: wexcommerceTypes.GetAdminProductsPayload } = req
+    const { body }: { body: lebobeautycoTypes.GetAdminProductsPayload } = req
     const { user: userId } = req.params
 
     if (!helper.isValidObjectId(userId)) {
       throw new Error('User id not valid')
     }
 
-    const user = await User.findOne({ _id: userId, type: wexcommerceTypes.UserType.Admin })
+    const user = await User.findOne({ _id: userId, type: lebobeautycoTypes.UserType.Admin })
 
     if (!user) {
       throw new Error('Admin user not found')
@@ -534,11 +534,11 @@ export const getAdminProducts = async (req: Request, res: Response) => {
     let $sort: Record<string, 1 | -1 | Expression.Meta> = { createdAt: -1 } // createdAt desc
     const { sortBy } = body
     if (sortBy) {
-      if (sortBy === wexcommerceTypes.SortProductBy.priceAsc) {
+      if (sortBy === lebobeautycoTypes.SortProductBy.priceAsc) {
         $sort = { price: 1, createdAt: -1 }
-      } else if (sortBy === wexcommerceTypes.SortProductBy.priceDesc) {
+      } else if (sortBy === lebobeautycoTypes.SortProductBy.priceDesc) {
         $sort = { price: -1, createdAt: -1 }
-      } else if (sortBy === wexcommerceTypes.SortProductBy.featured) {
+      } else if (sortBy === lebobeautycoTypes.SortProductBy.featured) {
         $sort = { featured: -1, createdAt: -1 }
       } else {
         $sort = { createdAt: -1 }
@@ -598,7 +598,7 @@ export const getFrontendProducts = async (req: Request, res: Response) => {
       category = new mongoose.Types.ObjectId(req.params.category)
     }
 
-    const { body }: { body: wexcommerceTypes.GetProductsPayload } = req
+    const { body }: { body: lebobeautycoTypes.GetProductsPayload } = req
     const { cart: cartId } = body
     let cartProducts: mongoose.Types.ObjectId[] = []
     if (cartId) {
@@ -655,11 +655,11 @@ export const getFrontendProducts = async (req: Request, res: Response) => {
     let $sort: Record<string, 1 | -1 | Expression.Meta> = { createdAt: -1 } // createdAt desc
     const { sortBy } = body
     if (sortBy) {
-      if (sortBy === wexcommerceTypes.SortProductBy.priceAsc) {
+      if (sortBy === lebobeautycoTypes.SortProductBy.priceAsc) {
         $sort = { price: 1, createdAt: -1 }
-      } else if (sortBy === wexcommerceTypes.SortProductBy.priceDesc) {
+      } else if (sortBy === lebobeautycoTypes.SortProductBy.priceDesc) {
         $sort = { price: -1, createdAt: -1 }
-      } else if (sortBy === wexcommerceTypes.SortProductBy.featured) {
+      } else if (sortBy === lebobeautycoTypes.SortProductBy.featured) {
         $sort = { featured: -1, createdAt: -1 }
       } else {
         $sort = { createdAt: -1 }
@@ -719,7 +719,7 @@ export const getFrontendProducts = async (req: Request, res: Response) => {
  */
 export const getFeaturedProducts = async (req: Request, res: Response) => {
   try {
-    const { body }: { body: wexcommerceTypes.GetProductsPayload } = req
+    const { body }: { body: lebobeautycoTypes.GetProductsPayload } = req
     const { cart: cartId, size: _size } = body
 
     const size: number = _size || 10

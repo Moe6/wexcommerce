@@ -1,10 +1,10 @@
 import React, { ReactNode, createContext, useContext, useMemo, useState } from 'react'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 
 // Create context
 export interface UserContextType {
-  user: wexcommerceTypes.User | null
-  setUser: React.Dispatch<React.SetStateAction<wexcommerceTypes.User | null>>
+  user: lebobeautycoTypes.User | null
+  setUser: React.Dispatch<React.SetStateAction<lebobeautycoTypes.User | null>>
 }
 
 const UserContext = createContext<UserContextType | null>(null)
@@ -15,7 +15,7 @@ interface UserProviderProps {
 }
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<wexcommerceTypes.User | null>(null)
+  const [user, setUser] = useState<lebobeautycoTypes.User | null>(null)
   const value = useMemo(() => ({ user, setUser }), [user])
 
   return (

@@ -1,14 +1,14 @@
 import { Schema, model } from 'mongoose'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as env from '../config/env.config'
 
 const paymentTypeSchema = new Schema<env.PaymentType>({
   name: {
     type: String,
     enum: [
-      wexcommerceTypes.PaymentType.CreditCard,
-      wexcommerceTypes.PaymentType.Cod,
-      wexcommerceTypes.PaymentType.WireTransfer,
+      lebobeautycoTypes.PaymentType.CreditCard,
+      lebobeautycoTypes.PaymentType.Cod,
+      lebobeautycoTypes.PaymentType.WireTransfer,
     ],
     required: [true, "can't be blank"],
     unique: true,

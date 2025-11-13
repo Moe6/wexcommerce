@@ -1,8 +1,8 @@
 import React, { Suspense } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import * as wexcommerceTypes from ':wexcommerce-types'
-import * as wexcommerceHelper from ':wexcommerce-helper'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
+import * as lebobeautycoHelper from ':lebobeautyco-helper'
 import env from '@/config/env.config'
 import * as SettingService from '@/lib/SettingService'
 import * as UserService from '@/lib/UserService'
@@ -36,22 +36,22 @@ const Products = async (props: { searchParams: Promise<SearchParams> }) => {
   const currency = await SettingService.getCurrency()
   const userId = (await UserService.getCurrentUser())?._id || ''
 
-  let products: wexcommerceTypes.Product[] = []
+  let products: lebobeautycoTypes.Product[] = []
   let rowCount = 0
   let totalRecords = 0
   let noMatch = false
 
-  let sortBy: wexcommerceTypes.SortProductBy = wexcommerceTypes.SortProductBy.dateDesc
+  let sortBy: lebobeautycoTypes.SortProductBy = lebobeautycoTypes.SortProductBy.dateDesc
   const sb = searchParams['sb'] as string
   if (sb) {
-    if (sb.toLowerCase() === wexcommerceTypes.SortProductBy.priceAsc.toLowerCase()) {
-      sortBy = wexcommerceTypes.SortProductBy.priceAsc
-    } else if (sb.toLowerCase() === wexcommerceTypes.SortProductBy.priceDesc.toLowerCase()) {
-      sortBy = wexcommerceTypes.SortProductBy.priceDesc
-    } else if (sb.toLowerCase() === wexcommerceTypes.SortProductBy.featured.toLowerCase()) {
-      sortBy = wexcommerceTypes.SortProductBy.featured
+    if (sb.toLowerCase() === lebobeautycoTypes.SortProductBy.priceAsc.toLowerCase()) {
+      sortBy = lebobeautycoTypes.SortProductBy.priceAsc
+    } else if (sb.toLowerCase() === lebobeautycoTypes.SortProductBy.priceDesc.toLowerCase()) {
+      sortBy = lebobeautycoTypes.SortProductBy.priceDesc
+    } else if (sb.toLowerCase() === lebobeautycoTypes.SortProductBy.featured.toLowerCase()) {
+      sortBy = lebobeautycoTypes.SortProductBy.featured
     } else {
-      sortBy = wexcommerceTypes.SortProductBy.dateDesc
+      sortBy = lebobeautycoTypes.SortProductBy.dateDesc
     }
   }
 
@@ -113,7 +113,7 @@ const Products = async (props: { searchParams: Promise<SearchParams> }) => {
                         <div className={styles.thumbnail}>
                           <Image
                             alt=""
-                            src={wexcommerceHelper.joinURL(env.CDN_PRODUCTS, product.image)}
+                            src={lebobeautycoHelper.joinURL(env.CDN_PRODUCTS, product.image)}
                             width={0}
                             height={0}
                             sizes="100vw"
@@ -123,7 +123,7 @@ const Products = async (props: { searchParams: Promise<SearchParams> }) => {
                         </div>
                         <Tags product={product} />
                         <span className={styles.name} title={product.name}>{product.name}</span>
-                        <span className={styles.price}>{`${wexcommerceHelper.formatPrice(product.price, currency, language)}`}</span>
+                        <span className={styles.price}>{`${lebobeautycoHelper.formatPrice(product.price, currency, language)}`}</span>
 
                       </Link>
                     </article>

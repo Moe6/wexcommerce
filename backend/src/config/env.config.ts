@@ -1,7 +1,7 @@
 import process from 'node:process'
 import { Document, Types } from 'mongoose'
 import { CookieOptions } from 'express'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as helper from '../utils/helper'
 
 /**
@@ -48,7 +48,7 @@ export const expireAt = 'expireAt'
  *
  * @type {string}
  */
-export const WEBSITE_NAME = __env__('WC_WEBSITE_NAME', false, 'wexCommerce')
+export const WEBSITE_NAME = __env__('WC_WEBSITE_NAME', false, 'lebobeautyco')
 
 /**
  * Indicate whether we are in CI environment or not.
@@ -95,11 +95,11 @@ export const PRIVATE_KEY = __env__('WC_PRIVATE_KEY', HTTPS)
 export const CERTIFICATE = __env__('WC_CERTIFICATE', HTTPS)
 
 /**
- * MongoDB database URI. Default is: mongodb://127.0.0.1:27017/wexcommerce?authSource=admin&appName=wexcommerce
+ * MongoDB database URI. Default is: mongodb://127.0.0.1:27017/lebobeautyco?authSource=admin&appName=lebobeautyco
  *
  * @type {string}
  */
-export const DB_URI = __env__('WC_DB_URI', false, 'mongodb://127.0.0.1:27017/wexcommerce?authSource=admin&appName=wexcommerce')
+export const DB_URI = __env__('WC_DB_URI', false, 'mongodb://127.0.0.1:27017/lebobeautyco?authSource=admin&appName=lebobeautyco')
 
 /**
  * Indicate whether MongoDB SSL is enabled or not.
@@ -134,7 +134,7 @@ export const DB_DEBUG = helper.StringToBoolean(__env__('WC_DB_DEBUG', false, 'fa
  *
  * @type {string}
  */
-export const COOKIE_SECRET = __env__('WC_COOKIE_SECRET', false, 'wexcommerce')
+export const COOKIE_SECRET = __env__('WC_COOKIE_SECRET', false, 'lebobeautyco')
 
 /**
  * Authentication cookie domain.
@@ -183,7 +183,7 @@ export const X_ACCESS_TOKEN = 'x-access-token'
  *
  * @type {string}
  */
-export const JWT_SECRET = __env__('WC_JWT_SECRET', false, 'wexcommerce')
+export const JWT_SECRET = __env__('WC_JWT_SECRET', false, 'lebobeautyco')
 
 /**
  * JWT expiration in seconds. Default is 86400 seconds (1 day).
@@ -451,7 +451,7 @@ export interface User extends Document {
   verified?: boolean
   verifiedAt?: Date
   language: string
-  type?: wexcommerceTypes.UserType
+  type?: lebobeautycoTypes.UserType
   blacklisted?: boolean
   customerId?: string
   avatar?: string
@@ -476,7 +476,7 @@ export interface UserInfo {
   verified?: boolean
   verifiedAt?: Date
   language: string
-  type?: wexcommerceTypes.UserType
+  type?: lebobeautycoTypes.UserType
   blacklisted?: boolean
   customerId?: string
 }
@@ -598,7 +598,7 @@ export interface Category extends Document {
  * @extends {Document}
  */
 export interface DeliveryType extends Document {
-  name: wexcommerceTypes.DeliveryType
+  name: lebobeautycoTypes.DeliveryType
   enabled: boolean
   price: number
 }
@@ -651,7 +651,7 @@ export interface Order extends Document {
   deliveryType: Types.ObjectId
   paymentType: Types.ObjectId
   total: number
-  status: wexcommerceTypes.OrderStatus
+  status: lebobeautycoTypes.OrderStatus
   orderItems?: Types.ObjectId[] | OrderItem[]
   sessionId?: string
   paymentIntentId?: string
@@ -669,7 +669,7 @@ export interface Order extends Document {
  * @extends {Document}
  */
 export interface PaymentType extends Document {
-  name: wexcommerceTypes.PaymentType
+  name: lebobeautycoTypes.PaymentType
   enabled: boolean
 }
 

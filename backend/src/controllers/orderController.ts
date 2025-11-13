@@ -1,7 +1,7 @@
 import mongoose, { Expression } from 'mongoose'
 import { Request, Response } from 'express'
 import escapeStringRegexp from 'escape-string-regexp'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as logger from '../utils/logger'
 import i18n from '../lang/i18n'
 import * as env from '../config/env.config'
@@ -26,11 +26,11 @@ import stripeAPI from '../payment/stripe'
  * @param {env.Order} __order
  * @param {env.OrderItem[]} orderItems
  * @param {env.Setting} settings
- * @param {wexcommerceTypes.PaymentType} paymentType
- * @param {wexcommerceTypes.DeliveryType} deliveryType
+ * @param {lebobeautycoTypes.PaymentType} paymentType
+ * @param {lebobeautycoTypes.DeliveryType} deliveryType
  * @returns {*}
  */
-export const confirm = async (_user: env.User, __order: env.Order, orderItems: env.OrderItem[], settings: env.Setting, paymentType: wexcommerceTypes.PaymentType, deliveryType: wexcommerceTypes.DeliveryType) => {
+export const confirm = async (_user: env.User, __order: env.Order, orderItems: env.OrderItem[], settings: env.Setting, paymentType: lebobeautycoTypes.PaymentType, deliveryType: lebobeautycoTypes.DeliveryType) => {
   i18n.locale = settings.language
   const mailOptions = {
     from: env.SMTP_FROM,
@@ -45,14 +45,14 @@ export const confirm = async (_user: env.User, __order: env.Order, orderItems: e
 
       }<br><b>${i18n.t('TOTAL')}</b> ${helper.formatPrice(__order.total, settings.currency, settings.language)}<br><br>`
 
-      + `<b>${i18n.t('PAYMENT_TYPE')}</b> ${paymentType === wexcommerceTypes.PaymentType.CreditCard ? i18n.t('CREDIT_CARD')
-        : paymentType === wexcommerceTypes.PaymentType.Cod ? i18n.t('COD')
-          : paymentType === wexcommerceTypes.PaymentType.WireTransfer ? i18n.t('WIRE_TRANSFER')
+      + `<b>${i18n.t('PAYMENT_TYPE')}</b> ${paymentType === lebobeautycoTypes.PaymentType.CreditCard ? i18n.t('CREDIT_CARD')
+        : paymentType === lebobeautycoTypes.PaymentType.Cod ? i18n.t('COD')
+          : paymentType === lebobeautycoTypes.PaymentType.WireTransfer ? i18n.t('WIRE_TRANSFER')
             : ''}<br><br>`
 
-      + `<b>${i18n.t('DELIVERY_TYPE')}</b> ${deliveryType === wexcommerceTypes.DeliveryType.Shipping ? i18n.t('SHIPPING')
-        : deliveryType === wexcommerceTypes.DeliveryType.Withdrawal ? i18n.t('WITHDRAWAL')
-          : ''}<br><br>${paymentType === wexcommerceTypes.PaymentType.WireTransfer ? (
+      + `<b>${i18n.t('DELIVERY_TYPE')}</b> ${deliveryType === lebobeautycoTypes.DeliveryType.Shipping ? i18n.t('SHIPPING')
+        : deliveryType === lebobeautycoTypes.DeliveryType.Withdrawal ? i18n.t('WITHDRAWAL')
+          : ''}<br><br>${paymentType === lebobeautycoTypes.PaymentType.WireTransfer ? (
             `${i18n.t('WIRE_TRANSFER_PART_1')}<br><br>`
             + `<b>${i18n.t('BANK_NAME')}</b> ${settings.bankName}<br>`
             + `<b>${i18n.t('ACCOUNT_HOLDER')}</b> ${settings.accountHolder}<br>`
@@ -96,7 +96,7 @@ export const notify = async (adminEmail: string, __order: env.Order, _user: env.
   await mailHelper.sendMail(mailOptions)
 
   // admin notification
-  const admin = await User.findOne({ email: adminEmail, type: wexcommerceTypes.UserType.Admin })
+  const admin = await User.findOne({ email: adminEmail, type: lebobeautycoTypes.UserType.Admin })
   if (admin) {
     const message = `${_user.fullName} ${i18n.t('MADE_ORDER')} ${__order._id}.`
     const notification = new Notification({ user: admin._id, message, order: __order._id })
@@ -126,10 +126,10 @@ export const checkout = async (req: Request, res: Response) => {
   const orderItems: env.OrderItem[] = []
   try {
     let _user
-    const { body }: { body: wexcommerceTypes.CheckoutPayload } = req
+    const { body }: { body: lebobeautycoTypes.CheckoutPayload } = req
     const { user, order } = body
 
-    // const admin = await User.findOne({ email: env.ADMIN_EMAIL, type: wexcommerceTypes.UserType.Admin })
+    // const admin = await User.findOne({ email: env.ADMIN_EMAIL, type: lebobeautycoTypes.UserType.Admin })
     // if (!admin) {
     //   throw new Error(`Admin user ${env.ADMIN_EMAIL} not found`)
     // }
@@ -172,12 +172,12 @@ export const checkout = async (req: Request, res: Response) => {
     }
 
     // order
-    const _order: wexcommerceTypes.OrderInfo = {
+    const _order: lebobeautycoTypes.OrderInfo = {
       user: _user!.id,
       paymentType: order.paymentType,
       deliveryType: order.deliveryType,
       total: order.total,
-      status: wexcommerceTypes.OrderStatus.Pending,
+      status: lebobeautycoTypes.OrderStatus.Pending,
     }
 
     // order.orderItems
@@ -194,7 +194,7 @@ export const checkout = async (req: Request, res: Response) => {
     const paymentType = (await PaymentType.findById(order.paymentType))!.name
     const deliveryType = (await DeliveryType.findById(order.deliveryType))!.name
 
-    if (paymentType === wexcommerceTypes.PaymentType.CreditCard) {
+    if (paymentType === lebobeautycoTypes.PaymentType.CreditCard) {
       const { payPal, paymentIntentId, sessionId } = body
 
       if (!payPal && !paymentIntentId && !sessionId) {
@@ -212,7 +212,7 @@ export const checkout = async (req: Request, res: Response) => {
         }
 
         _order.paymentIntentId = paymentIntentId
-        _order.status = wexcommerceTypes.OrderStatus.Paid
+        _order.status = lebobeautycoTypes.OrderStatus.Paid
       } else {
         //
         // Orders created from checkout with Stripe are temporary
@@ -228,7 +228,7 @@ export const checkout = async (req: Request, res: Response) => {
         }
 
         _order.sessionId = !payPal ? body.sessionId : undefined
-        _order.status = wexcommerceTypes.OrderStatus.Pending
+        _order.status = lebobeautycoTypes.OrderStatus.Pending
         _order.expireAt = expireAt
 
         if (!_user.verified) {
@@ -248,7 +248,7 @@ export const checkout = async (req: Request, res: Response) => {
     __order = new Order(_order)
     await __order.save()
 
-    if (paymentType !== wexcommerceTypes.PaymentType.CreditCard) {
+    if (paymentType !== lebobeautycoTypes.PaymentType.CreditCard) {
       // user confirmation email
       await confirm(_user, __order, orderItems, settings, paymentType, deliveryType)
 
@@ -300,7 +300,7 @@ export const deleteNotifications = async (orderId: string) => {
 export const update = async (req: Request, res: Response) => {
   try {
     const { user: userId, id } = req.params
-    const { status }: wexcommerceTypes.UpdateOrderPayload = req.body
+    const { status }: lebobeautycoTypes.UpdateOrderPayload = req.body
 
     if (!helper.isValidObjectId(userId)) {
       throw new Error('User id not valid')
@@ -310,7 +310,7 @@ export const update = async (req: Request, res: Response) => {
       throw new Error('Order id not valid')
     }
 
-    const admin = await User.findOne({ _id: userId, type: wexcommerceTypes.UserType.Admin })
+    const admin = await User.findOne({ _id: userId, type: lebobeautycoTypes.UserType.Admin })
     if (!admin) {
       throw new Error(`Admin user ${userId} not found.`)
     }
@@ -389,7 +389,7 @@ export const deleteOrder = async (req: Request, res: Response) => {
       throw new Error('User id not valid')
     }
 
-    const admin = await User.findOne({ _id: userId, type: wexcommerceTypes.UserType.Admin })
+    const admin = await User.findOne({ _id: userId, type: lebobeautycoTypes.UserType.Admin })
     if (!admin) {
       throw new Error(`admin user ${userId} not found`)
     }
@@ -423,7 +423,7 @@ export const deleteTempOrder = async (req: Request, res: Response) => {
       throw new Error('Order id not valid')
     }
 
-    const order = await Order.findOne({ _id: orderId, sessionId, status: wexcommerceTypes.OrderStatus.Pending, expireAt: { $ne: null } })
+    const order = await Order.findOne({ _id: orderId, sessionId, status: lebobeautycoTypes.OrderStatus.Pending, expireAt: { $ne: null } })
     if (order) {
       const user = await User.findOne({ _id: order.user, verified: false, expireAt: { $ne: null } })
       await user?.deleteOne()
@@ -573,10 +573,10 @@ export const getOrders = async (req: Request, res: Response) => {
     const keyword = escapeStringRegexp(String(req.query.s || ''))
     const options = 'i'
 
-    const { paymentTypes, deliveryTypes, statuses }: wexcommerceTypes.GetOrdersPayload = req.body
+    const { paymentTypes, deliveryTypes, statuses }: lebobeautycoTypes.GetOrdersPayload = req.body
 
     let $match: mongoose.FilterQuery<any> = {}
-    if (user.type === wexcommerceTypes.UserType.User) {
+    if (user.type === lebobeautycoTypes.UserType.User) {
       $match = {
         $and: [
           { 'user._id': { $eq: new mongoose.Types.ObjectId(userId) } },
@@ -586,7 +586,7 @@ export const getOrders = async (req: Request, res: Response) => {
           { expireAt: null },
         ],
       }
-    } else if (user.type === wexcommerceTypes.UserType.Admin) {
+    } else if (user.type === lebobeautycoTypes.UserType.Admin) {
       $match = {
         $and: [
           { 'paymentType.name': { $in: paymentTypes } },
@@ -606,7 +606,7 @@ export const getOrders = async (req: Request, res: Response) => {
       }
     }
 
-    const { from, to, sortBy }: wexcommerceTypes.GetOrdersPayload = req.body
+    const { from, to, sortBy }: lebobeautycoTypes.GetOrdersPayload = req.body
 
     if (from) {
       $match.$and!.push({ createdAt: { $gt: new Date(from) } })
@@ -617,7 +617,7 @@ export const getOrders = async (req: Request, res: Response) => {
 
     let $sort: Record<string, 1 | -1 | Expression.Meta> = { createdAt: -1 } // dateDesc default
     if (sortBy) {
-      if (sortBy === wexcommerceTypes.SortOrderBy.dateAsc) {
+      if (sortBy === lebobeautycoTypes.SortOrderBy.dateAsc) {
         $sort = { createdAt: 1 }
       }
     }

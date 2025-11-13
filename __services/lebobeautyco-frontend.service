@@ -1,0 +1,15 @@
+[Unit]
+Description=lebobeautyco frontend
+Wants=lebobeautyco.service
+After=lebobeautyco.service
+
+[Service]
+ExecStart=/usr/bin/npm run start
+WorkingDirectory=/opt/lebobeautyco/frontend
+Type=simple
+Restart=always
+StandardOutput=append:/var/log/lebobeautyco-frontend.log
+StandardError=append:/var/log/lebobeautyco-frontend.log
+
+[Install]
+WantedBy=multi-user.target

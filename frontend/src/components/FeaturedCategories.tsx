@@ -2,14 +2,14 @@
 
 import React from 'react'
 import Link from 'next/link'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import env from '@/config/env.config'
 import FeaturedProducts from './FeaturedProducts'
 
 import styles from '@/styles/featured-categories.module.css'
 
 interface FeaturedCategoriesProps {
-  categoryGroups: wexcommerceTypes.FeaturedCategory[]
+  categoryGroups: lebobeautycoTypes.FeaturedCategory[]
 }
 
 const FeaturedCategories: React.FC<FeaturedCategoriesProps> = ({ categoryGroups }) => categoryGroups.length > 0 && (

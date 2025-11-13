@@ -36,8 +36,8 @@ services:
     depends_on:
       - mongo
     volumes:
-      - cdn:/var/www/cdn/wexcommerce
-      - backend_logs:/wexcommerce/backend/logs
+      - cdn:/var/www/cdn/lebobeautyco
+      - backend_logs:/lebobeautyco/backend/logs
 
   wc-admin:
     build:
@@ -68,7 +68,7 @@ services:
     ports:
       - 8006:8006
     volumes:
-      - cdn:/var/www/cdn/wexcommerce
+      - cdn:/var/www/cdn/lebobeautyco
     restart: always
 
   wc-nginx-frontend:
@@ -81,7 +81,7 @@ services:
       - 8080:80
       - 4443:443
     volumes:
-      - cdn:/var/www/cdn/wexcommerce
+      - cdn:/var/www/cdn/lebobeautyco
     restart: always
 
 volumes:

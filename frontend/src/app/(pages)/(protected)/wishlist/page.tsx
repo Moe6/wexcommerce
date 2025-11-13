@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as serverHelper from '@/utils/serverHelper'
 import * as UserService from '@/lib/UserService'
 import * as WishlistService from '@/lib/WishlistService'
@@ -8,7 +8,7 @@ import Indicator from '@/components/Indicator'
 import ScrollToTop from '@/components/ScrollToTop'
 
 const Wishlist = async () => {
-  let wishlist: wexcommerceTypes.Wishlist | undefined = undefined
+  let wishlist: lebobeautycoTypes.Wishlist | undefined = undefined
 
   try {
     const userId = await UserService.getUserId()

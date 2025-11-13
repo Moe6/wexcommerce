@@ -7,7 +7,7 @@ import asyncFs from 'node:fs/promises'
 import escapeStringRegexp from 'escape-string-regexp'
 import axios from 'axios'
 import { nanoid } from 'nanoid'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as logger from '../utils/logger'
 import i18n from '../lang/i18n'
 import * as env from '../config/env.config'
@@ -38,11 +38,11 @@ const getStatusMessage = (lang: string, msg: string) => (
  * @async
  * @param {Request} req
  * @param {Response} res
- * @param {wexcommerceTypes.UserType} userType
+ * @param {lebobeautycoTypes.UserType} userType
  * @returns {unknown}
  */
-const _signup = async (req: Request, res: Response, userType: wexcommerceTypes.UserType) => {
-  const { body }: { body: wexcommerceTypes.SignUpPayload } = req
+const _signup = async (req: Request, res: Response, userType: lebobeautycoTypes.UserType) => {
+  const { body }: { body: lebobeautycoTypes.SignUpPayload } = req
 
   //
   // Create user
@@ -130,7 +130,7 @@ const _signup = async (req: Request, res: Response, userType: wexcommerceTypes.U
  * @param {Response} res
  */
 export const signup = async (req: Request, res: Response) => {
-  await _signup(req, res, wexcommerceTypes.UserType.User)
+  await _signup(req, res, lebobeautycoTypes.UserType.User)
 }
 
 /**
@@ -142,7 +142,7 @@ export const signup = async (req: Request, res: Response) => {
  * @param {Response} res
  */
 export const adminSignup = async (req: Request, res: Response) => {
-  await _signup(req, res, wexcommerceTypes.UserType.Admin)
+  await _signup(req, res, lebobeautycoTypes.UserType.Admin)
 }
 
 /**
@@ -210,7 +210,7 @@ export const confirmEmail = async (req: Request, res: Response) => {
  * @returns {unknown}
  */
 export const resendLink = async (req: Request, res: Response) => {
-  const { body }: { body: wexcommerceTypes.ResendLinkPayload } = req
+  const { body }: { body: lebobeautycoTypes.ResendLinkPayload } = req
   const { email } = body
 
   try {
@@ -274,7 +274,7 @@ export const resendLink = async (req: Request, res: Response) => {
  * @returns {unknown}
  */
 export const validateEmail = async (req: Request, res: Response) => {
-  const { body }: { body: wexcommerceTypes.ValidateEmailPayload } = req
+  const { body }: { body: lebobeautycoTypes.ValidateEmailPayload } = req
   const { email } = body
 
   try {
@@ -307,11 +307,11 @@ export const validateEmail = async (req: Request, res: Response) => {
  */
 export const isAdmin = async (req: Request, res: Response) => {
   try {
-    const { body }: { body: wexcommerceTypes.IsAdminPayload } = req
+    const { body }: { body: lebobeautycoTypes.IsAdminPayload } = req
     if (!body.email) {
       throw new Error('Email not found')
     }
-    const exists = await User.exists({ email: body.email, type: wexcommerceTypes.UserType.Admin })
+    const exists = await User.exists({ email: body.email, type: lebobeautycoTypes.UserType.Admin })
 
     if (exists) {
       res.sendStatus(200)
@@ -334,11 +334,11 @@ export const isAdmin = async (req: Request, res: Response) => {
  */
 export const isUser = async (req: Request, res: Response) => {
   try {
-    const { body }: { body: wexcommerceTypes.IsUserPayload } = req
+    const { body }: { body: lebobeautycoTypes.IsUserPayload } = req
     if (!body.email) {
       throw new Error('Email not found')
     }
-    const exists = await User.exists({ email: body.email, type: wexcommerceTypes.UserType.User })
+    const exists = await User.exists({ email: body.email, type: lebobeautycoTypes.UserType.User })
 
     if (exists) {
       res.sendStatus(200)
@@ -370,12 +370,12 @@ export const resend = async (req: Request, res: Response) => {
     const user = await User.findOne({ email })
 
     if (user) {
-      const type = req.params.type.toLowerCase() as wexcommerceTypes.AppType
+      const type = req.params.type.toLowerCase() as lebobeautycoTypes.AppType
 
       if (
-        ![wexcommerceTypes.AppType.Frontend, wexcommerceTypes.AppType.Admin].includes(type)
-        || (type === wexcommerceTypes.AppType.Admin && user.type === wexcommerceTypes.UserType.User)
-        || (type === wexcommerceTypes.AppType.Frontend && user.type !== wexcommerceTypes.UserType.User)
+        ![lebobeautycoTypes.AppType.Frontend, lebobeautycoTypes.AppType.Admin].includes(type)
+        || (type === lebobeautycoTypes.AppType.Admin && user.type === lebobeautycoTypes.UserType.User)
+        || (type === lebobeautycoTypes.AppType.Frontend && user.type !== lebobeautycoTypes.UserType.User)
       ) {
         res.sendStatus(403)
         return
@@ -401,7 +401,7 @@ export const resend = async (req: Request, res: Response) => {
           ${i18n.t('HELLO')}${user.fullName},<br><br>  
           ${reset ? i18n.t('PASSWORD_RESET_LINK') : i18n.t('ACCOUNT_ACTIVATION_LINK')}<br><br>  
           ${helper.joinURL(
-            user.type === wexcommerceTypes.UserType.User ? env.FRONTEND_HOST : env.ADMIN_HOST,
+            user.type === lebobeautycoTypes.UserType.User ? env.FRONTEND_HOST : env.ADMIN_HOST,
             reset ? 'reset-password' : 'activate',
           )}/?u=${encodeURIComponent(user.id)}&e=${encodeURIComponent(user.email)}&t=${encodeURIComponent(token.token)}<br><br>
           ${i18n.t('REGARDS')}<br>
@@ -430,7 +430,7 @@ export const resend = async (req: Request, res: Response) => {
  * @returns {unknown}
  */
 export const activate = async (req: Request, res: Response) => {
-  const { body }: { body: wexcommerceTypes.ActivatePayload } = req
+  const { body }: { body: lebobeautycoTypes.ActivatePayload } = req
   const { userId } = body
 
   try {
@@ -484,12 +484,12 @@ export const checkToken = async (req: Request, res: Response) => {
     })
 
     if (user) {
-      const type = req.params.type.toLowerCase() as wexcommerceTypes.AppType
+      const type = req.params.type.toLowerCase() as lebobeautycoTypes.AppType
 
       if (
-        ![wexcommerceTypes.AppType.Frontend, wexcommerceTypes.AppType.Admin].includes(type)
-        || (type === wexcommerceTypes.AppType.Admin && user.type === wexcommerceTypes.UserType.User)
-        || (type === wexcommerceTypes.AppType.Frontend && user.type !== wexcommerceTypes.UserType.User)
+        ![lebobeautycoTypes.AppType.Frontend, lebobeautycoTypes.AppType.Admin].includes(type)
+        || (type === lebobeautycoTypes.AppType.Admin && user.type === lebobeautycoTypes.UserType.User)
+        || (type === lebobeautycoTypes.AppType.Frontend && user.type !== lebobeautycoTypes.UserType.User)
         || user.active
       ) {
         res.sendStatus(204)
@@ -556,7 +556,7 @@ export const deleteTokens = async (req: Request, res: Response) => {
  * @returns {unknown}
  */
 export const signin = async (req: Request, res: Response) => {
-  const { body }: { body: wexcommerceTypes.SignInPayload } = req
+  const { body }: { body: lebobeautycoTypes.SignInPayload } = req
   const { email: emailFromBody, password, stayConnected } = body
 
   try {
@@ -571,15 +571,15 @@ export const signin = async (req: Request, res: Response) => {
     }
 
     const user = await User.findOne({ email })
-    const type = req.params.type.toLowerCase() as wexcommerceTypes.AppType
+    const type = req.params.type.toLowerCase() as lebobeautycoTypes.AppType
 
     if (
       !password
       || !user
       || !user.password
-      || ![wexcommerceTypes.AppType.Frontend, wexcommerceTypes.AppType.Admin].includes(type)
-      || (type === wexcommerceTypes.AppType.Admin && user.type === wexcommerceTypes.UserType.User)
-      || (type === wexcommerceTypes.AppType.Frontend && user.type !== wexcommerceTypes.UserType.User)
+      || ![lebobeautycoTypes.AppType.Frontend, lebobeautycoTypes.AppType.Admin].includes(type)
+      || (type === lebobeautycoTypes.AppType.Admin && user.type === lebobeautycoTypes.UserType.User)
+      || (type === lebobeautycoTypes.AppType.Frontend && user.type !== lebobeautycoTypes.UserType.User)
     ) {
       res.sendStatus(204)
       return
@@ -593,7 +593,7 @@ export const signin = async (req: Request, res: Response) => {
       //
       // Return the token in the response body.
       //
-      const loggedUser: wexcommerceTypes.User = {
+      const loggedUser: lebobeautycoTypes.User = {
         _id: user.id,
         email: user.email,
         fullName: user.fullName,
@@ -626,7 +626,7 @@ export const signin = async (req: Request, res: Response) => {
  * @returns {unknown}
  */
 export const socialSignin = async (req: Request, res: Response) => {
-  const { body }: { body: wexcommerceTypes.SignInPayload } = req
+  const { body }: { body: lebobeautycoTypes.SignInPayload } = req
   const { socialSignInType, accessToken, email: emailFromBody, fullName, avatar, stayConnected, mobile } = body
 
   try {
@@ -664,7 +664,7 @@ export const socialSignin = async (req: Request, res: Response) => {
         verified: true,
         language: 'en',
         enableEmailNotifications: true,
-        type: wexcommerceTypes.UserType.User,
+        type: lebobeautycoTypes.UserType.User,
         blacklisted: false,
         avatar,
       })
@@ -677,7 +677,7 @@ export const socialSignin = async (req: Request, res: Response) => {
     //
     // Return the token in the response body.
     //
-    const loggedUser: wexcommerceTypes.User = {
+    const loggedUser: lebobeautycoTypes.User = {
       _id: user.id,
       email: user.email,
       fullName: user.fullName,
@@ -758,7 +758,7 @@ export const getUser = async (req: Request, res: Response) => {
  */
 export const update = async (req: Request, res: Response) => {
   try {
-    const { body }: { body: wexcommerceTypes.UpdateUserPayload } = req
+    const { body }: { body: lebobeautycoTypes.UpdateUserPayload } = req
     const { _id } = body
 
     if (!helper.isValidObjectId(_id)) {
@@ -800,7 +800,7 @@ export const update = async (req: Request, res: Response) => {
  */
 export const updateLanguage = async (req: Request, res: Response) => {
   try {
-    const { body }: { body: wexcommerceTypes.UpdateLanguagePayload } = req
+    const { body }: { body: lebobeautycoTypes.UpdateLanguagePayload } = req
     const { id, language } = body
 
     if (!helper.isValidObjectId(id)) {
@@ -876,7 +876,7 @@ export const checkPassword = async (req: Request, res: Response) => {
  * @returns {unknown}
  */
 export const changePassword = async (req: Request, res: Response) => {
-  const { body }: { body: wexcommerceTypes.ChangePasswordPayload } = req
+  const { body }: { body: lebobeautycoTypes.ChangePasswordPayload } = req
   const {
     _id,
     password: currentPassword,
@@ -951,7 +951,7 @@ export const getUsers = async (req: Request, res: Response) => {
         $match = {
           $and: [
             {
-              type: wexcommerceTypes.UserType.User,
+              type: lebobeautycoTypes.UserType.User,
             },
             {
               _id: { $eq: new mongoose.Types.ObjectId(keyword) },
@@ -967,7 +967,7 @@ export const getUsers = async (req: Request, res: Response) => {
         $match = {
           $and: [
             {
-              type: wexcommerceTypes.UserType.User,
+              type: lebobeautycoTypes.UserType.User,
             },
             {
               $or: [{ fullName: { $regex: keyword, $options: options } }, { email: { $regex: keyword, $options: options } }],
@@ -979,7 +979,7 @@ export const getUsers = async (req: Request, res: Response) => {
         }
       }
     } else {
-      $match = { type: wexcommerceTypes.UserType.User, expireAt: null }
+      $match = { type: lebobeautycoTypes.UserType.User, expireAt: null }
     }
 
     const users = await User.aggregate([
@@ -1048,7 +1048,7 @@ export const deleteUsers = async (req: Request, res: Response) => {
           }
         }
 
-        if (user.type === wexcommerceTypes.UserType.User) {
+        if (user.type === lebobeautycoTypes.UserType.User) {
           const orders = await Order.find({ user: id })
           for (const order of orders) {
             await OrderItem.deleteMany({ _id: { $in: order.orderItems } })
@@ -1113,7 +1113,7 @@ export const sendEmail = async (req: Request, res: Response) => {
       throw new Error('Unauthorized!')
     }
 
-    const { body }: { body: wexcommerceTypes.SendEmailPayload } = req
+    const { body }: { body: lebobeautycoTypes.SendEmailPayload } = req
     const { from, to, subject, message, isContactForm } = body
 
     const mailOptions: nodemailer.SendMailOptions = {

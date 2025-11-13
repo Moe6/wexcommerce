@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { notFound } from 'next/navigation'
 import { strings as commonStrings } from '@/lang/common'
 import { strings } from '@/lang/sign-up'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import * as UserService from '@/lib/UserService'
 import Error from '@/components/Error'
 import Backdrop from '@/components/SimpleBackdrop'
@@ -144,7 +144,7 @@ const SignUp: React.FC = () => {
 
       setLoading(true)
 
-      const data: wexcommerceTypes.SignUpPayload = {
+      const data: lebobeautycoTypes.SignUpPayload = {
         email,
         password,
         fullName,

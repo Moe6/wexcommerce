@@ -1,5 +1,5 @@
 import { toast, ToastContent } from 'react-toastify'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import { strings as commonStrings } from '@/lang/common'
 import { strings as osStrings } from '@/lang/order-status'
 import LocalizedStrings from 'localized-strings'
@@ -29,55 +29,55 @@ export const setLanguage = (strings: LocalizedStrings, language: string) => {
 
 export const getPaymentTypes = () => {
   return [
-    wexcommerceTypes.PaymentType.CreditCard,
-    wexcommerceTypes.PaymentType.Cod, wexcommerceTypes.PaymentType.WireTransfer,
+    lebobeautycoTypes.PaymentType.CreditCard,
+    lebobeautycoTypes.PaymentType.Cod, lebobeautycoTypes.PaymentType.WireTransfer,
   ]
 }
 
-export const getPaymentType = (paymentType: wexcommerceTypes.PaymentType, language: string) => {
+export const getPaymentType = (paymentType: lebobeautycoTypes.PaymentType, language: string) => {
   setLanguage(commonStrings, language)
 
-  return paymentType === wexcommerceTypes.PaymentType.CreditCard ? commonStrings.CREDIT_CARD
-    : paymentType === wexcommerceTypes.PaymentType.Cod ? commonStrings.COD
-      : paymentType === wexcommerceTypes.PaymentType.WireTransfer ? commonStrings.WIRE_TRANSFER
+  return paymentType === lebobeautycoTypes.PaymentType.CreditCard ? commonStrings.CREDIT_CARD
+    : paymentType === lebobeautycoTypes.PaymentType.Cod ? commonStrings.COD
+      : paymentType === lebobeautycoTypes.PaymentType.WireTransfer ? commonStrings.WIRE_TRANSFER
         : ''
 }
 
 export const getOrderStatuses = () => {
   return [
-    wexcommerceTypes.OrderStatus.Pending,
-    wexcommerceTypes.OrderStatus.Paid,
-    wexcommerceTypes.OrderStatus.Confirmed,
-    wexcommerceTypes.OrderStatus.InProgress,
-    wexcommerceTypes.OrderStatus.Shipped,
-    wexcommerceTypes.OrderStatus.Cancelled,
+    lebobeautycoTypes.OrderStatus.Pending,
+    lebobeautycoTypes.OrderStatus.Paid,
+    lebobeautycoTypes.OrderStatus.Confirmed,
+    lebobeautycoTypes.OrderStatus.InProgress,
+    lebobeautycoTypes.OrderStatus.Shipped,
+    lebobeautycoTypes.OrderStatus.Cancelled,
   ]
 }
 
 
-export const getOrderStatus = (orderStatus: wexcommerceTypes.OrderStatus, language: string) => {
+export const getOrderStatus = (orderStatus: lebobeautycoTypes.OrderStatus, language: string) => {
   setLanguage(osStrings, language)
 
-  return orderStatus === wexcommerceTypes.OrderStatus.Pending ? osStrings.PENDING
-    : orderStatus === wexcommerceTypes.OrderStatus.Paid ? osStrings.PAID
-      : orderStatus === wexcommerceTypes.OrderStatus.Confirmed ? osStrings.CONFIRMED
-        : orderStatus === wexcommerceTypes.OrderStatus.InProgress ? osStrings.IN_PROGRESS
-          : orderStatus === wexcommerceTypes.OrderStatus.Shipped ? osStrings.SHIPPED
-            : orderStatus === wexcommerceTypes.OrderStatus.Cancelled ? osStrings.CANCELLED
+  return orderStatus === lebobeautycoTypes.OrderStatus.Pending ? osStrings.PENDING
+    : orderStatus === lebobeautycoTypes.OrderStatus.Paid ? osStrings.PAID
+      : orderStatus === lebobeautycoTypes.OrderStatus.Confirmed ? osStrings.CONFIRMED
+        : orderStatus === lebobeautycoTypes.OrderStatus.InProgress ? osStrings.IN_PROGRESS
+          : orderStatus === lebobeautycoTypes.OrderStatus.Shipped ? osStrings.SHIPPED
+            : orderStatus === lebobeautycoTypes.OrderStatus.Cancelled ? osStrings.CANCELLED
               : ''
 }
 
 export const getDeliveryTypes = () => {
   return [
-    wexcommerceTypes.DeliveryType.Shipping,
-    wexcommerceTypes.DeliveryType.Withdrawal,
+    lebobeautycoTypes.DeliveryType.Shipping,
+    lebobeautycoTypes.DeliveryType.Withdrawal,
   ]
 }
 
-export const getDeliveryType = (deliveryType: wexcommerceTypes.DeliveryType, language: string) => {
+export const getDeliveryType = (deliveryType: lebobeautycoTypes.DeliveryType, language: string) => {
   setLanguage(commonStrings, language)
 
-  return deliveryType === wexcommerceTypes.DeliveryType.Shipping ? commonStrings.SHIPPING
-    : deliveryType === wexcommerceTypes.DeliveryType.Withdrawal ? commonStrings.WITHDRAWAL
+  return deliveryType === lebobeautycoTypes.DeliveryType.Shipping ? commonStrings.SHIPPING
+    : deliveryType === lebobeautycoTypes.DeliveryType.Withdrawal ? commonStrings.WITHDRAWAL
       : ''
 }

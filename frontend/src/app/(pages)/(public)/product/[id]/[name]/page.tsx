@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import * as wexcommerceTypes from ':wexcommerce-types'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
 import NoMatch from '@/components/NoMatch'
 import * as SettingService from '@/lib/SettingService'
 import * as ProductService from '@/lib/ProductService'
@@ -20,7 +20,7 @@ const Product = async (props: { params: Promise<{ id: string, name: string }> })
     )
   }
 
-  let product: wexcommerceTypes.Product | undefined = undefined
+  let product: lebobeautycoTypes.Product | undefined = undefined
   try {
     const language = await SettingService.getLanguage()
     const cartId = await CartService.getCartId()

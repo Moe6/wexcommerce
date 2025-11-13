@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useState, useRef, useEffect } from 'react'
-import * as wexcommerceTypes from ':wexcommerce-types'
-import * as wexcommerceHelper from ':wexcommerce-helper'
+import * as lebobeautycoTypes from ':lebobeautyco-types'
+import * as lebobeautycoHelper from ':lebobeautyco-helper'
 import { strings as commonStrings } from '@/lang/common'
 import Accordion from './Accordion'
 import OrderStatus from './OrderStatus'
@@ -11,11 +11,11 @@ import * as helper from '@/utils/helper'
 import styles from '@/styles/order-status-filter.module.css'
 
 interface OrderStatusFilterProps {
-  selectedOptions: wexcommerceTypes.OrderStatus[]
+  selectedOptions: lebobeautycoTypes.OrderStatus[]
   collapse?: boolean
   className?: string
   // eslint-disable-next-line no-unused-vars
-  onChange: (values: wexcommerceTypes.OrderStatus[]) => void
+  onChange: (values: lebobeautycoTypes.OrderStatus[]) => void
 }
 
 const statuses = helper.getOrderStatuses()
@@ -35,7 +35,7 @@ const OrderStatusFilter: React.FC<OrderStatusFilterProps> = (
   useEffect(() => {
     if (selectedOptions) {
       refs.current.forEach((checkbox) => {
-        const status = checkbox.getAttribute('data-value') as wexcommerceTypes.OrderStatus
+        const status = checkbox.getAttribute('data-value') as lebobeautycoTypes.OrderStatus
         if (selectedOptions.includes(status)) {
           checkbox.checked = true
         }
@@ -62,9 +62,9 @@ const OrderStatusFilter: React.FC<OrderStatusFilterProps> = (
   }
 
   const handleCheckOrderStatusChange = (e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLElement>) => {
-    const status = e.currentTarget.getAttribute('data-value') as wexcommerceTypes.OrderStatus
+    const status = e.currentTarget.getAttribute('data-value') as lebobeautycoTypes.OrderStatus
 
-    const _checkedStatuses = wexcommerceHelper.cloneArray(checkedStatuses) as wexcommerceTypes.OrderStatus[]
+    const _checkedStatuses = lebobeautycoHelper.cloneArray(checkedStatuses) as lebobeautycoTypes.OrderStatus[]
     if ((e.currentTarget as HTMLInputElement).checked) {
       _checkedStatuses.push(status)
 
