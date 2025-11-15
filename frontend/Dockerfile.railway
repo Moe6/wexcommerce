@@ -26,11 +26,12 @@ COPY frontend/package*.json ./frontend/
 WORKDIR /app/frontend
 RUN npm ci
 
-# Copy frontend source
+# Copy frontend source (excluding node_modules to preserve installed deps)
 COPY frontend ./
 
-# Build Next.js app
+# Ensure node_modules/.bin is in PATH and build Next.js app
 ENV NODE_OPTIONS=--max-old-space-size=2048
+ENV PATH="/app/frontend/node_modules/.bin:$PATH"
 RUN npm run build
 
 # Production stage
