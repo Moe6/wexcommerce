@@ -1,0 +1,43 @@
+# Railway-optimized Dockerfile for Backend
+FROM node:lts-alpine
+
+WORKDIR /app
+
+# Copy root package.json if exists
+COPY package*.json ./
+
+# Copy packages directory (shared dependencies)
+COPY packages ./packages
+
+# Copy backend package files
+COPY backend/package*.json ./backend/
+
+# Install dependencies for packages first (including dev dependencies for building)
+WORKDIR /app/packages/lebobeautyco-types
+RUN npm ci || true
+
+WORKDIR /app/packages/lebobeautyco-helper
+RUN npm ci || true
+
+WORKDIR /app/packages/reactjs-social-login
+RUN npm ci || true
+
+# Install backend dependencies (including dev dependencies for building)
+WORKDIR /app/backend
+RUN npm ci
+
+# Copy backend source
+COPY backend ./
+
+# Build TypeScript (requires dev dependencies like typescript, rimraf, @babel/cli)
+RUN npm run build
+
+# Note: Dev dependencies are kept because the start script runs 'npm run build' on every start
+# If you want to optimize, consider modifying the start script to skip build if dist already exists
+
+# Expose port (Railway will set PORT env var)
+EXPOSE 4005
+
+# Start the application
+CMD ["npm", "run", "start"]
+
