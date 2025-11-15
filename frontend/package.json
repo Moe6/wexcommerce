@@ -12,7 +12,7 @@
     "ts:docker-build": "tsc --build --verbose",
     "dev:docker": "npm run ts:docker-build && next dev -p 8006",
     "build": "rimraf .next && npm run ts:build && cross-env NODE_OPTIONS=--max-old-space-size=1024 next build",
-    "start": "next start -H 0.0.0.0 -p 8006",
+    "start": "next start -H 0.0.0.0 -p ${PORT:-8006}",
     "lint": "eslint . --cache --cache-location .eslintcache",
     "fix": "eslint --fix",
     "ncu": "ncu -u",

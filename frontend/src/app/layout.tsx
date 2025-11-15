@@ -1,4 +1,5 @@
 import React from 'react'
+import { Playfair_Display } from 'next/font/google'
 
 import type { Metadata } from 'next'
 
@@ -7,6 +8,14 @@ import env from '@/config/env.config'
 // import 'github-fork-ribbon-css/gh-fork-ribbon.css'
 
 import '@/styles/globals.css'
+
+// Load elegant serif font for fashion brand
+const playfairDisplay = Playfair_Display({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-playfair',
+  display: 'swap',
+})
 
 export const dynamic = 'force-dynamic'
 
@@ -28,7 +37,7 @@ type RootLayoutProps = Readonly<{
 
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => (
 
-  <html>
+  <html className={playfairDisplay.variable}>
 
     <body>
 

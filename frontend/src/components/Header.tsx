@@ -343,12 +343,13 @@ const Header: React.FC<HeaderProps> = ({ hidden, hideSearch, hideCart, hideNotif
   return !hidden &&
     <div style={classes.grow} className={styles.header}>
       <AppBar position="relative" sx={{ bgcolor: '#fff', boxShadow: 'none', borderBottom: '1px solid #ddd', zIndex: showMobileSearch ? 1202 : 1 }}>
-        <Toolbar>
+        <Toolbar sx={{ minHeight: '64px !important', overflow: 'visible' }}>
           <div
             className={styles.headerLogo}
             style={{
               display: showMobileSearch ? 'none' : 'flex',
-              minWidth: isSignedIn || env.isMobile() ? 160 : 140
+              minWidth: 'auto',
+              maxWidth: 'none'
             }}>
             {
               isLoaded && !loading && !showMobileSearch &&
@@ -366,18 +367,9 @@ const Header: React.FC<HeaderProps> = ({ hidden, hideSearch, hideCart, hideNotif
 
                 <Link href="/" className={styles.logo}>
                   {logoType === 'text' ? (
-                    <Typography
-                      variant="h6"
-                      component="div"
-                      sx={{
-                        fontWeight: 600,
-                        color: '#000',
-                        textDecoration: 'none',
-                        fontSize: '1.25rem',
-                      }}
-                    >
+                    <span className={styles.logoText}>
                       {logoText || 'LeboBeauty'}
-                    </Typography>
+                    </span>
                   ) : logoImageUrl ? (
                     <Image
                       alt="Logo"
@@ -390,18 +382,9 @@ const Header: React.FC<HeaderProps> = ({ hidden, hideSearch, hideCart, hideNotif
                       style={{ width: 'auto', height: '40px', maxWidth: '200px' }}
                     />
                   ) : (
-                    <Typography
-                      variant="h6"
-                      component="div"
-                      sx={{
-                        fontWeight: 600,
-                        color: '#000',
-                        textDecoration: 'none',
-                        fontSize: '1.25rem',
-                      }}
-                    >
+                    <span className={styles.logoText}>
                       LeboBeauty
-                    </Typography>
+                    </span>
                   )}
                 </Link>
               </>

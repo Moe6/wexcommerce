@@ -1,0 +1,70 @@
+# Railway-optimized Dockerfile for Frontend
+FROM node:lts-alpine AS build
+
+WORKDIR /app
+
+# Copy root package.json if exists
+COPY package*.json ./
+
+# Copy packages directory (shared dependencies)
+COPY packages ./packages
+
+# Install packages dependencies first
+WORKDIR /app/packages/lebobeautyco-types
+RUN npm ci || true
+
+WORKDIR /app/packages/lebobeautyco-helper
+RUN npm ci || true
+
+WORKDIR /app/packages/reactjs-social-login
+RUN npm ci || true
+
+# Copy frontend package files
+COPY frontend/package*.json ./frontend/
+
+# Install frontend dependencies
+WORKDIR /app/frontend
+RUN npm ci
+
+# Copy frontend source
+COPY frontend ./
+
+# Build Next.js app
+ENV NODE_OPTIONS=--max-old-space-size=2048
+RUN npm run build
+
+# Production stage
+FROM node:lts-alpine
+
+WORKDIR /app
+
+# Copy packages for production
+COPY packages ./packages
+
+# Install packages production dependencies
+WORKDIR /app/packages/lebobeautyco-types
+RUN npm ci --only=production || true
+
+WORKDIR /app/packages/lebobeautyco-helper
+RUN npm ci --only=production || true
+
+WORKDIR /app/packages/reactjs-social-login
+RUN npm ci --only=production || true
+
+# Copy frontend package files and install production dependencies
+COPY frontend/package*.json ./frontend/
+WORKDIR /app/frontend
+RUN npm ci --only=production
+
+# Copy built application from build stage
+COPY --from=build /app/frontend/.next ./.next
+COPY --from=build /app/frontend/public ./public
+COPY --from=build /app/frontend/next.config.ts ./next.config.ts
+COPY --from=build /app/frontend/tsconfig.json ./tsconfig.json
+
+# Expose port (Railway will set PORT env var)
+EXPOSE 8006
+
+# Start Next.js
+CMD ["npm", "start"]
+

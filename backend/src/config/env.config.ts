@@ -69,10 +69,11 @@ export const BATCH_SIZE = Number.parseInt(__env__('WC_BATCH_SIZE', false, '1000'
 
 /**
  * Server Port. Default is 4005.
+ * Railway sets PORT environment variable, so we check that first.
  *
  * @type {number}
  */
-export const PORT = Number.parseInt(__env__('WC_PORT', false, '4005'), 10)
+export const PORT = Number.parseInt(process.env.PORT || __env__('WC_PORT', false, '4005'), 10)
 
 /**
  * Indicate whether HTTPS is enabled or not.
