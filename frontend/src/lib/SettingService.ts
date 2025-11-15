@@ -37,3 +37,15 @@ export const getStripeCurrency = async (): Promise<string> =>
       '/api/stripe-currency'
     )
     .then((res) => res.data)
+
+/**
+ * Get logo settings.
+ *
+ * @returns {Promise<{logoType: 'text' | 'image', logoText: string, logoImageUrl?: string}>}
+ */
+export const getLogoSettings = async (): Promise<{logoType: 'text' | 'image', logoText: string, logoImageUrl?: string}> =>
+  fetchInstance
+    .GET(
+      '/api/logo-settings'
+    )
+    .then((res) => res.data)

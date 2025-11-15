@@ -172,6 +172,9 @@ export interface UpdateSettingsPayload {
   language: string
   currency: string
   stripeCurrency: string
+  logoType?: 'text' | 'image'
+  logoText?: string
+  logoImageUrl?: string
 }
 
 export interface UpdateBankSettingsPayload {
@@ -341,6 +344,9 @@ export interface Setting {
   accountHolder?: string
   rib?: string
   iban?: string
+  logoType?: 'text' | 'image'
+  logoText?: string
+  logoImageUrl?: string
 }
 
 export interface Product {

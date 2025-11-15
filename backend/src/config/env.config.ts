@@ -1,4 +1,5 @@
 import process from 'node:process'
+import path from 'node:path'
 import { Document, Types } from 'mongoose'
 import { CookieOptions } from 'express'
 import * as lebobeautycoTypes from ':lebobeautyco-types'
@@ -282,6 +283,20 @@ export const CDN_PRODUCTS = __env__('WC_CDN_PRODUCTS', true)
  * @type {string}
  */
 export const CDN_TEMP_PRODUCTS = __env__('WC_CDN_TEMP_PRODUCTS', true)
+
+/**
+ * Logo cdn folder path.
+ *
+ * @type {string}
+ */
+export const CDN_LOGO = path.join(CDN_ROOT, 'logo')
+
+/**
+ * Logo temp cdn folder path.
+ *
+ * @type {string}
+ */
+export const CDN_TEMP_LOGO = path.join(CDN_ROOT, 'logo', 'temp')
 
 /**
  * Admin host.
@@ -689,4 +704,7 @@ export interface Setting extends Document {
   accountHolder?: string
   rib?: string
   iban?: string
+  logoType?: 'text' | 'image'
+  logoText?: string
+  logoImageUrl?: string
 }

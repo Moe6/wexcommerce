@@ -29,9 +29,11 @@ import * as UserService from '@/lib/UserService'
 import * as PaymentTypeService from '@/lib/PaymentTypeService'
 import * as SettingService from '@/lib/SettingService'
 import * as DeliveryTypeService from '@/lib/DeliveryTypeService'
+import * as ImageService from '@/lib/ImageService'
 import { strings } from '@/lang/settings'
 import { strings as commonStrings } from '@/lang/common'
 import * as helper from '@/utils/helper'
+import Image from 'next/image'
 
 import styles from '@/styles/settings.module.css'
 
@@ -55,6 +57,11 @@ const Settings: React.FC = () => {
   const [accountHolder, setAccountHolder] = useState<string>()
   const [rib, setRib] = useState<string>()
   const [iban, setIban] = useState<string>()
+  const [logoType, setLogoType] = useState<'text' | 'image'>('text')
+  const [logoText, setLogoText] = useState('')
+  const [logoImageUrl, setLogoImageUrl] = useState<string>()
+  const [tempLogoImageUrl, setTempLogoImageUrl] = useState<string>()
+  const logoUploadRef = React.useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,6 +80,9 @@ const Settings: React.FC = () => {
         setAccountHolder(settings.accountHolder)
         setRib(settings.rib)
         setIban(settings.iban)
+        setLogoType(settings.logoType || 'text')
+        setLogoText(settings.logoText || '')
+        setLogoImageUrl(settings.logoImageUrl)
       }
     }
 
@@ -140,6 +150,63 @@ const Settings: React.FC = () => {
       } else {
         helper.error()
       }
+    } catch (err) {
+      helper.error(err)
+    }
+  }
+
+  const handleLogoImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0]
+
+    if (file) {
+      try {
+        // Delete old temp image if exists
+        if (tempLogoImageUrl) {
+          await ImageService.deleteTempLogoImage(tempLogoImageUrl).catch(() => {})
+        }
+
+        const filename = await ImageService.uploadLogoImage(file)
+        setTempLogoImageUrl(filename)
+        setLogoImageUrl(filename)
+      } catch (err) {
+        helper.error(err)
+      }
+    }
+  }
+
+  const handleLogoSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    try {
+      const data: lebobeautycoTypes.UpdateSettingsPayload = {
+        language,
+        currency,
+        stripeCurrency,
+        logoType,
+        logoText: logoType === 'text' ? logoText : undefined,
+        logoImageUrl: logoType === 'image' ? (logoImageUrl || undefined) : undefined,
+      }
+
+      const status = await SettingService.updateSettings(data)
+
+      if (status === 200) {
+        helper.info(commonStrings.UPDATED)
+        setTempLogoImageUrl(undefined)
+      } else {
+        helper.error()
+      }
+    } catch (err) {
+      helper.error(err)
+    }
+  }
+
+  const handleRemoveLogo = async () => {
+    try {
+      if (tempLogoImageUrl) {
+        await ImageService.deleteTempLogoImage(tempLogoImageUrl).catch(() => {})
+      }
+      setTempLogoImageUrl(undefined)
+      setLogoImageUrl(undefined)
     } catch (err) {
       helper.error(err)
     }
@@ -374,6 +441,111 @@ const Settings: React.FC = () => {
               https://docs.stripe.com/currencies
             </a>
           </FormControl>
+
+          <div className="buttons">
+            <Button
+              type="submit"
+              variant="contained"
+              className="btn-primary btn-margin-bottom"
+              size="small"
+            >
+              {commonStrings.SAVE}
+            </Button>
+            <Button
+              variant="contained"
+              className="btn-secondary btn-margin-bottom"
+              size="small"
+              onClick={() => {
+                router.push('/')
+              }}
+            >
+              {commonStrings.CANCEL}
+            </Button>
+          </div>
+        </form>
+      </Paper>
+
+      <Paper className={styles.form} elevation={10}>
+        <form onSubmit={handleLogoSubmit}>
+          <h1 className={styles.formTitle}>{strings.LOGO_SETTINGS}</h1>
+
+          <FormControl fullWidth margin="dense">
+            <InputLabel>{strings.LOGO_TYPE}</InputLabel>
+            <Select
+              variant="standard"
+              value={logoType}
+              onChange={(e) => {
+                setLogoType(e.target.value as 'text' | 'image')
+              }}
+            >
+              <MenuItem value="text">{strings.TEXT}</MenuItem>
+              <MenuItem value="image">{strings.IMAGE}</MenuItem>
+            </Select>
+          </FormControl>
+
+          {logoType === 'text' && (
+            <FormControl fullWidth margin="dense">
+              <InputLabel>{strings.LOGO_TEXT}</InputLabel>
+              <Input
+                type="text"
+                value={logoText}
+                onChange={(e) => {
+                  setLogoText(e.target.value)
+                }}
+                autoComplete="off"
+              />
+            </FormControl>
+          )}
+
+          {logoType === 'image' && (
+            <FormControl fullWidth margin="dense">
+              <div style={{ marginBottom: '10px' }}>
+                {logoImageUrl && (
+                  <div style={{ marginBottom: '10px', position: 'relative', display: 'inline-block' }}>
+                    <Image
+                      alt="Logo preview"
+                      src={logoImageUrl.startsWith('http') ? logoImageUrl : `${env.CDN_LOGO}/${logoImageUrl}`}
+                      width={200}
+                      height={200}
+                      style={{ objectFit: 'contain', maxHeight: '200px' }}
+                      onError={(e) => {
+                        // Try temp path if permanent path fails
+                        if (!logoImageUrl.startsWith('http')) {
+                          (e.target as HTMLImageElement).src = `${env.CDN_TEMP_LOGO}/${logoImageUrl}`
+                        }
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+              <Button
+                variant="contained"
+                component="label"
+                className="btn-secondary"
+                size="small"
+                style={{ marginRight: '10px' }}
+              >
+                {strings.UPLOAD_LOGO}
+                <input
+                  ref={logoUploadRef}
+                  type="file"
+                  accept="image/*"
+                  hidden
+                  onChange={handleLogoImageChange}
+                />
+              </Button>
+              {logoImageUrl && (
+                <Button
+                  variant="contained"
+                  className="btn-secondary"
+                  size="small"
+                  onClick={handleRemoveLogo}
+                >
+                  {strings.REMOVE_LOGO}
+                </Button>
+              )}
+            </FormControl>
+          )}
 
           <div className="buttons">
             <Button

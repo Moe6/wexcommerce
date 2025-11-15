@@ -34,6 +34,8 @@ const env = {
   CDN_TEMP_CATEGORIES: String(process.env.NEXT_PUBLIC_WC_CDN_TEMP_CATEGORIES),
   CDN_PRODUCTS: String(process.env.NEXT_PUBLIC_WC_CDN_PRODUCTS),
   CDN_TEMP_PRODUCTS: String(process.env.NEXT_PUBLIC_WC_CDN_TEMP_PRODUCTS),
+  CDN_LOGO: String(process.env.NEXT_PUBLIC_WC_CDN_LOGO || process.env.NEXT_PUBLIC_WC_CDN_ROOT + '/logo'),
+  CDN_TEMP_LOGO: String(process.env.NEXT_PUBLIC_WC_CDN_TEMP_LOGO || process.env.NEXT_PUBLIC_WC_CDN_ROOT + '/logo/temp'),
 }
 
 export const CookieOptions: Partial<ResponseCookie> = {
