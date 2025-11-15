@@ -42,20 +42,23 @@ Your application consists of:
 ### Step 4: Deploy Backend Service
 
 1. In Railway dashboard, click **"+ New"** → **"GitHub Repo"**
-2. Select your repository again
-3. Railway will detect it's a monorepo
-4. Configure the backend service:
-   - **Root Directory**: `/backend`
-   - **Build Command**: `cd backend && npm install && npm run build`
-   - **Start Command**: `cd backend && npm run start`
-   - **Dockerfile Path**: `backend/Dockerfile.railway` (if using Docker)
+2. Select your repository
+3. Configure the backend service:
 
-#### Alternative: Using Dockerfile
+#### Option A: Using Dockerfile (Recommended)
 
-1. Click on the backend service
-2. Go to **Settings** → **Build**
-3. Set **Dockerfile Path** to `backend/Dockerfile.railway`
-4. Set **Root Directory** to `/` (root of repo)
+1. Go to **Settings** → **Build**
+2. Set **Dockerfile Path** to `backend/Dockerfile.railway`
+3. Leave **Root Directory** empty (Railway uses repo root by default)
+4. Go to **Settings** → **Deploy**
+5. Leave **Start Command** empty (uses Dockerfile CMD)
+
+#### Option B: Using Nixpacks (No Dockerfile)
+
+1. Go to **Settings** → **Root Directory**: `/backend`
+2. Railway will auto-detect Node.js
+3. Set **Start Command**: `npm run start`
+4. Note: You may need to adjust build commands for monorepo structure
 
 ### Step 5: Configure Backend Environment Variables
 
@@ -128,17 +131,21 @@ WC_ENABLE_SENTRY=false
 1. In Railway dashboard, click **"+ New"** → **"GitHub Repo"**
 2. Select your repository
 3. Configure the frontend service:
-   - **Root Directory**: `/frontend`
-   - **Build Command**: `cd frontend && npm install && npm run build`
-   - **Start Command**: `cd frontend && npm start`
-   - **Dockerfile Path**: `frontend/Dockerfile.railway` (if using Docker)
 
-#### Alternative: Using Dockerfile
+#### Option A: Using Dockerfile (Recommended)
 
-1. Click on the frontend service
-2. Go to **Settings** → **Build**
-3. Set **Dockerfile Path** to `frontend/Dockerfile.railway`
-4. Set **Root Directory** to `/` (root of repo)
+1. Go to **Settings** → **Build**
+2. Set **Dockerfile Path** to `frontend/Dockerfile.railway`
+3. Leave **Root Directory** empty (Railway uses repo root by default)
+4. Go to **Settings** → **Deploy**
+5. Leave **Start Command** empty (uses Dockerfile CMD)
+
+#### Option B: Using Nixpacks (No Dockerfile)
+
+1. Go to **Settings** → **Root Directory**: `/frontend`
+2. Railway will auto-detect Node.js/Next.js
+3. Set **Start Command**: `next start -H 0.0.0.0 -p $PORT`
+4. Note: You may need to adjust build commands for monorepo structure
 
 ### Step 7: Configure Frontend Environment Variables
 
@@ -282,6 +289,20 @@ Railway provides:
 - Alerts: Set up notifications for errors
 
 ## Troubleshooting
+
+### Error: "Dockerfile `Dockerfile.railway` does not exist"
+
+**Problem**: Railway is looking for a Dockerfile at the root, but your Dockerfiles are in subdirectories.
+
+**Solution**: 
+1. Go to your service → **Settings** → **Build**
+2. Set **Dockerfile Path** to:
+   - Backend: `backend/Dockerfile.railway`
+   - Frontend: `frontend/Dockerfile.railway`
+3. Leave **Root Directory** empty
+4. Save and redeploy
+
+See `RAILWAY_TROUBLESHOOTING.md` for more troubleshooting tips.
 
 ### Build Failures
 
