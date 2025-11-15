@@ -52,7 +52,8 @@ WORKDIR /app/packages/reactjs-social-login
 RUN npm ci --only=production || true
 
 # Copy frontend package files and install production dependencies
-COPY frontend/package*.json ./frontend/
+# Copy package files from build stage to ensure package-lock.json is included
+COPY --from=build /app/frontend/package*.json ./frontend/
 WORKDIR /app/frontend
 RUN npm ci --only=production
 
