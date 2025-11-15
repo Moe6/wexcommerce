@@ -52,7 +52,7 @@ const start = async (): Promise<void> => {
     const protocol = env.HTTPS ? 'HTTPS' : 'HTTP'
     const server = await createServer()
 
-    server.listen(env.PORT, () => {
+    server.listen(env.PORT, '0.0.0.0', () => {
       logger.info(`${protocol} server is running on port ${env.PORT}`)
     })
 

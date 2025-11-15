@@ -6,6 +6,8 @@ COPY ./frontend ./
 COPY ./frontend/.env.docker .env
 COPY ./packages /lebobeautyco/packages
 RUN npm install --force
+# Increase memory limit for Next.js build
+ENV NODE_OPTIONS=--max-old-space-size=2048
 RUN npm run build
 
 CMD ["npm", "start"]

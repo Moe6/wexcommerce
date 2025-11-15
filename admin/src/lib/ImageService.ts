@@ -74,3 +74,44 @@ export const updateCategoryImage = async (id: string, file: Blob): Promise<strin
     )
     .then((res) => res.data)
 }
+
+/**
+ * Upload logo image.
+ *
+ * @param {Blob} file
+ * @returns {Promise<string>}
+ */
+export const uploadLogoImage = async (file: Blob): Promise<string> => {
+  const user = await UserService.getCurrentUser()
+  const formData = new FormData()
+  formData.append('image', file)
+
+  return fetchInstance
+    .POST(
+      '/api/upload-logo-image',
+      formData,
+      user && user.accessToken ?
+        [{ 'x-access-token': user.accessToken }, { 'Content-Type': 'multipart/form-data' }]
+        : [{ 'Content-Type': 'multipart/form-data' }],
+      false,
+      true,
+    )
+    .then((res) => res.data)
+}
+
+/**
+ * Delete temp logo image.
+ *
+ * @param {string} filename
+ * @returns {Promise<number>}
+ */
+export const deleteTempLogoImage = async (filename: string): Promise<number> => {
+  return fetchInstance
+    .POST(
+      '/api/delete-temp-logo-image',
+      { filename },
+      [await UserService.authHeader()],
+      true,
+    )
+    .then((res) => res.status)
+}

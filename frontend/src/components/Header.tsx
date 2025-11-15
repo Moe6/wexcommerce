@@ -37,6 +37,7 @@ import * as helper from '@/utils/helper'
 import { strings as commonStrings } from '@/lang/common'
 import { strings } from '@/lang/header'
 import * as UserService from '@/lib/UserService'
+import * as SettingService from '@/lib/SettingService'
 import { UserContextType, useUserContext } from '@/context/UserContext'
 import { NotificationContextType, useNotificationContext } from '@/context/NotificationContext'
 import { CartContextType, useCartContext } from '@/context/CartContext'
@@ -74,6 +75,9 @@ const Header: React.FC<HeaderProps> = ({ hidden, hideSearch, hideCart, hideNotif
   const [searchKeyword, setSearchKeyword] = useState('')
   const [showPlaceholder, setShowPlaceholder] = useState(true)
   const [showMobileSearch, setShowMobileSearch] = useState(false)
+  const [logoType, setLogoType] = useState<'text' | 'image'>('text')
+  const [logoText, setLogoText] = useState('')
+  const [logoImageUrl, setLogoImageUrl] = useState<string>()
 
   const searchRef = useRef<HTMLElement>(null)
 
@@ -106,6 +110,23 @@ const Header: React.FC<HeaderProps> = ({ hidden, hideSearch, hideCart, hideNotif
       }
     }
   }, [hidden, user])
+
+  useEffect(() => {
+    const fetchLogoSettings = async () => {
+      try {
+        const logoSettings = await SettingService.getLogoSettings()
+        setLogoType(logoSettings.logoType || 'text')
+        setLogoText(logoSettings.logoText || '')
+        setLogoImageUrl(logoSettings.logoImageUrl)
+      } catch (err) {
+        console.error('Failed to fetch logo settings:', err)
+      }
+    }
+
+    if (!hidden) {
+      fetchLogoSettings()
+    }
+  }, [hidden])
 
   useEffect(() => {
     if (showMobileSearch && searchRef.current && searchRef.current.firstChild) {
@@ -344,15 +365,44 @@ const Header: React.FC<HeaderProps> = ({ hidden, hideSearch, hideCart, hideNotif
                 </IconButton>
 
                 <Link href="/" className={styles.logo}>
-                  <Image
-                    alt=""
-                    src="/logo.png"
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    priority={true}
-                    className={styles.logo}
-                  />
+                  {logoType === 'text' ? (
+                    <Typography
+                      variant="h6"
+                      component="div"
+                      sx={{
+                        fontWeight: 600,
+                        color: '#000',
+                        textDecoration: 'none',
+                        fontSize: '1.25rem',
+                      }}
+                    >
+                      {logoText || 'LeboBeauty'}
+                    </Typography>
+                  ) : logoImageUrl ? (
+                    <Image
+                      alt="Logo"
+                      src={logoImageUrl.startsWith('http') ? logoImageUrl : `${env.CDN_LOGO}/${logoImageUrl}`}
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      priority={true}
+                      className={styles.logo}
+                      style={{ width: 'auto', height: '40px', maxWidth: '200px' }}
+                    />
+                  ) : (
+                    <Typography
+                      variant="h6"
+                      component="div"
+                      sx={{
+                        fontWeight: 600,
+                        color: '#000',
+                        textDecoration: 'none',
+                        fontSize: '1.25rem',
+                      }}
+                    >
+                      LeboBeauty
+                    </Typography>
+                  )}
                 </Link>
               </>
             }

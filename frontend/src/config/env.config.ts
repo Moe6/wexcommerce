@@ -32,6 +32,7 @@ const env = {
   ORDERS_PAGE_SIZE: Number.parseInt(process.env.NEXT_PUBLIC_WC_ORDERS_PAGE_SIZE || '4', 10),
   CDN_PRODUCTS: String(process.env.NEXT_PUBLIC_WC_CDN_PRODUCTS),
   CDN_CATEGORIES: String(process.env.NEXT_PUBLIC_WC_CDN_CATEGORIES),
+  CDN_LOGO: String(process.env.NEXT_PUBLIC_WC_CDN_LOGO || process.env.NEXT_PUBLIC_WC_CDN_ROOT + '/logo'),
   FB_APP_ID: String(process.env.NEXT_PUBLIC_WC_FB_APP_ID),
   APPLE_ID: String(process.env.NEXT_PUBLIC_WC_APPLE_ID),
   GG_APP_ID: String(process.env.NEXT_PUBLIC_WC_GG_APP_ID),
@@ -46,6 +47,9 @@ const env = {
   RECAPTCHA_ENABLED: (process.env.NEXT_PUBLIC_WC_RECAPTCHA_ENABLED && process.env.NEXT_PUBLIC_WC_RECAPTCHA_ENABLED.toLowerCase()) === 'true',
   RECAPTCHA_SITE_KEY: String(process.env.NEXT_PUBLIC_WC_RECAPTCHA_SITE_KEY),
   CONTACT_EMAIL: String(process.env.NEXT_PUBLIC_WC_CONTACT_EMAIL),
+  EMAILJS_SERVICE_ID: String(process.env.NEXT_PUBLIC_WC_EMAILJS_SERVICE_ID || 'service_8sbwo4c'),
+  EMAILJS_TEMPLATE_ID: String(process.env.NEXT_PUBLIC_WC_EMAILJS_TEMPLATE_ID || 'template_dq5bfjp'),
+  EMAILJS_PUBLIC_KEY: String(process.env.NEXT_PUBLIC_WC_EMAILJS_PUBLIC_KEY || 'nsWlD4VUrfFyB6tHg'),
 }
 
 export const CookieOptions: Partial<ResponseCookie> = {

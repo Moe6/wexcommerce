@@ -29,6 +29,16 @@ const settingSchema = new Schema<env.Setting>({
   iban: {
     type: String,
   },
+  logoType: {
+    type: String,
+    enum: ['text', 'image'],
+  },
+  logoText: {
+    type: String,
+  },
+  logoImageUrl: {
+    type: String,
+  },
 }, {
   timestamps: true,
   strict: true,
