@@ -5,10 +5,14 @@
 ### New Files:
 1. **`backend/Dockerfile.railway`** - Railway-optimized Dockerfile for backend
 2. **`frontend/Dockerfile.railway`** - Railway-optimized Dockerfile for frontend
-3. **`railway.json`** - Railway project configuration (optional)
-4. **`RAILWAY_DEPLOYMENT.md`** - Comprehensive deployment guide
-5. **`RAILWAY_QUICK_START.md`** - Quick start guide
-6. **`RAILWAY_SETUP_SUMMARY.md`** - This file
+3. **`frontend/start.cjs`** - Cross-platform start script for Next.js
+4. **`frontend/start.sh`** - Shell start script (alternative)
+5. **`RAILWAY_DEPLOYMENT.md`** - Comprehensive deployment guide
+6. **`RAILWAY_QUICK_START.md`** - Quick start guide
+7. **`RAILWAY_TROUBLESHOOTING.md`** - Troubleshooting guide
+8. **`RAILWAY_SETUP_SUMMARY.md`** - This file
+
+**Note**: No root `railway.json` is needed. Configure each service separately in Railway's UI.
 
 ### Modified Files:
 1. **`backend/src/config/env.config.ts`** - Updated to check Railway's PORT env var first

@@ -26,7 +26,7 @@ This is a condensed version of the deployment guide. Follow these steps to get y
 1. Click **"+ New"** → **"GitHub Repo"** → Select your repo
 2. Go to **Settings** → **Build**
    - **Dockerfile Path**: `backend/Dockerfile.railway`
-   - **Root Directory**: `/` (leave empty or set to `/`)
+   - **Root Directory**: Leave empty (Railway will use repo root)
 3. Go to **Settings** → **Deploy**
    - **Start Command**: Leave empty (uses Dockerfile CMD)
 
@@ -96,7 +96,7 @@ WC_PAYPAL_SANDBOX=false
 1. Click **"+ New"** → **"GitHub Repo"** → Select your repo
 2. Go to **Settings** → **Build**
    - **Dockerfile Path**: `frontend/Dockerfile.railway`
-   - **Root Directory**: `/` (leave empty or set to `/`)
+   - **Root Directory**: Leave empty (Railway will use repo root)
 3. Go to **Settings** → **Deploy**
    - **Start Command**: Leave empty (uses Dockerfile CMD)
 
