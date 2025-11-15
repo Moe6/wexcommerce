@@ -29,9 +29,13 @@ RUN npm ci
 # Copy frontend source (excluding node_modules to preserve installed deps)
 COPY frontend ./
 
+# Reinstall dependencies if package.json changed (ensures TypeScript is installed)
+RUN npm ci
+
 # Ensure node_modules/.bin is in PATH and build Next.js app
 ENV NODE_OPTIONS=--max-old-space-size=2048
 ENV PATH="/app/frontend/node_modules/.bin:$PATH"
+WORKDIR /app/frontend
 RUN npm run build
 
 # Production stage
