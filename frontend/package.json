@@ -5,7 +5,7 @@
   "version": "3.9.0",
   "type": "module",
   "scripts": {
-    "install:reactjs-social-login": "cd ../packages/reactjs-social-login && npm i",
+    "install:reactjs-social-login": "(cd ../packages/reactjs-social-login && npm i)",
     "install:dependencies": "npm run install:reactjs-social-login",
     "ts:build": "npm run install:dependencies && tsc --build --verbose",
     "dev": "npm run ts:build && next dev --turbo -p 8006",
