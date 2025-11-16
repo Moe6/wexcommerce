@@ -3,7 +3,9 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import type { IResolveParams } from ':reactjs-social-login'
+// Use relative path for Turbopack compatibility
+// The alias doesn't work reliably with Turbopack, so we use relative paths
+import type { IResolveParams } from '../../../packages/reactjs-social-login/dist/src'
 import * as lebobeautycoTypes from ':lebobeautyco-types'
 import { strings as commonStrings } from '@/lang/common'
 import env from '@/config/env.config'
@@ -11,15 +13,15 @@ import * as UserService from '@/lib/UserService'
 
 import styles from '@/styles/social-login.module.css'
 
-// Import social login components using the alias
-// This should work with both webpack and Turbopack if configured correctly
+// Import social login components using relative path
+// This works with both webpack and Turbopack
 import {
   LoginSocialGoogle,
   LoginSocialFacebook,
   LoginSocialApple
-} from ':reactjs-social-login'
+} from '../../../packages/reactjs-social-login/dist/src'
 
-let REDIRECT_URI: string | null = null
+let REDIRECT_URI: string | undefined = undefined
 if (typeof window !== 'undefined') {
   REDIRECT_URI = window.location.href
 }
