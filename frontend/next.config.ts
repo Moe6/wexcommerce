@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: false,
   poweredByHeader: false,
   // Transpile packages from monorepo to ensure they're processed correctly
-  transpilePackages: ['reactjs-social-login'],
+  transpilePackages: ['reactjs-social-login', 'lebobeautyco-types', 'lebobeautyco-helper'],
   images: {
     //
     // Add your frontend domain here
