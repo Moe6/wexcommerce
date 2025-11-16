@@ -22,7 +22,7 @@
       "@/*": ["./src/*"],
       ":lebobeautyco-types": ["../packages/lebobeautyco-types"],
       ":lebobeautyco-helper": ["../packages/lebobeautyco-helper"],
-      ":reactjs-social-login": ["../packages/reactjs-social-login"],
+      // Removed :reactjs-social-login alias - using relative paths instead for Turbopack compatibility
     },
     "downlevelIteration": true,
     "target": "ESNext"
