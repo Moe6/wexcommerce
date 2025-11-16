@@ -3,7 +3,7 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import type { IResolveParams } from '../../../packages/reactjs-social-login/dist/src'
+import type { IResolveParams } from ':reactjs-social-login'
 import * as lebobeautycoTypes from ':lebobeautyco-types'
 import { strings as commonStrings } from '@/lang/common'
 import env from '@/config/env.config'
@@ -11,16 +11,16 @@ import * as UserService from '@/lib/UserService'
 
 import styles from '@/styles/social-login.module.css'
 
-let LoginSocialGoogle = null
-let LoginSocialFacebook = null
-let LoginSocialApple = null
-let REDIRECT_URI = null
-if (typeof window === 'object') {
-  // Use relative path for runtime require to avoid Turbopack alias issues
-  const reactjsSocialLogin = require('../../../packages/reactjs-social-login/dist/src')
-  LoginSocialGoogle = reactjsSocialLogin.LoginSocialGoogle
-  LoginSocialFacebook = reactjsSocialLogin.LoginSocialFacebook
-  LoginSocialApple = reactjsSocialLogin.LoginSocialApple
+// Import social login components using the alias
+// This should work with both webpack and Turbopack if configured correctly
+import {
+  LoginSocialGoogle,
+  LoginSocialFacebook,
+  LoginSocialApple
+} from ':reactjs-social-login'
+
+let REDIRECT_URI: string | null = null
+if (typeof window !== 'undefined') {
   REDIRECT_URI = window.location.href
 }
 

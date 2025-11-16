@@ -51,6 +51,9 @@ WORKDIR /app/packages/reactjs-social-login
 RUN test -d dist/src || (echo "ERROR: reactjs-social-login dist/src folder not found after build" && exit 1)
 RUN test -f dist/src/index.js || (echo "ERROR: reactjs-social-login dist/src/index.js file not found after build" && exit 1)
 RUN ls -la dist/src/ || (echo "ERROR: Cannot list dist/src directory" && exit 1)
+# Verify the path from frontend/src/components perspective
+WORKDIR /app/frontend/src/components
+RUN test -f ../../../packages/reactjs-social-login/dist/src/index.js || (echo "ERROR: Cannot resolve relative path from frontend/src/components" && exit 1)
 
 # Ensure node_modules/.bin is in PATH and build Next.js app
 ENV NODE_OPTIONS=--max-old-space-size=2048
