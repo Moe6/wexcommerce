@@ -46,7 +46,8 @@ const nextConfig: NextConfig = {
     resolveAlias: {
       ':lebobeautyco-types': path.resolve(__dirname, '../packages/lebobeautyco-types'),
       ':lebobeautyco-helper': path.resolve(__dirname, '../packages/lebobeautyco-helper'),
-      ':reactjs-social-login': path.resolve(__dirname, '../packages/reactjs-social-login'),
+      // Point to dist/src directory where the built files are
+      ':reactjs-social-login': path.resolve(__dirname, '../packages/reactjs-social-login/dist/src'),
     },
   },
   //
