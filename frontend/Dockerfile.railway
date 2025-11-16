@@ -56,7 +56,9 @@ WORKDIR /app/frontend/src/components
 RUN test -f ../../../packages/reactjs-social-login/dist/src/index.js || (echo "ERROR: Cannot resolve relative path from frontend/src/components" && exit 1)
 
 # Ensure node_modules/.bin is in PATH and build Next.js app
+# Disable Turbopack - use webpack instead for better monorepo alias support
 ENV NODE_OPTIONS=--max-old-space-size=2048
+ENV NEXT_PRIVATE_SKIP_TURBO=1
 ENV PATH="/app/frontend/node_modules/.bin:$PATH"
 WORKDIR /app/frontend
 RUN npm run build
