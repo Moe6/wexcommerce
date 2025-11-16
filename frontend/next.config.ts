@@ -46,8 +46,8 @@ const nextConfig: NextConfig = {
     resolveAlias: {
       ':lebobeautyco-types': path.resolve(__dirname, '../packages/lebobeautyco-types'),
       ':lebobeautyco-helper': path.resolve(__dirname, '../packages/lebobeautyco-helper'),
-      // Point to package root - Turbopack should use package.json main field
-      ':reactjs-social-login': path.resolve(__dirname, '../packages/reactjs-social-login'),
+      // Point to dist/src directory - Turbopack will resolve index.js from there
+      ':reactjs-social-login': path.resolve(__dirname, '../packages/reactjs-social-login/dist/src'),
     },
   },
   //
