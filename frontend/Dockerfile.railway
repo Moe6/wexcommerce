@@ -56,18 +56,9 @@ FROM node:lts-alpine
 
 WORKDIR /app
 
-# Copy packages for production
-COPY packages ./packages
-
-# Install packages production dependencies
-WORKDIR /app/packages/lebobeautyco-types
-RUN npm ci --only=production || true
-
-WORKDIR /app/packages/lebobeautyco-helper
-RUN npm ci --only=production || true
-
-WORKDIR /app/packages/reactjs-social-login
-RUN npm ci --only=production || true
+# Copy built packages from build stage (including dist folders and node_modules)
+# This ensures all packages are built and ready to use
+COPY --from=build /app/packages ./packages
 
 # Copy frontend package files and install production dependencies
 # Copy package files from build stage to ensure package-lock.json is included
