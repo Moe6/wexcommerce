@@ -30,9 +30,12 @@ RUN npm ci || npm install
 # Copy frontend source (excluding node_modules to preserve installed deps)
 COPY frontend ./
 
+# Reinstall dependencies after copying source to ensure everything is in sync
+WORKDIR /app/frontend
+RUN npm install
+
 # Ensure packages are built and available
 # Build all packages that have build scripts
-# Packages have TypeScript in dependencies, so npm run build should work
 WORKDIR /app/packages/lebobeautyco-types
 RUN npm run build || echo "Skipping build for lebobeautyco-types"
 
