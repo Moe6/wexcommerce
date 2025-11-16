@@ -9,6 +9,8 @@ const isProduction = process.env.NODE_ENV === 'production'
 const nextConfig: NextConfig = {
   reactStrictMode: false,
   poweredByHeader: false,
+  // Transpile packages from monorepo to ensure they're processed correctly
+  transpilePackages: ['reactjs-social-login'],
   images: {
     //
     // Add your frontend domain here
