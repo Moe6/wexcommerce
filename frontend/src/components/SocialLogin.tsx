@@ -3,9 +3,8 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-// Use relative path to package root - let package.json exports handle resolution
-// This works better with Turbopack than pointing directly to dist files
-import type { IResolveParams } from '../../../packages/reactjs-social-login'
+// Use the alias - webpack handles this correctly
+import type { IResolveParams } from ':reactjs-social-login'
 import * as lebobeautycoTypes from ':lebobeautyco-types'
 import { strings as commonStrings } from '@/lang/common'
 import env from '@/config/env.config'
@@ -13,13 +12,13 @@ import * as UserService from '@/lib/UserService'
 
 import styles from '@/styles/social-login.module.css'
 
-// Import social login components from package root
-// Package.json exports field will resolve to dist/src/index.js
+// Import social login components using the alias
+// This works with webpack (we'll disable Turbopack)
 import {
   LoginSocialGoogle,
   LoginSocialFacebook,
   LoginSocialApple
-} from '../../../packages/reactjs-social-login'
+} from ':reactjs-social-login'
 
 let REDIRECT_URI: string | undefined = undefined
 if (typeof window !== 'undefined') {
