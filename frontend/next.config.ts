@@ -27,6 +27,20 @@ const nextConfig: NextConfig = {
     ],
     unoptimized: true,
   },
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      ':lebobeautyco-types': path.resolve(__dirname, '../packages/lebobeautyco-types'),
+      ':lebobeautyco-helper': path.resolve(__dirname, '../packages/lebobeautyco-helper'),
+      ':reactjs-social-login': path.resolve(__dirname, '../packages/reactjs-social-login'),
+    }
+    // Ensure packages can be resolved as modules
+    config.resolve.modules = [
+      ...(config.resolve.modules || []),
+      path.resolve(__dirname, '../packages'),
+    ]
+    return config
+  },
   turbopack: {
     root: path.resolve(__dirname, '..'), // makes it absolute
     resolveAlias: {
