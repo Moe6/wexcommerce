@@ -36,14 +36,19 @@ RUN npm install
 
 # Ensure packages are built and available
 # Build all packages that have build scripts
+# Verify builds succeed - these packages are required for the frontend build
 WORKDIR /app/packages/lebobeautyco-types
-RUN npm run build || echo "Skipping build for lebobeautyco-types"
+RUN npm run build
 
 WORKDIR /app/packages/lebobeautyco-helper
-RUN npm run build || echo "Skipping build for lebobeautyco-helper"
+RUN npm run build
 
 WORKDIR /app/packages/reactjs-social-login
-RUN npm run build || echo "Skipping build for reactjs-social-login"
+RUN npm run build
+
+# Verify the reactjs-social-login dist folder exists
+WORKDIR /app/packages/reactjs-social-login
+RUN test -d dist/src || (echo "ERROR: reactjs-social-login dist/src folder not found after build" && exit 1)
 
 # Ensure node_modules/.bin is in PATH and build Next.js app
 ENV NODE_OPTIONS=--max-old-space-size=2048
