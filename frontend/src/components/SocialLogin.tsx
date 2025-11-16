@@ -3,7 +3,7 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { IResolveParams } from ':reactjs-social-login'
+import type { IResolveParams } from '../../../packages/reactjs-social-login/dist/src'
 import * as lebobeautycoTypes from ':lebobeautyco-types'
 import { strings as commonStrings } from '@/lang/common'
 import env from '@/config/env.config'
@@ -16,9 +16,11 @@ let LoginSocialFacebook = null
 let LoginSocialApple = null
 let REDIRECT_URI = null
 if (typeof window === 'object') {
-  LoginSocialGoogle = require(':reactjs-social-login').LoginSocialGoogle
-  LoginSocialFacebook = require(':reactjs-social-login').LoginSocialFacebook
-  LoginSocialApple = require(':reactjs-social-login').LoginSocialApple
+  // Use relative path for runtime require to avoid Turbopack alias issues
+  const reactjsSocialLogin = require('../../../packages/reactjs-social-login/dist/src')
+  LoginSocialGoogle = reactjsSocialLogin.LoginSocialGoogle
+  LoginSocialFacebook = reactjsSocialLogin.LoginSocialFacebook
+  LoginSocialApple = reactjsSocialLogin.LoginSocialApple
   REDIRECT_URI = window.location.href
 }
 
