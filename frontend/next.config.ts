@@ -30,9 +30,9 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(__dirname, '..'), // makes it absolute
     resolveAlias: {
-      ':lebobeautyco-types': '../packages/lebobeautyco-types',
-      ':lebobeautyco-helper': '../packages/lebobeautyco-helper',
-      ':reactjs-social-login': '../packages/reactjs-social-login',
+      ':lebobeautyco-types': path.resolve(__dirname, '../packages/lebobeautyco-types'),
+      ':lebobeautyco-helper': path.resolve(__dirname, '../packages/lebobeautyco-helper'),
+      ':reactjs-social-login': path.resolve(__dirname, '../packages/reactjs-social-login'),
     },
   },
   //

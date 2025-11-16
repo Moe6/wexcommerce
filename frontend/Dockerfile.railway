@@ -30,6 +30,17 @@ RUN npm ci || npm install
 # Copy frontend source (excluding node_modules to preserve installed deps)
 COPY frontend ./
 
+# Ensure packages are built and available
+# Build all packages that have build scripts
+WORKDIR /app/packages/lebobeautyco-types
+RUN npm run build || echo "No build script for lebobeautyco-types"
+
+WORKDIR /app/packages/lebobeautyco-helper
+RUN npm run build || echo "No build script for lebobeautyco-helper"
+
+WORKDIR /app/packages/reactjs-social-login
+RUN npm run build || echo "No build script for reactjs-social-login"
+
 # Ensure node_modules/.bin is in PATH and build Next.js app
 ENV NODE_OPTIONS=--max-old-space-size=2048
 ENV PATH="/app/frontend/node_modules/.bin:$PATH"
