@@ -33,6 +33,7 @@ const nextConfig: NextConfig = {
     config.resolve.alias = {
       ...config.resolve.alias,
       '@': path.resolve(__dirname, './src'),
+      '@/': `${path.resolve(__dirname, './src')}/`,
       ':lebobeautyco-types': path.resolve(__dirname, '../packages/lebobeautyco-types'),
       ':lebobeautyco-helper': path.resolve(__dirname, '../packages/lebobeautyco-helper'),
       ':reactjs-social-login': path.resolve(__dirname, '../packages/reactjs-social-login'),
@@ -50,6 +51,7 @@ const nextConfig: NextConfig = {
     root: path.resolve(__dirname, '..'), // Set root to monorepo root
     resolveAlias: {
       '@': path.resolve(__dirname, './src'),
+      '@/': `${path.resolve(__dirname, './src')}/`,
       ':lebobeautyco-types': path.resolve(__dirname, '../packages/lebobeautyco-types'),
       ':lebobeautyco-helper': path.resolve(__dirname, '../packages/lebobeautyco-helper'),
       // Point directly to the built index.js file - Turbopack needs the full path
