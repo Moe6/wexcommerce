@@ -59,6 +59,7 @@ RUN test -f ../../../packages/reactjs-social-login/dist/src/index.js || (echo "E
 # Disable Turbopack - use webpack instead for better monorepo alias support
 ENV NODE_OPTIONS=--max-old-space-size=2048
 ENV NEXT_PRIVATE_SKIP_TURBO=1
+ENV TURBOPACK=0
 ENV PATH="/app/frontend/node_modules/.bin:$PATH"
 WORKDIR /app/frontend
 RUN npm run build
