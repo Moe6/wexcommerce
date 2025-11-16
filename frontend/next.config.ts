@@ -27,7 +27,7 @@ const nextConfig: NextConfig = {
     ],
     unoptimized: true,
   },
-  webpack: (config) => {
+  webpack: (config, { isServer }) => {
     config.resolve.alias = {
       ...config.resolve.alias,
       ':lebobeautyco-types': path.resolve(__dirname, '../packages/lebobeautyco-types'),
@@ -39,6 +39,8 @@ const nextConfig: NextConfig = {
       ...(config.resolve.modules || []),
       path.resolve(__dirname, '../packages'),
     ]
+    // Ensure webpack resolves package.json main field correctly
+    config.resolve.mainFields = ['main', 'module', 'browser', ...(config.resolve.mainFields || [])]
     return config
   },
   turbopack: {
@@ -63,7 +65,6 @@ const nextConfig: NextConfig = {
     serverActions: {
       allowedOrigins: ['localhost', 'lebobeautyco.dynv6.net:8002'],
     },
-    // workerThreads: false,
   },
   reactCompiler: true,
   logging: {
