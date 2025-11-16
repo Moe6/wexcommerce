@@ -2,8 +2,8 @@
 
 import React from 'react'
 import { useRouter } from 'next/navigation'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
-// Use the alias - webpack handles this correctly
 import type { IResolveParams } from ':reactjs-social-login'
 import * as lebobeautycoTypes from ':lebobeautyco-types'
 import { strings as commonStrings } from '@/lang/common'
@@ -12,13 +12,19 @@ import * as UserService from '@/lib/UserService'
 
 import styles from '@/styles/social-login.module.css'
 
-// Import social login components using the alias
-// This works with webpack (we'll disable Turbopack)
-import {
-  LoginSocialGoogle,
-  LoginSocialFacebook,
-  LoginSocialApple
-} from ':reactjs-social-login'
+// Dynamically import social login components on the client to avoid React type conflicts
+const LoginSocialGoogle: React.ComponentType<any> = dynamic(
+  () => import(':reactjs-social-login').then((mod) => mod.LoginSocialGoogle as React.ComponentType<any>),
+  { ssr: false, loading: () => null }
+)
+const LoginSocialFacebook: React.ComponentType<any> = dynamic(
+  () => import(':reactjs-social-login').then((mod) => mod.LoginSocialFacebook as React.ComponentType<any>),
+  { ssr: false, loading: () => null }
+)
+const LoginSocialApple: React.ComponentType<any> = dynamic(
+  () => import(':reactjs-social-login').then((mod) => mod.LoginSocialApple as React.ComponentType<any>),
+  { ssr: false, loading: () => null }
+)
 
 let REDIRECT_URI: string | undefined = undefined
 if (typeof window !== 'undefined') {
