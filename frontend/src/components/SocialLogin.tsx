@@ -4,7 +4,7 @@ import React from 'react'
 import { useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import type { IResolveParams } from ':reactjs-social-login'
+import type { IResolveParams } from '../../../packages/reactjs-social-login/dist/src'
 import * as lebobeautycoTypes from ':lebobeautyco-types'
 import { strings as commonStrings } from '@/lang/common'
 import env from '@/config/env.config'
@@ -14,15 +14,15 @@ import styles from '@/styles/social-login.module.css'
 
 // Dynamically import social login components on the client to avoid React type conflicts
 const LoginSocialGoogle: React.ComponentType<any> = dynamic(
-  () => import(':reactjs-social-login').then((mod) => mod.LoginSocialGoogle as React.ComponentType<any>),
+  () => import('../../../packages/reactjs-social-login/dist/src').then((mod) => mod.LoginSocialGoogle as React.ComponentType<any>),
   { ssr: false, loading: () => null }
 )
 const LoginSocialFacebook: React.ComponentType<any> = dynamic(
-  () => import(':reactjs-social-login').then((mod) => mod.LoginSocialFacebook as React.ComponentType<any>),
+  () => import('../../../packages/reactjs-social-login/dist/src').then((mod) => mod.LoginSocialFacebook as React.ComponentType<any>),
   { ssr: false, loading: () => null }
 )
 const LoginSocialApple: React.ComponentType<any> = dynamic(
-  () => import(':reactjs-social-login').then((mod) => mod.LoginSocialApple as React.ComponentType<any>),
+  () => import('../../../packages/reactjs-social-login/dist/src').then((mod) => mod.LoginSocialApple as React.ComponentType<any>),
   { ssr: false, loading: () => null }
 )
 
