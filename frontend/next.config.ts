@@ -42,10 +42,11 @@ const nextConfig: NextConfig = {
     return config
   },
   turbopack: {
+    root: path.resolve(__dirname, '..'), // Set root to monorepo root
     resolveAlias: {
       ':lebobeautyco-types': path.resolve(__dirname, '../packages/lebobeautyco-types'),
       ':lebobeautyco-helper': path.resolve(__dirname, '../packages/lebobeautyco-helper'),
-      ':reactjs-social-login': path.resolve(__dirname, '../packages/reactjs-social-login/dist/src'),
+      ':reactjs-social-login': path.resolve(__dirname, '../packages/reactjs-social-login'),
     },
   },
   //
