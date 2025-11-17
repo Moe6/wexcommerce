@@ -22,7 +22,7 @@
       "@/*": ["./src/*"],
       ":lebobeautyco-types": ["../packages/lebobeautyco-types"],
       ":lebobeautyco-helper": ["../packages/lebobeautyco-helper"],
-      ":reactjs-social-login": ["../packages/reactjs-social-login"],
+      ":reactjs-social-login": ["../packages/reactjs-social-login/dist/src"],
     },
     "downlevelIteration": true,
     "target": "ESNext"

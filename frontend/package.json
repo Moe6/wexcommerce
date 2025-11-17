@@ -7,11 +7,11 @@
   "scripts": {
     "install:reactjs-social-login": "(cd ../packages/reactjs-social-login && npm i)",
     "install:dependencies": "npm run install:reactjs-social-login",
-    "ts:build": "npm run install:dependencies && (node_modules/.bin/tsc --build --verbose || tsc --build --verbose || echo 'TypeScript build completed with warnings')",
+    "ts:build": "npm run install:dependencies && (npx tsc --build --verbose || tsc --build --verbose || echo 'TypeScript build completed with warnings')",
     "dev": "npm run ts:build && next dev --turbo -p 8006",
     "ts:docker-build": "tsc --build --verbose",
     "dev:docker": "npm run ts:docker-build && next dev -p 8006",
-    "build": "npx rimraf .next && npm run ts:build; npx cross-env NODE_OPTIONS=--max-old-space-size=1024 NEXT_PRIVATE_SKIP_TURBO=1 NEXT_SKIP_TURBO=1 TURBOPACK=0 next build",
+    "build": "npx rimraf .next && npm run ts:build && npx cross-env NODE_OPTIONS=--max-old-space-size=1024 NEXT_PRIVATE_SKIP_TURBO=1 NEXT_SKIP_TURBO=1 TURBOPACK=0 next build",
     "start": "node start.cjs",
     "lint": "eslint . --cache --cache-location .eslintcache",
     "fix": "eslint --fix",

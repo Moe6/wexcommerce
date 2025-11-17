@@ -36,7 +36,7 @@ const nextConfig: NextConfig = {
       '@/': `${path.resolve(__dirname, './src')}/`,
       ':lebobeautyco-types': path.resolve(__dirname, '../packages/lebobeautyco-types'),
       ':lebobeautyco-helper': path.resolve(__dirname, '../packages/lebobeautyco-helper'),
-      ':reactjs-social-login': path.resolve(__dirname, '../packages/reactjs-social-login'),
+      ':reactjs-social-login': path.resolve(__dirname, '../packages/reactjs-social-login/dist/src'),
     }
     // Ensure packages can be resolved as modules
     config.resolve.modules = [
@@ -55,7 +55,7 @@ const nextConfig: NextConfig = {
       ':lebobeautyco-types': path.resolve(__dirname, '../packages/lebobeautyco-types'),
       ':lebobeautyco-helper': path.resolve(__dirname, '../packages/lebobeautyco-helper'),
       // Point directly to the built index.js file - Turbopack needs the full path
-      ':reactjs-social-login': path.resolve(__dirname, '../packages/reactjs-social-login/dist/src/index.js'),
+      ':reactjs-social-login': path.resolve(__dirname, '../packages/reactjs-social-login/dist/src'),
     },
   },
   //
