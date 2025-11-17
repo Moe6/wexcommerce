@@ -31,6 +31,11 @@
 - Ensure you're using the Railway Dockerfiles (`backend/Dockerfile.railway` or `frontend/Dockerfile.railway`)
 - These Dockerfiles handle the monorepo structure correctly
 - Check build logs to see if packages are being installed
+- Make sure the shared packages are actually built before running `next build`. From the repo root run `npm run ts:build` or, inside the Dockerfile, keep the `npm run build` steps for every package.
+- Verify the social login package really produced `packages/reactjs-social-login/dist/src/index.js`. The Dockerfile already has guard rails (`test -f dist/src/index.js`)—do the same locally if in doubt.
+- If Railway still reports Turbopack build errors, set the following Railway variables so Next.js falls back to webpack:  
+  `NEXT_PRIVATE_SKIP_TURBO=1`, `NEXT_SKIP_TURBO=1`, `TURBOPACK=0`
+- Double-check `frontend/tsconfig.json` and `frontend/next.config.ts` both point `:reactjs-social-login` to `../packages/reactjs-social-login/dist/src`. Without the compiled output, Turbopack cannot resolve the entry point.
 
 ---
 
